@@ -36,7 +36,8 @@
                 android:digits="0123456789"
                 android:padding="5dip"
                 android:textSize="15sp"
-                android:textColorHint="#d6d6d6"/>
+                android:textColorHint="#d6d6d6"
+                android:textColor="#434343"/>
         </LinearLayout>
 
         <View
@@ -70,7 +71,8 @@
                 android:digits="0123456789"
                 android:padding="5dip"
                 android:textSize="15sp"
-                android:textColorHint="#d6d6d6"/>
+                android:textColorHint="#d6d6d6"
+                android:textColor="#434343"/>
         </LinearLayout>
     </LinearLayout>
 
