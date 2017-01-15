@@ -190,8 +190,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
                         }
                     }.start();
                     toastUtil.Short(RegisterActivity.this, "注册成功").show();
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                     overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){//服务器验证码发送成功

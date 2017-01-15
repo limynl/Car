@@ -106,7 +106,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
             //登录
             case R.id.main_btn_login:{
                 SVProgressHUD.showWithStatus(context, "登录中...");
-                /*new Thread(){
+                new Thread(){
                     @Override
                     public void run() {
                         super.run();
@@ -116,7 +116,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
                             e.printStackTrace();
                         }
                     }
-                }.start();*/
+                }.start();
                 Timer timer=new Timer();
                 timer.schedule(new wait(), 5000);
                 SVProgressHUD.isCancel(this, true);

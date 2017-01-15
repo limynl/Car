@@ -66,20 +66,18 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
         View headerView = navigationView.getHeaderView(0);
         TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
 //        customText.setText("哈哈哈。。。我换了");
-        ImageView imageView = (ImageView)headerView.findViewById(R.id.imageView);
-        imageView.setImageResource(R.mipmap.head);
-        imageView.setOnClickListener(this);
+        ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);
+        userHead.setImageResource(R.mipmap.head);
+        userHead.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.imageView:
+            case R.id.user_head:
             {
-//                Intent intent = new Intent(MainActivity.this, UpDataUserActivity.class);
-//                startActivity(intent);
-//                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
+                toastUtil.Short(MainActivity.this, "我的个人中心").show();
             }
                 break;
         }
