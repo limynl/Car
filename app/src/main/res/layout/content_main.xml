@@ -10,10 +10,53 @@
     tools:context="com.team.car.activitys.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="主内容"
-        android:layout_gravity="center_horizontal" />
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#d0d0d0"/>
+
+
+    <!--底部导航栏RadioGroup-->
+    <RadioGroup
+        android:gravity="center_vertical"
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <!--音乐-->
+        <RadioButton
+            android:id="@+id/rb_music"
+            android:text="音乐"
+            android:drawableTop="@drawable/rb_footer_drawable_selector"
+            style="@style/button_style" />
+
+
+        <!--相册-->
+        <RadioButton
+            android:id="@+id/rb_picture"
+            android:text="相册"
+            android:drawableTop="@drawable/rb_picture_center_selector"
+            style="@style/button_style" />
+
+        <!--游戏-->
+        <RadioButton
+            android:id="@+id/rb_game"
+            android:text="游戏"
+            android:drawableTop="@drawable/rb_footer_drawable_selector"
+            style="@style/button_style"/>
+
+        <!--个人中心-->
+        <RadioButton
+            android:id="@+id/rb_person_center"
+            android:text="设置"
+            android:drawableTop="@drawable/rb_person_center_selector"
+            style="@style/button_style"/>
+
+    </RadioGroup>
 
 </LinearLayout>
