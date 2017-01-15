@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Car</string>
+    <string name="app_name">汽车服务</string>
+
+    <!--Open navigation drawer   Close navigation drawer-->
+    <string name="navigation_drawer_open">打开导航视图</string>
+    <string name="navigation_drawer_close">关闭导航视图</string>
+
+    <string name="action_settings">设置</string>
 </resources>
