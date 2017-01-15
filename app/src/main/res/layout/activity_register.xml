@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7ADFB8"
+    android:orientation="vertical"
+    android:id="@+id/background">
+    <!--019b79 007968  #7ADFB8-->
+    <include
+        android:id="@+id/topbar"
+        layout="@layout/topbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_title"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center"
+            android:text="Three Boys"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="show my logo"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:background="@drawable/radius_drawable_bg"
+        android:orientation="vertical"
+        android:padding="10dip" >
+
+        <LinearLayout
+            android:id="@+id/input_layout_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/phone_number" />
+
+            <com.lmy.testthreelogin.common.CleanableEditText
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:background="#00000000"
+                android:hint="手机号"
+                android:drawableRight="@mipmap/ic_clear_nor"
+                android:maxLength="11"
+                android:digits="0123456789"
+                android:padding="5dip"
+                android:textSize="15sp"
+                android:textColorHint="#d6d6d6"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:background="#eeeeee" />
+
+        <LinearLayout
+            android:id="@+id/input_layout_psw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/password" />
+
+            <com.lmy.testthreelogin.common.CleanableEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:background="#00000000"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:drawableRight="@mipmap/ic_clear_nor"
+                android:maxLength="11"
+                android:digits="0123456789"
+                android:padding="5dip"
+                android:textSize="15sp"
+                android:textColorHint="#d6d6d6"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:background="#eeeeee" />
+
+        <LinearLayout
+            android:id="@+id/input_layout_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/code" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.lmy.testthreelogin.common.CleanableEditText
+                    android:id="@+id/code"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="#00000000"
+                    android:hint="验证码"
+                    android:inputType="textPassword"
+                    android:drawableRight="@mipmap/ic_clear_nor"
+                    android:maxLength="4"
+                    android:digits="0123456789"
+                    android:padding="5dip"
+                    android:textSize="15sp"
+                    android:textColorHint="#d6d6d6"/>
+
+                    <Button
+                        android:id="@+id/getCord"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="#d6d6d6"
+                        android:text="获取验证码"
+                        android:textColor="#009a71"
+                        android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_register"
+        android:layout_width="180sp"
+        android:layout_height="40sp"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/text_bg"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingBottom="2dip"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"
+        android:paddingTop="2dip"
+        android:text="Register"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
