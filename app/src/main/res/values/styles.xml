@@ -8,13 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--指定侧滑样式-->
     <!--<style name="AppTheme.NoActionBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>-->
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--选择弹话框样式，相当于一个Activity-->
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/photo_choose_bg</item>
+    </style>
+    <style name="main_menu_animstyle">
+        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
+    </style>
 
 </resources>

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:gravity="center"
-            android:text="Three Boys"
+            android:text="We are a team"
             android:textColor="#ffffff"
             android:textSize="24sp" />
 

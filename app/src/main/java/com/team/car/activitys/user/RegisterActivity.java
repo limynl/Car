@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.activitys.MainActivity;
 import com.team.car.widgets.CleanableEditText;
 import com.team.car.widgets.ToastUtil;
 import com.team.car.widgets.dialogview.SVProgressHUD;
@@ -122,8 +121,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.topbar_left:
             {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish();
                 overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
             }
             default:
@@ -191,7 +190,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
                         }
                     }.start();
                     toastUtil.Short(RegisterActivity.this, "注册成功").show();
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果

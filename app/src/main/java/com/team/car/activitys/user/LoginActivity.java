@@ -1,6 +1,7 @@
 package com.team.car.activitys.user;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +10,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mob.tools.utils.UIHandler;
 import com.team.car.R;
 import com.team.car.activitys.MainActivity;
+import com.team.car.widgets.ToastUtil;
 import com.team.car.widgets.dialogview.SVProgressHUD;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
@@ -32,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -44,6 +49,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
  */
 
 public class LoginActivity extends Activity implements View.OnClickListener,PlatformActionListener,Handler.Callback{
+    private ToastUtil toastUtil = new ToastUtil();
     private TextView mBtnLogin;
     private TextView register;
 
@@ -71,6 +77,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
         initView();
         //Mob平台授权,初始化SDK
         ShareSDK.initSDK(this);
+
         //传入参数APPID和全局Context上下文
         mTencent = Tencent.createInstance("1105819277",context.getApplicationContext());
 
@@ -99,7 +106,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
             //登录
             case R.id.main_btn_login:{
                 SVProgressHUD.showWithStatus(context, "登录中...");
-                new Thread(){
+                /*new Thread(){
                     @Override
                     public void run() {
                         super.run();
@@ -109,21 +116,18 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
                             e.printStackTrace();
                         }
                     }
-                }.start();
+                }.start();*/
+                Timer timer=new Timer();
+                timer.schedule(new wait(), 5000);
                 SVProgressHUD.isCancel(this, true);
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(context, MainActivity.class));
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
             }
             break;
             //注册
             case R.id.register:
             {
-                Intent intent = new Intent(context, RegisterActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
-
+                showDialog();
             }
             break;
             //第三方新浪微博登录
@@ -142,7 +146,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
             //第三方微信登录
             case R.id.btn_wechat_login:
                 if(!api.isWXAppInstalled()){
-                    Toast.makeText(this, "请安装微信客户端之后再进行登录", Toast.LENGTH_SHORT).show();
+                    toastUtil.Short(LoginActivity.this, "请安装微信客户端之后再进行登录").show();
                     return;
                 }
                 getCode();
@@ -162,14 +166,6 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
     /** 新浪微博授权成功回调页面 */
     @Override
     public void onComplete(Platform platform, int action, HashMap<String, Object> hashMap) {
-        /** res是返回的数据，例如showUser(null),返回用户信息，对其解析就行
-         *   http://sharesdk.cn/androidDoc/cn/sharesdk/framework/PlatformActionListener.html
-         *   1、不懂如何解析hashMap的，可以上网搜索一下
-         *   2、可以参考官网例子中的GetInforPage这个类解析用户信息
-         *   3、相关的key-value,可以看看对应的开放平台的api
-         *     如新浪的：http://open.weibo.com/wiki/2/users/show
-         *     腾讯微博：http://wiki.open.t.qq.com/index.php/API%E6%96%87%E6%A1%A3/%E5%B8%90%E6%88%B7%E6%8E%A5%E5%8F%A3/%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%99%BB%E5%BD%95%E7%94%A8%E6%88%B7%E7%9A%84%E4%B8%AA%E4%BA%BA%E8%B5%84%E6%96%99
-         */
         Message msg = new Message();
         msg.what = MSG_ACTION_CCALLBACK;
         msg.arg1 = 1;
@@ -207,7 +203,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
         switch(msg.what) {
             case MSG_TOAST: {
                 String text = String.valueOf(msg.obj);
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                toastUtil.Short(LoginActivity.this, text).show();
             }
             break;
             case MSG_ACTION_CCALLBACK: {
@@ -252,9 +248,6 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
 
     /**QQ登录授权，获取用户信息*/
     public void thirdQQLogin(){
-        /**通过这句代码，SDK实现了QQ的登录，这个方法有三个参数，第一个参数是context上下文，第二个参数SCOPO 是一个String类型的字符串，表示一些权限
-         官方文档中的说明：应用需要获得哪些API的权限，由“，”分隔。例如：SCOPE = “get_user_info,add_t”；所有权限用“all”
-         第三个参数，是一个事件监听器，IUiListener接口的实例，这里用的是该接口的实现类 */
         mIUiListener = new BaseUiListener();
         if(!mTencent.isSessionValid()){//判断是否登录过
             mTencent.login(LoginActivity.this,"all", mIUiListener);//all表示获取所有权限
@@ -297,7 +290,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        toastUtil.Short(LoginActivity.this, "登录成功").show();
                         Log.e("Mainactivity","登录成功"+response.toString());
                         /*Intent intent = new Intent(TestLoginActivity.this, TestExampleAsyncActivity.class);
                         startActivity(intent);
@@ -320,12 +313,12 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
         @Override
         public void onError(UiError uiError) {
             Log.e("MainActivity", "onError: " + uiError.toString());
-            Toast.makeText(LoginActivity.this, "授权失败", Toast.LENGTH_SHORT).show();
+            toastUtil.Short(LoginActivity.this, "授权失败").show();
         }
 
         @Override
         public void onCancel() {
-            Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+            toastUtil.Short(LoginActivity.this, "授权取消").show();
         }
     }
 
@@ -345,14 +338,13 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
 
 
     /** 第三方微信登录  */
-    //微信平台应用授权
     private void regToWx(){
         // 通过WXAPIFactory工厂,获得IWXAPI的实例
         api = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4868b35061f87885", true);
         // 将应用的appid注册到微信
         api.registerApp("wx4868b35061f87885");
     }
-    //获取微信访问getCode
+
     private void getCode(){
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
@@ -364,5 +356,68 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
     protected void onDestroy() {
         super.onDestroy();
         ShareSDK.stopSDK(this);
+    }
+
+    private void showDialog() {
+        View view = View.inflate(this,R.layout.photo_choose_dialog, null);
+        Button user_choose = (Button) view.findViewById(R.id.choose_one);
+        user_choose.setText("用户注册");
+        Button business_choose = (Button) view.findViewById(R.id.choose_two);
+        business_choose.setText("商家注册");
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+
+        final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        // 设置显示动画
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = window.getWindowManager().getDefaultDisplay().getHeight();
+        // 以下这两句是为了保证按钮可以水平满屏
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        // 设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+        // 设置点击外围解散
+        dialog.setCanceledOnTouchOutside(true);
+
+        //用户注册
+        user_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastUtil.Long(LoginActivity.this, "用户注册").show();
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                dialog.dismiss();
+            }
+        });
+
+        //商家注册
+        business_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastUtil.Long(LoginActivity.this, "商家注册").show();
+                dialog.dismiss();
+            }
+        });
+
+        //取消
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastUtil.Long(LoginActivity.this, "你点击了取消").show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();//显示对话框主题
+    }
+
+    class wait extends TimerTask {
+        @Override
+        public void run() {
+            finish();
+        }
     }
 }

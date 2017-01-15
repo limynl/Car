@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team.car.R;
+import com.team.car.widgets.ToastUtil;
 
 /**
  * Created by Lmy on 2017/1/15.
@@ -25,6 +25,7 @@ import com.team.car.R;
  */
 
 public class MainActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+    private ToastUtil toastUtil = new ToastUtil();
     private CoordinatorLayout right;
     private NavigationView left;
     private boolean isDrawer=false;
@@ -90,18 +91,16 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-            Toast.makeText(this, "我要拍照", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        if (id == R.id.add_car) {
+            toastUtil.Long(MainActivity.this, "添加爱车").show();
+        } else if (id == R.id.integral) {
+            toastUtil.Long(MainActivity.this, "积分查询").show();
+        } else if (id == R.id.share) {
+            toastUtil.Long(MainActivity.this, "分享App").show();
+        } else if (id == R.id.online_complaint) {
+            toastUtil.Long(MainActivity.this, "在线投诉").show();
         }else if (id == R.id.setting){
-            Toast.makeText(this, "你点击了设置", Toast.LENGTH_SHORT).show();
+            toastUtil.Long(MainActivity.this, "设置").show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
