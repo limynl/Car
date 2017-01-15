@@ -19,6 +19,10 @@ import android.widget.Toast;
 
 import com.team.car.R;
 
+/**
+ * Created by Lmy on 2017/1/15.
+ * email 1434117404@qq.com
+ */
 
 public class MainActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
     private CoordinatorLayout right;
