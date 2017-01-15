@@ -18,12 +18,35 @@ android {
         }
     }
 }
+repositories{
+    flatDir{
+        dirs 'libs' //放aar的目录地址
+    }
+}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
+    compile name: 'SMSSDK-2.0.2', ext: 'aar'
+    compile name: 'SMSSDKGUI-2.0.2', ext: 'aar'
+    compile files('libs/libammsdk.jar')
+    compile files('libs/MobCommons-2016.1107.1809.jar')
+    compile files('libs/MobTools-2016.1107.1809.jar')
+    compile files('libs/mta-sdk-1.6.2.jar')
+    compile files('libs/open_sdk_r5756.jar')
+    compile files('libs/ShareSDK-Alipay-2.7.10.jar')
+    compile files('libs/ShareSDK-Alipay-Core-2.7.10.jar')
+    compile files('libs/ShareSDK-Alipay-Moments-2.7.10.jar')
+    compile files('libs/ShareSDK-Core-2.7.10.jar')
+    compile files('libs/ShareSDK-QQ-2.7.10.jar')
+    compile files('libs/ShareSDK-QZone-2.7.10.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.10.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.10.jar')
 }
