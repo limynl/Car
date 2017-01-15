@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/count" />
 
-            <com.lmy.testslid.widgets.CleanableEditText
+            <com.team.car.widgets.CleanableEditText
                 android:id="@+id/test_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/password" />
 
-            <com.lmy.testslid.widgets.CleanableEditText
+            <com.team.car.widgets.CleanableEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"

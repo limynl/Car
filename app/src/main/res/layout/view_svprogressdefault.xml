@@ -30,7 +30,7 @@
             android:visibility="gone" />
 
         <!--进度条设置-->
-        <com.lmy.testslid.widgets.dialogview.SVCircleProgressBar
+        <com.team.car.widgets.dialogview.SVCircleProgressBar
             android:id="@+id/circleProgressBar"
             android:layout_width="60dp"
             android:layout_height="60dp"
