@@ -101,10 +101,14 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             case R.id.user_head:
             {
                 toastUtil.Short(MainActivity.this, "我的个人中心").show();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
             }
                 break;
             case R.id.weather:{
                 toastUtil.Short(MainActivity.this, "天气预报").show();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
             }
                 break;
         }
