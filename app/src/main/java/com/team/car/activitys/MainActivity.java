@@ -94,7 +94,10 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         setListener(); //设置RadioGroup的监听
     }
 
-    //菜单列表头部点击事件
+    /**
+     * 菜单列表头部点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -114,7 +117,11 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         }
     }
 
-    //菜单列表条目点击事件
+    /**
+     * 菜单列表条目点击事件
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -138,7 +145,9 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         return true;
     }
 
-    //按返回键侧滑关闭
+    /**
+     * 按返回键侧滑关闭
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,7 +172,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         rg_main.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
         rg_main.check(R.id.rb_home); //实现进入主界面时就在初始界面(默认为个人中心)
     }
-
 
     /**
      * 点击相应的选项进入相应的fragment
@@ -289,6 +297,4 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             public void onDrawerStateChanged(int newState) {}
         });
     }
-
-
 }
