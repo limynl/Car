@@ -19,8 +19,15 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:background="#009688"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:background="#f5821f"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="汽车服务"
+                android:layout_gravity="center" />
+            </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

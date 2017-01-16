@@ -6,14 +6,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.team.car.activitys.MainActivity">
-<!-- app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_main"
--->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="hahahahhahaha"/>
+    tools:context="com.team.car.activitys.MainActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
+
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
@@ -35,26 +31,26 @@
         <RadioButton
             android:id="@+id/rb_music"
             android:text="首页"
-            android:drawableTop="@drawable/rb_footer_drawable_selector"
+            android:drawableTop="@drawable/rb_home_drawable_selector"
             style="@style/button_style" />
 
 
         <RadioButton
             android:id="@+id/rb_picture"
             android:text="管家"
-            android:drawableTop="@drawable/rb_picture_center_selector"
+            android:drawableTop="@drawable/rb_manager_drawable_selector"
             style="@style/button_style" />
 
         <RadioButton
             android:id="@+id/rb_game"
             android:text="商店"
-            android:drawableTop="@drawable/rb_footer_drawable_selector"
+            android:drawableTop="@drawable/rb_shangjia_drawable_selector"
             style="@style/button_style"/>
 
         <RadioButton
             android:id="@+id/rb_person_center"
-            android:text="音乐"
-            android:drawableTop="@drawable/rb_person_center_selector"
+            android:text="发现"
+            android:drawableTop="@drawable/rb_found_drawable_selector"
             style="@style/button_style"/>
 
     </RadioGroup>
