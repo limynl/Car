@@ -23,6 +23,7 @@
             app:srcCompat="@android:drawable/sym_def_app_icon" />
 
         <ImageView
+            android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/whrear"

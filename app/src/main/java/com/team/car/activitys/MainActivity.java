@@ -67,9 +67,10 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
 //        customText.setText("哈哈哈。。。我换了");
         ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);
+        ImageView weather = (ImageView)headerView.findViewById(R.id.weather);
         userHead.setImageResource(R.mipmap.head);
         userHead.setOnClickListener(this);
-
+        weather.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +79,10 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             case R.id.user_head:
             {
                 toastUtil.Short(MainActivity.this, "我的个人中心").show();
+            }
+                break;
+            case R.id.weather:{
+                toastUtil.Short(MainActivity.this, "天气预报").show();
             }
                 break;
         }
