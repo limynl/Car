@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,10 +16,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
+import com.team.car.fragment.BaseFragment;
+import com.team.car.fragment.home.homeFragment;
+import com.team.car.fragment.manage.manageFragment;
+import com.team.car.fragment.found.foundFragment;
+import com.team.car.fragment.shop.shopFragment;
 import com.team.car.widgets.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lmy on 2017/1/15.
@@ -30,11 +41,17 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     private NavigationView left;
     private boolean isDrawer=false;
 
+    private RadioGroup rg_main;
+    private List<BaseFragment> baseFragment;
+    private Fragment content; //上次的界面，上下文对象
+    private int position; //选中的Fragment的对应的位置
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);//显示ActionBar
         //取消显示标题
@@ -58,21 +75,26 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         //菜单与主界面一起滑动
         move(drawer);
 
-        //设置菜单列表图标颜色
+        //设置菜单列表图标颜色为指定颜色
         navigationView.setItemIconTintList(null);
 
         //以下可以设置菜单列表中的信息
         //获取头部的信息
         View headerView = navigationView.getHeaderView(0);
         TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
-//        customText.setText("哈哈哈。。。我换了");
         ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);
         ImageView weather = (ImageView)headerView.findViewById(R.id.weather);
         userHead.setImageResource(R.mipmap.head);
         userHead.setOnClickListener(this);
         weather.setOnClickListener(this);
+
+        //初始化主布局
+        initView(); //初始化
+        initFragment(); //初始化Fragment
+        setListener(); //设置RadioGroup的监听
     }
 
+    //菜单列表头部点击事件
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -88,7 +110,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         }
     }
 
-    //侧滑导航选择
+    //菜单列表条目点击事件
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -106,11 +128,13 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             toastUtil.Long(MainActivity.this, "设置").show();
         }
 
+        //点击条目侧滑关闭
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    //按返回键侧滑关闭
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -121,8 +145,116 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         }
     }
 
+    /**
+     * 初始化
+     */
+    private void initView() {
+        rg_main = (RadioGroup) findViewById(R.id.rg_main);
+    }
+
+    /**
+     * 设置监听
+     */
+    private void setListener(){
+        rg_main.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
+        rg_main.check(R.id.rb_home); //实现进入主界面时就在初始界面(默认为个人中心)
+    }
+
+
+    /**
+     * 点击相应的选项进入相应的fragment
+     */
+    class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener{
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch(checkedId)
+            {
+                case R.id.rb_home:
+                    position = 0;
+                    break;
+                case R.id.rb_manager:
+                    position = 1;
+                    break;
+                case R.id.rb_shangjia:
+                    position = 2;
+                    break;
+                case R.id.rb_found:
+                    position = 3;
+                    break;
+                default:
+                    position = 0;
+                    break;
+            }
+            //根据位置得到对应的Fragment
+           /* BaseFragment fragment = getFragment();
+            switchFragment(fragment);*/
+            BaseFragment to = getFragment();
+            switchFragment(content,to);
+        }
+    }
+
+    /**
+     * 用于切换时，不会被重复加载
+     * @param from
+     * @param to
+     */
+    private void switchFragment(Fragment from, Fragment to)
+    {
+        if(from != to)
+        {
+            //实现切换
+            content = to;
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //判断是否被添加
+            if(!to.isAdded())
+            {
+                //to没被添加，from隐藏,添加to
+                if(from != null)
+                {
+                    ft.hide(from);
+                }
+                if(to != null)
+                {
+                    ft.add(R.id.fl_content,to).commit();
+                }
+            }else{
+                //to已经被添加，from隐藏
+                if(from != null)
+                {
+                    ft.hide(from);
+                }
+                //显示to
+                if(to != null)
+                {
+                    ft.show(to).commit();
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据位值得到对应的Fragment
+     * @return
+     */
+    private BaseFragment getFragment()
+    {
+        BaseFragment fragment = baseFragment.get(position);
+        return fragment;
+    }
+
+    private void initFragment()
+    {
+        baseFragment = new ArrayList<BaseFragment>();
+        baseFragment.add(new homeFragment());
+        baseFragment.add(new manageFragment());
+        baseFragment.add(new foundFragment());
+        baseFragment.add(new shopFragment());
+    }
+
+    /**
+        主界面与菜单一起滑动
+     */
     private void move(DrawerLayout drawer) {
-        //主界面与菜单一起滑动
         right.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

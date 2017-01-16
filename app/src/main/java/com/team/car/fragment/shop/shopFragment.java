@@ -1,6 +1,7 @@
 package com.team.car.fragment.shop;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.team.car.fragment.BaseFragment;
 
@@ -12,6 +13,9 @@ import com.team.car.fragment.BaseFragment;
 public class shopFragment extends BaseFragment {
     @Override
     protected View initView() {
-        return null;
+        TextView textView = new TextView(getContext());
+        textView.setText("我是商店");
+        textView.setTextSize(25);
+        return textView;
     }
 }

@@ -9,7 +9,7 @@
         <item
             android:id="@+id/integral"
             android:icon="@mipmap/integral"
-            android:title="我的积分" />
+            android:title="我的资产" />
         <item
             android:id="@+id/share"
             android:icon="@mipmap/share"

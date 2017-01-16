@@ -29,26 +29,26 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/rb_music"
+            android:id="@+id/rb_home"
             android:text="首页"
             android:drawableTop="@drawable/rb_home_drawable_selector"
             style="@style/button_style" />
 
 
         <RadioButton
-            android:id="@+id/rb_picture"
+            android:id="@+id/rb_manager"
             android:text="管家"
             android:drawableTop="@drawable/rb_manager_drawable_selector"
             style="@style/button_style" />
 
         <RadioButton
-            android:id="@+id/rb_game"
+            android:id="@+id/rb_shangjia"
             android:text="商店"
             android:drawableTop="@drawable/rb_shangjia_drawable_selector"
             style="@style/button_style"/>
 
         <RadioButton
-            android:id="@+id/rb_person_center"
+            android:id="@+id/rb_found"
             android:text="发现"
             android:drawableTop="@drawable/rb_found_drawable_selector"
             style="@style/button_style"/>
