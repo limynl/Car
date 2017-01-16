@@ -1,10 +1,9 @@
 package com.team.car.fragment.home;
 
 
-import android.graphics.Color;
 import android.view.View;
-import android.widget.TextView;
 
+import com.team.car.R;
 import com.team.car.fragment.BaseFragment;
 
 /**
@@ -15,10 +14,8 @@ import com.team.car.fragment.BaseFragment;
 public class homeFragment extends BaseFragment {
     @Override
     protected View initView() {
-        TextView textView = new TextView(getContext());
-        textView.setText("我是主页");
-        textView.setTextSize(25);
-        textView.setTextColor(Color.RED);
-        return textView;
+        View view = View.inflate(context, R.layout.activity_home, null);
+
+        return view;
     }
 }
