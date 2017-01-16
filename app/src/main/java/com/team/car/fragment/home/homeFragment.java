@@ -14,8 +14,8 @@ import com.team.car.fragment.BaseFragment;
 public class homeFragment extends BaseFragment {
     @Override
     protected View initView() {
-        View view = View.inflate(context, R.layout.activity_home, null);
 
+        View view = View.inflate(context, R.layout.activity_home, null);
         return view;
     }
 }
