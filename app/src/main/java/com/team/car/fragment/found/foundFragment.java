@@ -1,5 +1,6 @@
 package com.team.car.fragment.found;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ public class foundFragment extends BaseFragment {
         TextView textView = new TextView(getContext());
         textView.setText("我是周边新鲜事");
         textView.setTextSize(25);
+        textView.setTextColor(Color.RED);
         return textView;
     }
 }

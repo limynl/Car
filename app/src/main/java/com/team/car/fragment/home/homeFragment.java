@@ -1,6 +1,7 @@
 package com.team.car.fragment.home;
 
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class homeFragment extends BaseFragment {
         TextView textView = new TextView(getContext());
         textView.setText("我是主页");
         textView.setTextSize(25);
+        textView.setTextColor(Color.RED);
         return textView;
     }
 }
