@@ -8,7 +8,7 @@
     android:id="@+id/right"
     tools:context="com.team.car.activitys.MainActivity">
 
-    <!--<android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:background="#f5821f"
+            android:background="#ff3d00"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
@@ -27,10 +27,11 @@
                 android:layout_height="wrap_content"
                 android:text="汽车服务"
                 android:textSize="20sp"
+                android:textColor="#FFFFFF"
                 android:layout_gravity="center" />
             </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>-->
+    </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main" />
 

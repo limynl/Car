@@ -6,7 +6,7 @@
  * Copyright (c) 2013年 mob.com. All rights reserved.
  */
 
-package com.team.car.wxapi;
+package cn.sharesdk.wxapi;
 
 import android.content.Intent;
 import android.widget.Toast;
