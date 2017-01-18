@@ -38,6 +38,8 @@ public class homeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 //                String url = "http://139.199.23.142:8080/TestShowMessage1/lmy/RegisterServlet";
+
+
                 String url = null;
                 Map<String, String> map = new HashMap<>();
                 map.put("title", "zhangsan");
