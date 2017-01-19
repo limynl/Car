@@ -79,8 +79,7 @@
         <activity
             android:name=".activitys.MainActivity"
             android:theme="@style/Theme.AppCompat"/>
-
-
+        <activity android:name=".activitys.user.SettingActivity"/>
     </application>
 
 </manifest>

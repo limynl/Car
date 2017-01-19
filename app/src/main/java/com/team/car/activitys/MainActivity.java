@@ -1,6 +1,7 @@
 package com.team.car.activitys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
+import com.team.car.activitys.user.SettingActivity;
 import com.team.car.fragment.BaseFragment;
 import com.team.car.fragment.home.homeFragment;
 import com.team.car.fragment.manage.manageFragment;
@@ -137,11 +139,14 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             toastUtil.Long(MainActivity.this, "在线投诉").show();
         }else if (id == R.id.setting){
             toastUtil.Long(MainActivity.this, "设置").show();
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
         }
 
         //点击条目侧滑关闭
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+       /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
 

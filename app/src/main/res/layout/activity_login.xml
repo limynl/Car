@@ -14,16 +14,10 @@
         android:layout_below="@+id/main_title"
         android:orientation="vertical" >
 
-        <ImageView
-            android:layout_width="55dip"
-            android:layout_height="55dip"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/project_detail_cir" />
-
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="55dip"
             android:gravity="center"
             android:text="We are a team"
             android:textColor="#ffffff"
@@ -60,12 +54,24 @@
             android:background="@drawable/text_bg"
             android:gravity="center"
             android:paddingBottom="2dip"
-            android:paddingLeft="15dip"
-            android:paddingRight="15dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
             android:paddingTop="2dip"
-            android:text="Login"
+            android:text="登  录"
             android:textColor="#ffffff"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_password"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:layout_below="@+id/main_btn_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"/>
+
     </RelativeLayout>
 
     <LinearLayout

@@ -6,4 +6,9 @@
     <string name="navigation_drawer_close">关闭导航视图</string>
 
     <string name="action_settings">设置</string>
+
+    <string name="forget_password"><u>忘 记 密 码？</u></string>
+
+    <string name="setting">Copyright &#169; 2017 车应用</string>
+
 </resources>

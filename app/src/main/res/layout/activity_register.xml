@@ -168,10 +168,10 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingBottom="2dip"
-        android:paddingLeft="15dip"
-        android:paddingRight="15dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
         android:paddingTop="2dip"
-        android:text="Register"
+        android:text="注  册"
         android:textColor="#ffffff"
         android:textSize="20sp" />
 
