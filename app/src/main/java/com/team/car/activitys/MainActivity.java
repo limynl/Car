@@ -22,9 +22,10 @@ import android.widget.TextView;
 
 import com.team.car.R;
 import com.team.car.activitys.user.SettingActivity;
+import com.team.car.activitys.user.UserMessageActivity;
 import com.team.car.fragment.BaseFragment;
 import com.team.car.fragment.home.homeFragment;
-import com.team.car.fragment.manage.manageFragment;
+import com.team.car.fragment.manager.manageFragment;
 import com.team.car.fragment.found.foundFragment;
 import com.team.car.fragment.shop.shopFragment;
 import com.team.car.widgets.ToastUtil;
@@ -105,9 +106,12 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         switch (v.getId()){
             case R.id.user_head:
             {
-                toastUtil.Short(MainActivity.this, "我的个人中心").show();
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
+                toastUtil.Short(MainActivity.this, "个人中心").show();
+                startActivity(new Intent(MainActivity.this, UserMessageActivity.class));
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+
+                /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);*/
             }
                 break;
             case R.id.weather:{

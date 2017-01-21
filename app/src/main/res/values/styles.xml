@@ -39,4 +39,17 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+
+    <!--时间选择控件-->
+    <style name="time_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+
+
+
 </resources>

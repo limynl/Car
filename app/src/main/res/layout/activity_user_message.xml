@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_user_message"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eeeeee"
+    tools:context="com.team.car.activitys.user.UserMessageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="8dp"
+        android:background="#7ADFB8">
+
+        <TextView
+            android:id="@+id/user_message_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个人中心"
+            android:textSize="23sp"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/user_message_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="15dp" />
+    </RelativeLayout>
+
+    <com.team.car.utils.RoundImageUtil
+        android:id="@+id/user_head"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@mipmap/head"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称:"
+            android:textSize="16sp"
+            android:textColor="@color/text_color_grey" />
+
+        <com.team.car.widgets.CleanableEditText
+            android:id="@+id/user_message_nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:background="#00000000"
+            android:hint="快取一个霸气的名字吧..."
+            android:drawableRight="@mipmap/clear"
+            android:textSize="12sp"
+            android:textColorHint="#d6d6d6"
+            android:textColor="#434343"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名:"
+            android:textSize="16sp"
+            android:textColor="@color/text_color_grey" />
+
+        <com.team.car.widgets.CleanableEditText
+            android:id="@+id/user_message_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:background="#00000000"
+            android:hint="车故障时需要用到喔..."
+            android:drawableRight="@mipmap/clear"
+            android:textSize="12sp"
+            android:textColorHint="#d6d6d6"
+            android:textColor="#434343"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电话:"
+            android:textSize="16sp"
+            android:textColor="@color/text_color_grey" />
+
+        <com.team.car.widgets.CleanableEditText
+            android:id="@+id/user_message_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:background="#00000000"
+            android:hint="紧急情况会用到喔..."
+            android:drawableRight="@mipmap/clear"
+            android:textSize="12sp"
+            android:textColorHint="#d6d6d6"
+            android:textColor="#434343"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别:"
+            android:textSize="16sp"
+            android:textColor="@color/text_color_grey" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_message_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请选择您的性别"
+                android:layout_marginLeft="10dp"/>
+
+            <ImageView
+                android:id="@+id/choose_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_open"
+                android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年龄:"
+            android:textSize="16sp"
+            android:textColor="@color/text_color_grey" />
+
+        <RelativeLayout
+            android:id="@+id/choose_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_message_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请选择您的年龄"
+                android:layout_marginLeft="10dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_open"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/user_message_submit"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="保  存"
+        android:textSize="15sp"
+        android:textColor="@color/text_color_grey"
+        android:background="#7ADFB8"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

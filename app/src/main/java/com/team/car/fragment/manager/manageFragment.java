@@ -1,4 +1,4 @@
-package com.team.car.fragment.manage;
+package com.team.car.fragment.manager;
 
 import android.graphics.Color;
 import android.view.View;

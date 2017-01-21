@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#e6e6e6">
 
-    <!--e6e6e6-->
+    <!--e6e6e6 浅绿-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,8 +32,6 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="15dp" />
     </RelativeLayout>
-
-
 
         <View
             android:layout_width="match_parent"
@@ -81,7 +79,6 @@
             android:background="@color/line"/>
 
         <RelativeLayout
-            android:id="@+id/re_pay_way"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="15dp"
@@ -105,15 +102,6 @@
                 android:text="消息推送"
                 android:textSize="16sp"
                 android:textColor="@color/text_color_grey" />
-
-            <!--<TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:drawablePadding="10dp"
-                android:drawableRight="@mipmap/ic_open"
-                android:text="招商银行(尾号2345)"
-                android:textColor="@color/text_color_grey" />-->
 
             <com.team.car.widgets.SlideSwitch
                 android:id="@+id/setting_slide_switch"
@@ -220,7 +208,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="扫面二维码\n下载车应用"
+            android:text="扫描二维码\n下载车应用"
             android:layout_gravity="center"
             android:textColor="#000000"/>
 
