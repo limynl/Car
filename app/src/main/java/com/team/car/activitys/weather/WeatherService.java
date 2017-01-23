@@ -90,7 +90,7 @@ public class WeatherService extends Service implements APICallback {
 
     @Override
     public void onCreate() {
-        MobAPI.initSDK(this, "120b650027878");
+        MobAPI.initSDK(this, "1a0c862622d16");
         com.mob.mobapi.apis.Weather api = (com.mob.mobapi.apis.Weather) MobAPI.getAPI(com.mob.mobapi.apis.Weather.NAME);
         api.getSupportedCities(this);
         clearIntent = new Intent(this, MainActivity.class);

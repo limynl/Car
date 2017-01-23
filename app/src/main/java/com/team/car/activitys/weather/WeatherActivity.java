@@ -68,7 +68,7 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
         LinearLayout tqLinList = (LinearLayout) findViewById(R.id.tq_lin_list);
         tqLinList.getBackground().setAlpha(153);
         init();
-        MobAPI.initSDK(this, "120b650027878");
+        MobAPI.initSDK(this, "1a0c862622d16");//120b650027878
         Weather api = (Weather) MobAPI.getAPI(Weather.NAME);
         api.getSupportedCities(this);
 
