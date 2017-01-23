@@ -149,62 +149,62 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
     private void updateWeatherImage() {
         time.setToNow();
         if (currentWeather.contains("晴")) {
-            weatherBg.setBackgroundResource(R.drawable.tq);
-            weatherIcon.setImageResource(R.drawable.tq_07);
+            weatherBg.setBackgroundResource(R.mipmap.tq);
+            weatherIcon.setImageResource(R.mipmap.tq_07);
         } else if (currentWeather.contains("多云")) {
-            weatherBg.setBackgroundResource(R.drawable.tq);
-            weatherIcon.setImageResource(R.drawable.dtq_15);
+            weatherBg.setBackgroundResource(R.mipmap.tq);
+            weatherIcon.setImageResource(R.mipmap.dtq_15);
         } else if (currentWeather.contains("阴")) {
-            weatherBg.setBackgroundResource(R.drawable.tq);
-            weatherIcon.setImageResource(R.drawable.dtq_30);
+            weatherBg.setBackgroundResource(R.mipmap.tq);
+            weatherIcon.setImageResource(R.mipmap.dtq_30);
         } else if (currentWeather.contains("雷")) {
-            weatherBg.setBackgroundResource(R.drawable.tq_lei);
-            weatherIcon.setImageResource(R.drawable.dtq_28);
+            weatherBg.setBackgroundResource(R.mipmap.tq_lei);
+            weatherIcon.setImageResource(R.mipmap.dtq_28);
         } else if (currentWeather.contains("雨")) {
-            weatherBg.setBackgroundResource(R.drawable.tq_yu);
+            weatherBg.setBackgroundResource(R.mipmap.tq_yu);
             if (currentWeather.contains("小雨")) {
-                weatherIcon.setImageResource(R.drawable.dtq_23);
+                weatherIcon.setImageResource(R.mipmap.dtq_23);
             } else if (currentWeather.contains("中雨")) {
-                weatherIcon.setImageResource(R.drawable.dtq_23);
+                weatherIcon.setImageResource(R.mipmap.dtq_23);
             } else if (currentWeather.contains("大雨")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else if (currentWeather.contains("暴雨")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else if (currentWeather.contains("雨夹雪")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else if (currentWeather.contains("冻雨")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else {
-                weatherIcon.setImageResource(R.drawable.dtq_23);
+                weatherIcon.setImageResource(R.mipmap.dtq_23);
             }
         } else if (currentWeather.contains("雪") || currentWeather.contains("冰雹")) {
-            weatherBg.setBackgroundResource(R.drawable.tq_yu);
+            weatherBg.setBackgroundResource(R.mipmap.tq_yu);
             if (currentWeather.contains("小雪")) {
-                weatherIcon.setImageResource(R.drawable.dtq_23);
+                weatherIcon.setImageResource(R.mipmap.dtq_23);
             } else if (currentWeather.contains("中雪")) {
                 weatherIcon
-                        .setImageResource(R.drawable.dtq_23);
+                        .setImageResource(R.mipmap.dtq_23);
             } else if (currentWeather.contains("大雪")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else if (currentWeather.contains("暴雪")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else if (currentWeather.contains("冰雹")) {
-                weatherIcon.setImageResource(R.drawable.dtq_25);
+                weatherIcon.setImageResource(R.mipmap.dtq_25);
             } else {
-                weatherIcon.setImageResource(R.drawable.dtq_23);
+                weatherIcon.setImageResource(R.mipmap.dtq_23);
             }
         } else if (currentWeather.contains("雾")) {
-            weatherBg.setBackgroundResource(R.drawable.tq_yu);
-            weatherIcon.setImageResource(R.drawable.dtq_30);
+            weatherBg.setBackgroundResource(R.mipmap.tq_yu);
+            weatherIcon.setImageResource(R.mipmap.dtq_30);
         } else if (currentWeather.contains("霾")) {
-            weatherBg.setBackgroundResource(R.drawable.tq_yu);
-            weatherIcon.setImageResource(R.drawable.dtq_30);
+            weatherBg.setBackgroundResource(R.mipmap.tq_yu);
+            weatherIcon.setImageResource(R.mipmap.dtq_30);
         } else if (currentWeather.contains("沙尘暴") || currentWeather.contains("浮尘") || currentWeather.contains("扬沙")) {
-            weatherBg.setBackgroundResource(R.drawable.tq_yu);
-            weatherIcon.setImageResource(R.drawable.dtq_30);
+            weatherBg.setBackgroundResource(R.mipmap.tq_yu);
+            weatherIcon.setImageResource(R.mipmap.dtq_30);
         } else {
-            weatherBg.setBackgroundResource(R.drawable.tq);
-            weatherIcon.setImageResource(R.drawable.tq_07);
+            weatherBg.setBackgroundResource(R.mipmap.tq);
+            weatherIcon.setImageResource(R.mipmap.tq_07);
         }
     }
 

@@ -1,8 +1,15 @@
 package com.team.car.activitys;
 
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,14 +26,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.team.car.R;
 import com.team.car.activitys.user.SettingActivity;
 import com.team.car.activitys.user.UserMessageActivity;
+import com.team.car.activitys.weather.NetReceiver;
+import com.team.car.activitys.weather.WeatherActivity;
+import com.team.car.activitys.weather.WeatherService;
 import com.team.car.fragment.BaseFragment;
+import com.team.car.fragment.found.foundFragment;
 import com.team.car.fragment.home.homeFragment;
 import com.team.car.fragment.manager.manageFragment;
-import com.team.car.fragment.found.foundFragment;
 import com.team.car.fragment.shop.shopFragment;
 import com.team.car.widgets.ToastUtil;
 
@@ -38,7 +49,9 @@ import java.util.List;
  * email 1434117404@qq.com
  */
 
-public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener{
+    private View headerView;
     private ToastUtil toastUtil = new ToastUtil();
     private CoordinatorLayout right;
     private NavigationView left;
@@ -48,6 +61,35 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     private List<BaseFragment> baseFragment;
     private Fragment content; //上次的界面，上下文对象
     private int position; //选中的Fragment的对应的位置
+
+
+    private Intent weatherIntent;
+    private TextView tvWeather;
+    private TextView tvCity;
+    private ProgressReceiver progressReceiver;//广播接收器
+    private String city = null, weather;//存储城市和天气信息
+    private String ip;//通过ip获取天气
+    private Intent intent;//用于跳转
+    //判断网络是否可用
+    private NetReceiver mReceiver;//广播接收器
+    private IntentFilter mFilter;//过滤器
+    WeatherService.WeatherBinder binder;
+    public final static int INTENT_SETCARINFO = 1;
+
+    private ImageView btnSstq;
+
+    //创建一个服务连接
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            binder = (WeatherService.WeatherBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Toast.makeText(MainActivity.this, "天气部分出现错误!", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
     @Override
@@ -73,28 +115,26 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
         //菜单与主界面一起滑动
         move(drawer);
-
-        //设置菜单列表图标颜色为指定颜色
+        //设置菜单列表图标颜色为指定颜色,
         navigationView.setItemIconTintList(null);
 
         //以下可以设置菜单列表中的信息
         //获取头部的信息
-        View headerView = navigationView.getHeaderView(0);
-        TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
+        headerView = navigationView.getHeaderView(0);
+//        TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
         ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);
-        ImageView weather = (ImageView)headerView.findViewById(R.id.weather);
+        btnSstq = (ImageView)headerView.findViewById(R.id.btnSstq);
         userHead.setImageResource(R.mipmap.head);
         userHead.setOnClickListener(this);
-        weather.setOnClickListener(this);
+        btnSstq.setOnClickListener(this);
 
         //初始化主布局
         initView(); //初始化
         initFragment(); //初始化Fragment
         setListener(); //设置RadioGroup的监听
+        initial();//初始化天气
     }
 
     /**
@@ -114,10 +154,12 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
                 drawer.closeDrawer(GravityCompat.START);*/
             }
                 break;
-            case R.id.weather:{
+            case R.id.btnSstq:{
                 toastUtil.Short(MainActivity.this, "天气预报").show();
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+               /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);*/
             }
                 break;
         }
@@ -305,5 +347,63 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             @Override
             public void onDrawerStateChanged(int newState) {}
         });
+    }
+
+
+    private void initial() {
+//        weather = (ImageView) findViewById(btnSstq);
+        tvWeather = (TextView) headerView.findViewById(R.id.weather_text);
+        tvCity = (TextView) headerView.findViewById(R.id.city_text);
+        mReceiver = new NetReceiver();//网络接受
+        mFilter = new IntentFilter();
+        btnSstq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, WeatherActivity.class);
+                intent.putExtra("city", city);
+                startActivity(intent);
+            }
+        });
+
+        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        MainActivity.this.registerReceiver(mReceiver, mFilter);
+        registerMyReceiver();
+        weatherIntent = new Intent(this, WeatherService.class);
+        bindService(weatherIntent, conn, Service.BIND_AUTO_CREATE);
+    }
+
+    private void registerMyReceiver() {
+        progressReceiver = new ProgressReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(WeatherService.ACTION_UPDATE_WEATHER);
+        intentFilter.addAction(WeatherService.ACTION_UPDATE_CITY);
+        MainActivity.this.registerReceiver(progressReceiver, intentFilter);
+    }
+
+    class ProgressReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (WeatherService.ACTION_UPDATE_WEATHER.equals(action)) {
+                weather = intent.getStringExtra(WeatherService.ACTION_UPDATE_WEATHER);
+                tvWeather.setText(weather);
+            } else if (WeatherService.ACTION_UPDATE_CITY.equals(action)) {
+                city = intent.getStringExtra(WeatherService.ACTION_UPDATE_CITY);
+                tvCity.setText(city);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //服务解除绑定
+        binder.stopWeather();
+        unbindService(conn);
+
+        //广播解除绑定
+        MainActivity.this.unregisterReceiver(mReceiver);
+        MainActivity.this.unregisterReceiver(progressReceiver);
     }
 }

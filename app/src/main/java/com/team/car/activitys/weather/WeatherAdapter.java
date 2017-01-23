@@ -30,21 +30,21 @@ public class WeatherAdapter extends ArrayAdapter<MyWeather> {
         ImageView icon = (ImageView) view.findViewById(R.id.weather_forecast_img);
         String weatherStr = iweather.getWeather();
         if (weatherStr.contains("晴")){
-            icon.setImageResource(R.drawable.tq_11);
+            icon.setImageResource(R.mipmap.tq_11);
         }else if (weatherStr.contains("多云")){
-            icon.setImageResource(R.drawable.tq_15);
+            icon.setImageResource(R.mipmap.tq_15);
         }else if (weatherStr.contains("阵雨")){
-            icon.setImageResource(R.drawable.tq_19);
+            icon.setImageResource(R.mipmap.tq_19);
         }else if (weatherStr.contains("中雨")){
-            icon.setImageResource(R.drawable.tq_23);
+            icon.setImageResource(R.mipmap.tq_23);
         }else if (weatherStr.contains("大雨")){
-            icon.setImageResource(R.drawable.tq_25);
+            icon.setImageResource(R.mipmap.tq_25);
         }else if (weatherStr.contains("雷")){
-            icon.setImageResource(R.drawable.tq_28);
+            icon.setImageResource(R.mipmap.tq_28);
         }else if (weatherStr.contains("阴")){
-            icon.setImageResource(R.drawable.tq_30);
+            icon.setImageResource(R.mipmap.tq_30);
         }else {
-            icon.setImageResource(R.drawable.tq_15);
+            icon.setImageResource(R.mipmap.tq_15);
         }
         String dateStr = iweather.getDate();
         if (dateStr.contains("一")){

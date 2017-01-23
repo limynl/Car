@@ -22,16 +22,50 @@
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/whrear"
-            android:layout_marginLeft="150dp" />
+            android:layout_marginLeft="150dp" />-->
+
+        <RelativeLayout
+            android:id="@+id/r1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp">
+
+            <ImageView
+                android:id="@+id/btnSstq"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/tq_07" />
+
+            <TextView
+                android:id="@+id/city_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnSstq"
+                android:layout_marginTop="5dp"
+                android:text="长春"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/weather_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnSstq"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/city_text"
+                android:text="晴"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
-
-
 
     <TextView
         android:id="@+id/custom_text_view"
