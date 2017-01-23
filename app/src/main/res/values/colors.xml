@@ -27,4 +27,11 @@
     <color name="color4">#666666</color>
     <color name="color5">#57C5E8</color>
 
+
+    <!--天气-->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="tq_item_color">#4282A6</color>
+    <color name="light_grey">#D3D3D3</color>
+
 </resources>

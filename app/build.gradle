@@ -53,4 +53,7 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Moments-2.7.10.jar')
     compile files('libs/gson-2.7.jar')
     compile files('libs/volley.jar')
+    compile files('libs/mobAPI-1.0.3.jar')
+    compile files('libs/MobCommons-2016.0816.1507.jar')
+    compile files('libs/MobTools-2016.0816.1507.jar')
 }
