@@ -11,6 +11,11 @@ import com.team.car.R;
 
 import java.util.List;
 
+/**
+ * Created by Lmy on 2017/1/24.
+ * email 1434117404@qq.com
+ */
+
 public class CityAdapter extends ArrayAdapter<City> {
 
     private int resourceId;

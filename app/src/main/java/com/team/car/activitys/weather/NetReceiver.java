@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 /**
- * Created by Administrator on 2016/4/23.
+ * Created by Lmy on 2017/1/24.
+ * email 1434117404@qq.com
  */
+
 public class NetReceiver extends BroadcastReceiver {
    private   String netType=""; //网络类型
     @Override

@@ -26,6 +26,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Created by Lmy on 2017/1/24.
+ * email 1434117404@qq.com
+ */
+
 public class WeatherService extends Service implements APICallback {
 
     private String ip;
@@ -48,11 +53,17 @@ public class WeatherService extends Service implements APICallback {
 
     static int NOTIFICATION_ID = 13565400;
 
-    public static final String ACTION_UPDATE_WEATHER = "com.hangon.weather.UPDATE_WEATHER";
+    /*public static final String ACTION_UPDATE_WEATHER = "com.hangon.weather.UPDATE_WEATHER";
     public static final String ACTION_UPDATE_CITY = "com.hangon.weather.UPDATE_CITY";
     public static final String ACTION_UPDATE_CLEARCAR = "com.hangon.weather.UPDATE_CLEARCAR";
     public static final String ACTION_UPDATE_AIR = "com.hangon.weather.UPDATE_AIR";
-    public static final String ACTION_UPDATE_EXE = "com.hangon.weather.UPDATE_EXE";
+    public static final String ACTION_UPDATE_EXE = "com.hangon.weather.UPDATE_EXE";*/
+
+    public static final String ACTION_UPDATE_WEATHER = "com.team.car.weather.UPDATE_WEATHER";
+    public static final String ACTION_UPDATE_CITY = "com.team.car.weather.UPDATE_CITY";
+    public static final String ACTION_UPDATE_CLEARCAR = "com.team.car.weather.UPDATE_CLEARCAR";
+    public static final String ACTION_UPDATE_AIR = "com.team.car.weather.UPDATE_AIR";
+    public static final String ACTION_UPDATE_EXE = "com.team.car.weather.UPDATE_EXE";
 
     private Intent clearIntent;
 //    private NotificationAdmain admain;

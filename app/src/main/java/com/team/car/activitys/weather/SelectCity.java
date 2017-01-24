@@ -15,11 +15,12 @@ import android.widget.ImageView;
 import com.team.car.R;
 
 import java.util.ArrayList;
-//import com.team.testwearthlmy.R;
 
 /**
- * Created by Chuan on 2016/5/5.
+ * Created by Lmy on 2017/1/24.
+ * email 1434117404@qq.com
  */
+
 public class SelectCity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private String[] citys = {"自动定位", "北京", "上海", "广州", "深圳", "厦门", "天津", "重庆", "珠海", "苏州", "石家庄", "太原", "呼和浩特", "沈阳",

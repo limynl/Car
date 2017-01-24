@@ -4,6 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+/**
+ * Created by Lmy on 2017/1/24.
+ * email 1434117404@qq.com
+ */
+
 public class NetUtils {
     // 判断网络连接状态
     public static boolean isNetworkConnected(Context context) {

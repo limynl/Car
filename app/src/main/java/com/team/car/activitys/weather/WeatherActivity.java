@@ -27,6 +27,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by Lmy on 2017/1/24.
+ * email 1434117404@qq.com
+ */
+
 public class WeatherActivity extends Activity implements APICallback,View.OnClickListener {
 
     private String ip;
@@ -68,16 +73,10 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
         LinearLayout tqLinList = (LinearLayout) findViewById(R.id.tq_lin_list);
         tqLinList.getBackground().setAlpha(153);
         init();
-        MobAPI.initSDK(this, "1a0c862622d16");//120b650027878
+        MobAPI.initSDK(this, "1a0c862622d16");
         Weather api = (Weather) MobAPI.getAPI(Weather.NAME);
         api.getSupportedCities(this);
-
-//        com.mob.mobapi.apis.Weather api = (com.mob.mobapi.apis.Weather) MobAPI.getAPI(com.mob.mobapi.apis.Weather.NAME);
-//        api.queryByIPAddress(ip, WeatherService.this);
-
-
         time = new Time();
-
         intent = getIntent();
         city = intent.getStringExtra("city");
         if(city == null){

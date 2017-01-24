@@ -51,19 +51,17 @@ import pl.droidsonroids.gif.GifImageView;
  * email 1434117404@qq.com
  */
 
-public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener{
-    private View headerView;
+public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+    private View headerView;//侧滑头布局
     private ToastUtil toastUtil = new ToastUtil();
     private CoordinatorLayout right;
     private NavigationView left;
     private boolean isDrawer=false;
 
-    private RadioGroup rg_main;
+    private RadioGroup rg_main;//底部四个按钮
     private List<BaseFragment> baseFragment;
     private Fragment content; //上次的界面，上下文对象
     private int position; //选中的Fragment的对应的位置
-
 
     private Intent weatherIntent;
     private TextView tvWeather;
@@ -72,13 +70,12 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     private String city = null, weather;//存储城市和天气信息
     private String ip;//通过ip获取天气
     private Intent intent;//用于跳转
-    //判断网络是否可用
     private NetReceiver mReceiver;//广播接收器
     private IntentFilter mFilter;//过滤器
-    WeatherService.WeatherBinder binder;
+    private WeatherService.WeatherBinder binder;
     public final static int INTENT_SETCARINFO = 1;
 
-    private GifImageView btnSstq;
+    private GifImageView btnSstq;//显示gif
 
     //创建一个服务连接
     private ServiceConnection conn = new ServiceConnection() {
@@ -98,7 +95,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);//显示ActionBar
         //取消显示标题
@@ -107,7 +103,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         toolbar.setTitleMarginStart(20);
 //        toolbar.setLogo(R.mipmap.head);
         toolbar.setNavigationIcon(R.mipmap.head);*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         right = (CoordinatorLayout) findViewById(R.id.right);
         left = (NavigationView) findViewById(R.id.nav_view);
@@ -117,19 +112,16 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //菜单与主界面一起滑动
-        move(drawer);
-        //设置菜单列表图标颜色为指定颜色,
-        navigationView.setItemIconTintList(null);
+        move(drawer);//菜单与主界面一起滑动
+        navigationView.setItemIconTintList(null);//设置菜单列表图标颜色为图片的本来颜色
 
-        //以下可以设置菜单列表中的信息
+        //以下可以设置侧滑部分的信息
         //获取头部的信息
         headerView = navigationView.getHeaderView(0);
-//        TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
-        ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);
-        btnSstq = (GifImageView)headerView.findViewById(R.id.btnSstq);
+        TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);//获取用户名或昵称
+        ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);//获取用户头像
+        btnSstq = (GifImageView)headerView.findViewById(R.id.btnSstq);//获取天气图标
         btnSstq.setImageResource(R.mipmap.test_gif);
-
         userHead.setImageResource(R.mipmap.head);
         userHead.setOnClickListener(this);
         btnSstq.setOnClickListener(this);
@@ -142,7 +134,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     }
 
     /**
-     * 菜单列表头部点击事件
+     * 侧滑中头部点击事件
      * @param v
      */
     @Override
@@ -153,18 +145,12 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
                 toastUtil.Short(MainActivity.this, "个人中心").show();
                 startActivity(new Intent(MainActivity.this, UserMessageActivity.class));
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
-
-                /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);*/
             }
                 break;
             case R.id.btnSstq:{
                 toastUtil.Short(MainActivity.this, "天气预报").show();
                 startActivity(new Intent(MainActivity.this, WeatherActivity.class));
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
-//                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
-               /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);*/
             }
                 break;
         }
@@ -178,7 +164,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.add_car) {
             toastUtil.Long(MainActivity.this, "添加爱车").show();
@@ -226,11 +211,11 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
      */
     private void setListener(){
         rg_main.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
-        rg_main.check(R.id.rb_home); //实现进入主界面时就在初始界面(默认为个人中心)
+        rg_main.check(R.id.rb_home); //实现进入主界面时就在初始界面(默认为首页)
     }
 
     /**
-     * 点击相应的选项进入相应的fragment
+     * 点击相应的选项进入相应的fragment，点击顺序就是initFragment（）中初始化添加的顺序
      */
     class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener{
         @Override
@@ -253,9 +238,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
                     position = 0;
                     break;
             }
-            //根据位置得到对应的Fragment
-           /* BaseFragment fragment = getFragment();
-            switchFragment(fragment);*/
             BaseFragment to = getFragment();
             switchFragment(content,to);
         }
@@ -315,8 +297,8 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         baseFragment = new ArrayList<BaseFragment>();
         baseFragment.add(new homeFragment());
         baseFragment.add(new manageFragment());
-        baseFragment.add(new foundFragment());
         baseFragment.add(new shopFragment());
+        baseFragment.add(new foundFragment());
     }
 
     /**
