@@ -44,6 +44,8 @@ import com.team.car.widgets.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
+
 /**
  * Created by Lmy on 2017/1/15.
  * email 1434117404@qq.com
@@ -76,7 +78,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     WeatherService.WeatherBinder binder;
     public final static int INTENT_SETCARINFO = 1;
 
-    private ImageView btnSstq;
+    private GifImageView btnSstq;
 
     //创建一个服务连接
     private ServiceConnection conn = new ServiceConnection() {
@@ -125,7 +127,9 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         headerView = navigationView.getHeaderView(0);
 //        TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);
         ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);
-        btnSstq = (ImageView)headerView.findViewById(R.id.btnSstq);
+        btnSstq = (GifImageView)headerView.findViewById(R.id.btnSstq);
+        btnSstq.setImageResource(R.mipmap.test_gif);
+
         userHead.setImageResource(R.mipmap.head);
         userHead.setOnClickListener(this);
         btnSstq.setOnClickListener(this);
@@ -157,7 +161,8 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             case R.id.btnSstq:{
                 toastUtil.Short(MainActivity.this, "天气预报").show();
                 startActivity(new Intent(MainActivity.this, WeatherActivity.class));
-                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
+//                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);*/
             }

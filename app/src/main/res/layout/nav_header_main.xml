@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    android:background="@mipmap/nav_head"
+    android:background="@mipmap/background_head"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,15 +37,15 @@
 
         <RelativeLayout
             android:id="@+id/r1"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp">
+            android:layout_marginLeft="140dp">
 
-            <ImageView
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/btnSstq"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@mipmap/tq_07" />
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+            <!--tq_07 android:background="@mipmap/test_gif"-->
 
             <TextView
                 android:id="@+id/city_text"
@@ -47,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btnSstq"
                 android:layout_marginTop="5dp"
-                android:text="长春"
+                android:text="城市"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
 
@@ -59,20 +65,27 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/city_text"
-                android:text="晴"
+                android:text="温度"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
 
         </RelativeLayout>
 
     </LinearLayout>
+        <TextView
+            android:id="@+id/custom_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="挑战杯 软件杯"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/custom_text_view"
+    </LinearLayout>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="挑战杯 软件杯"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_height="0.2dp"
+        android:background="#616161"
+        android:layout_marginTop="15dp"/>
 
 </LinearLayout>

@@ -54,5 +54,6 @@ dependencies {
     compile files('libs/gson-2.7.jar')
     compile files('libs/volley.jar')
     compile files('libs/mobAPI-1.0.3.jar')
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
 
 }
