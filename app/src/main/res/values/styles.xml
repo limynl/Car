@@ -28,8 +28,8 @@
         <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
     </style>
 
-
-    <style name="button_style" >
+    <!--主布局中四个tab样式-->
+    <style name="main_button_style" >
         <item name="android:textColor">@drawable/bottom_textcolor_drawable_selector</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">15dp</item>
@@ -39,6 +39,20 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+
+    <!--发现：顶部两个tab样式-->
+    <style name="found_button_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:button">@android:color/transparent</item>
+    </style>
 
     <!--时间选择控件-->
     <style name="time_dialog" parent="android:style/Theme.Dialog">

@@ -168,12 +168,16 @@
         <activity
             android:name=".activitys.MainActivity"
             android:theme="@style/Theme.AppCompat"
-            android:supportsRtl="true"/>
+            android:supportsRtl="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <!--注册activity界面-->
         <activity android:name=".activitys.user.RegisterActivity" />
         <activity android:name=".activitys.user.SettingActivity" />
         <activity android:name=".activitys.user.UserMessageActivity"/>
         <activity android:name=".activitys.weather.SelectCity"/>
         <activity android:name=".activitys.weather.WeatherActivity"/>
+
+        <!--注册服务-->
         <service android:name=".activitys.weather.WeatherService"/>
     </application>
 

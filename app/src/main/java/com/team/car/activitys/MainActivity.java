@@ -19,6 +19,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,6 +44,8 @@ import com.team.car.widgets.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -60,7 +63,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 
     private RadioGroup rg_main;//底部四个按钮
     private List<BaseFragment> baseFragment;
-    private Fragment content; //上次的界面，上下文对象
+    private Fragment content; //上次的界面内容，上下文对象
     private int position; //选中的Fragment的对应的位置
 
     private Intent weatherIntent;
@@ -76,6 +79,8 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     public final static int INTENT_SETCARINFO = 1;
 
     private GifImageView btnSstq;//显示gif
+
+    private static Boolean isExit = false;//是否退出应用程序
 
     //创建一个服务连接
     private ServiceConnection conn = new ServiceConnection() {
@@ -168,7 +173,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         if (id == R.id.add_car) {
             toastUtil.Long(MainActivity.this, "添加爱车").show();
         } else if (id == R.id.integral) {
-            toastUtil.Long(MainActivity.this, "积分查询").show();
+            toastUtil.Long(MainActivity.this, "我的资产").show();
         } else if (id == R.id.share) {
             toastUtil.Long(MainActivity.this, "分享App").show();
         } else if (id == R.id.online_complaint) {
@@ -234,11 +239,11 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
                 case R.id.rb_found:
                     position = 3;
                     break;
-                default:
+                default://默认为首页
                     position = 0;
                     break;
             }
-            BaseFragment to = getFragment();
+            BaseFragment to = baseFragment.get(position);
             switchFragment(content,to);
         }
     }
@@ -283,15 +288,8 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     }
 
     /**
-     * 根据位值得到对应的Fragment
-     * @return
+     * 初始化Fragment(即底部的四个tab选项)
      */
-    private BaseFragment getFragment()
-    {
-        BaseFragment fragment = baseFragment.get(position);
-        return fragment;
-    }
-
     private void initFragment()
     {
         baseFragment = new ArrayList<BaseFragment>();
@@ -392,5 +390,33 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         //广播解除绑定
         MainActivity.this.unregisterReceiver(mReceiver);
         MainActivity.this.unregisterReceiver(progressReceiver);
+    }
+
+    /**
+     * 手机返回键监听，连续按两次退出程序
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Timer timer = null;
+            if(isExit == false){
+                isExit = true;
+                toastUtil.Short(MainActivity.this, "再按一次退出应用程序^_^").show();
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        isExit = false;
+                    }
+                }, 2000);
+            }else{
+                MainActivity.this.finish();
+                System.exit(0);
+            }
+        }
+        return false;
     }
 }

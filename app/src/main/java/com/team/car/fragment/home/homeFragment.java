@@ -24,9 +24,11 @@ import java.util.Map;
  */
 
 public class homeFragment extends BaseFragment {
+    private static final String TAG = homeFragment.class.getSimpleName();
     ToastUtil toastUtil = new ToastUtil();
     @Override
     protected View initView() {
+        Log.e(TAG, "homeFragment创建了");
 
         View view = View.inflate(context, R.layout.activity_home, null);
         ImageView imageView = (ImageView)view.findViewById(R.id.ceshi);
