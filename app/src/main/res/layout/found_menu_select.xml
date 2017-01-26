@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff" >
+    <TextView
+        android:id="@+id/found_send_mood"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="发动态"
+        android:textSize="15sp"
+        android:drawableLeft="@mipmap/send_mood"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="@color/bgColor_overlay_black"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/line"/>
+    <TextView
+        android:id="@+id/found_send_help"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="求助"
+        android:textSize="15sp"
+        android:drawableLeft="@mipmap/send_help"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="@color/bgColor_overlay_black"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"/>
+
+</LinearLayout>

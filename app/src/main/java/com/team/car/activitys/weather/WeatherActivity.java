@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mob.mobapi.API;
 import com.mob.mobapi.APICallback;
@@ -22,6 +21,7 @@ import com.mob.tools.network.KVPair;
 import com.mob.tools.network.NetworkHelper;
 import com.mob.tools.utils.Hashon;
 import com.team.car.R;
+import com.team.car.widgets.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,9 +33,9 @@ import java.util.Map;
  */
 
 public class WeatherActivity extends Activity implements APICallback,View.OnClickListener {
-
+    private static final String TAG = WeatherActivity.class.getSimpleName();
+    private ToastUtil toastUtil = new ToastUtil();
     private String ip;
-
     private TextView tvCity;
     private TextView tvUpdateTime;
     private TextView tvTemperature;
@@ -234,7 +234,7 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
     @Override
     public void onError(API api, int action, Throwable details) {
         details.printStackTrace();
-        Toast.makeText(this, "亲，查询不到你所要的城市天气！", Toast.LENGTH_SHORT).show();
+        toastUtil.Short(WeatherActivity.this, "天气预报定位失败！").show();
     }
 
     @Override
@@ -249,7 +249,7 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
     }
 
     /**
-     * 设置布局的高度（铺满屏幕）
+     * 设置布局的高度（铺满屏幕）,设置通知栏相关
      */
     private void setCurrentWeatherLayoutHight() {
         // 通知栏高度
@@ -308,7 +308,6 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
                                     api.queryByIPAddress(ip, WeatherActivity.this);
                                 }
                             }
-
                         }.start();
                     }
                 }

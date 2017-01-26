@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class homeFragment extends BaseFragment {
     private static final String TAG = homeFragment.class.getSimpleName();
-    ToastUtil toastUtil = new ToastUtil();
+    private ToastUtil toastUtil = new ToastUtil();
     @Override
     protected View initView() {
         Log.e(TAG, "homeFragment创建了");

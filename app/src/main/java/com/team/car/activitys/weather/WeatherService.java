@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mob.mobapi.API;
 import com.mob.mobapi.APICallback;
@@ -19,6 +18,7 @@ import com.mob.tools.network.NetworkHelper;
 import com.mob.tools.utils.Hashon;
 import com.team.car.R;
 import com.team.car.activitys.MainActivity;
+import com.team.car.widgets.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +32,8 @@ import java.util.TimerTask;
  */
 
 public class WeatherService extends Service implements APICallback {
+    private static final String TAG = WeatherService.class.getSimpleName();
+    private ToastUtil toastUtil = new ToastUtil();
 
     private String ip;
     private ArrayList<HashMap<String, Object>> results;
@@ -53,24 +55,14 @@ public class WeatherService extends Service implements APICallback {
 
     static int NOTIFICATION_ID = 13565400;
 
-    /*public static final String ACTION_UPDATE_WEATHER = "com.hangon.weather.UPDATE_WEATHER";
-    public static final String ACTION_UPDATE_CITY = "com.hangon.weather.UPDATE_CITY";
-    public static final String ACTION_UPDATE_CLEARCAR = "com.hangon.weather.UPDATE_CLEARCAR";
-    public static final String ACTION_UPDATE_AIR = "com.hangon.weather.UPDATE_AIR";
-    public static final String ACTION_UPDATE_EXE = "com.hangon.weather.UPDATE_EXE";*/
-
     public static final String ACTION_UPDATE_WEATHER = "com.team.car.weather.UPDATE_WEATHER";
     public static final String ACTION_UPDATE_CITY = "com.team.car.weather.UPDATE_CITY";
     public static final String ACTION_UPDATE_CLEARCAR = "com.team.car.weather.UPDATE_CLEARCAR";
     public static final String ACTION_UPDATE_AIR = "com.team.car.weather.UPDATE_AIR";
     public static final String ACTION_UPDATE_EXE = "com.team.car.weather.UPDATE_EXE";
-
     private Intent clearIntent;
-//    private NotificationAdmain admain;
     private WeatherBinder binder;
-
     private Handler handler = new Handler() {
-
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case updateWeather:
@@ -186,8 +178,6 @@ public class WeatherService extends Service implements APICallback {
         handler.sendEmptyMessageDelayed(updateAirCondition, 1000);
     }
 
-
-
     @Override
     public void onSuccess(API api, int action, Map<String, Object> result) {
         switch (action) {
@@ -200,7 +190,7 @@ public class WeatherService extends Service implements APICallback {
     @Override
     public void onError(API api, int i, Throwable details) {
         details.printStackTrace();
-        Toast.makeText(this, "亲，查询不到你所要的城市天气！", Toast.LENGTH_SHORT).show();
+        toastUtil.Short(this, "天气预报定位失败").show();
     }
 
     @Override
@@ -215,7 +205,6 @@ public class WeatherService extends Service implements APICallback {
         public void stopWeather(){
             flag = false;
         }
-
         public void startWeather(){
             flag = true;
         }

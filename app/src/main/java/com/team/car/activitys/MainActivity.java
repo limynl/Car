@@ -27,7 +27,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team.car.R;
 import com.team.car.activitys.user.SettingActivity;
@@ -88,10 +87,9 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         public void onServiceConnected(ComponentName name, IBinder service) {
             binder = (WeatherService.WeatherBinder) service;
         }
-
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Toast.makeText(MainActivity.this, "天气部分出现错误!", Toast.LENGTH_SHORT).show();
+            toastUtil.Short(MainActivity.this, "天气部分出现错误!").show();
         }
     };
 
@@ -334,9 +332,10 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         });
     }
 
-
+    /**
+     *初始化跟天气相关控件
+     */
     private void initial() {
-//        weather = (ImageView) findViewById(btnSstq);
         tvWeather = (TextView) headerView.findViewById(R.id.weather_text);
         tvCity = (TextView) headerView.findViewById(R.id.city_text);
         mReceiver = new NetReceiver();//网络接受

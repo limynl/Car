@@ -1,14 +1,21 @@
 package com.team.car.fragment.found;
 
+import android.app.ActionBar.LayoutParams;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.team.car.R;
+import com.team.car.activitys.user.SettingActivity;
 import com.team.car.fragment.BaseFragment;
 import com.team.car.fragment.found.childfragment.carDynamicFragment;
 import com.team.car.fragment.found.childfragment.newThingFragment;
@@ -29,11 +36,16 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     private List<Fragment> mFragments;//两个fragment的集合
     private Fragment content;//存储上一次fragment
     private int position;//标记fragment选中状态
-    private ImageView sendMood;//发动态
+    private ImageView foundMore;//更多
     private RadioButton newThing;//新鲜事
     private RadioButton carDynamic;//车动态
 
-    private View view;
+    private PopupWindow popupWindow ;
+    private View mPopupWindowView;
+    private TextView sendMood;
+    private TextView sendHelp;
+
+    private View view;//主视图
 
     /**
      * 初始化主布局
@@ -42,10 +54,19 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     @Override
     protected View initView() {
         Log.e(TAG, "foundFragment创建了");
-        view = View.inflate(context, R.layout.activity_found, null);
-        sendMood = (ImageView)view.findViewById(R.id.found_send_mood);
+        view = View.inflate(context, R.layout.activity_found, null);//加载主布局
+        mPopupWindowView = LayoutInflater.from(context).inflate(R.layout.found_menu_select, null);//加载弹框
+        //主布局中相应控件的初始化
+        foundMore = (ImageView)view.findViewById(R.id.found_more);
         newThing = (RadioButton)view.findViewById(R.id.found_new_things);
         carDynamic = (RadioButton)view.findViewById(R.id.found_car_dynamic);
+
+        //弹框中相应控件的初始化
+        sendMood = (TextView) mPopupWindowView.findViewById(R.id.found_send_mood);
+        sendMood.getBackground().setAlpha(100);
+        sendHelp = (TextView) mPopupWindowView.findViewById(R.id.found_send_help);
+        sendHelp.getBackground().setAlpha(100);
+
         return view;
     }
 
@@ -55,10 +76,11 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
         initial();//初始化布局
         initFragment();//初始化fragment
         setListener();//设置监听
+        initPopupWindow();//初始化弹出窗体
 
-
-
-        sendMood.setOnClickListener(this);
+        foundMore.setOnClickListener(this);//监听更多
+        sendMood.setOnClickListener(this);//监听发动态
+        sendHelp.setOnClickListener(this);//监听求救
     }
 
     /**
@@ -68,10 +90,50 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.found_send_mood://发表动态
-                toastUtil.Short(getContext(), "点击我发表动态^_^").show();
+            case R.id.found_more://发表动态
+                toastUtil.Short(getContext(), "点击我查看更多^_^").show();
+                showPopupWindow();
+                break;
+            case R.id.found_send_mood:
+                toastUtil.Short(context, "发动态").show();
+                startActivity(new Intent(context, SettingActivity.class));
+                popupWindow.dismiss();
+                break;
+            case R.id.found_send_help:
+                toastUtil.Short(context, "求救").show();
+                popupWindow.dismiss();
                 break;
         }
+    }
+
+    /**
+     * 显示popupWindow
+     */
+    private void showPopupWindow(){
+        if(!popupWindow.isShowing()){
+            popupWindow.showAsDropDown(foundMore, foundMore.getLayoutParams().width/2, 31);
+        }else{
+            popupWindow.dismiss();
+        }
+    }
+
+    /**
+     * 初始化PopupWindow
+     * 注意：popupWindow.setBackgroundDrawable()这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景；使用该方法点击窗体之外，才可关闭窗体
+     *如果将setBackgroundDrawable设为null，那么将不会有任何效果，dismiss将失效
+     */
+    private void initPopupWindow(){
+        popupWindow = new PopupWindow(mPopupWindowView,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);//绑定视图
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);//点击外围也将失效
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.mipmap.clear));
+		popupWindow.setAnimationStyle(R.style.popupwindow);//设置进入和退出效果
+        popupWindow.update();
+        popupWindow.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+            }
+        });
     }
 
     /**
@@ -88,8 +150,6 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
         mFragments = new ArrayList<Fragment>();
         mFragments.add(new newThingFragment());
         mFragments.add(new carDynamicFragment());
-//        mFragments.add(new FragmentPage1());
-//        mFragments.add(new FragmentPage2());
     }
 
     /**
@@ -115,7 +175,7 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
                     position = 1;
                     carDynamic.getBackground().setAlpha(100);
                     break;
-                default:
+                default://默认被选中的
                     position = 0;
                     newThing.getBackground().setAlpha(100);
                     break;
@@ -126,35 +186,31 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     }
 
     /**
-     * 转换fragment
+     * 转换fragment，其中对fragment进行了优化，防止每次切换fragment都要重新加载
      * @param fromFragment：上一个fragment
      * @param toFragment：要显示的下一个fragment
      */
     private void switchFragment(Fragment fromFragment, Fragment toFragment) {
         if(fromFragment != toFragment) {
-            //实现切换
-            content = toFragment;
+            content = toFragment;//存储上一个Fragment
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            //判断是否被添加
-            if(!toFragment.isAdded()) {
-                //to没被添加，from隐藏,添加to
-                if(fromFragment != null) {
+            if(!toFragment.isAdded()) {//判断要显示的Fragment是否被添加
+                //toFragment没被添加，先将fromFragment隐藏,再添加toFragment
+                if(fromFragment != null) {//先进行判空操作(前一个fragment是否被添加)，防止空指针异常
                     ft.hide(fromFragment);
                 }
                 if(toFragment != null) {
                     ft.add(R.id.found_fl_content,toFragment).commit();
                 }
             }else{
-                //to已经被添加，from隐藏
+                //toFragment已经被添加，直接将fromFragment隐藏
                 if(fromFragment != null) {
                     ft.hide(fromFragment);
                 }
-                //显示to
-                if(toFragment != null) {
+                if(toFragment != null) {//显示toFragment
                     ft.show(toFragment).commit();
                 }
             }
         }
     }
-
 }

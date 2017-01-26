@@ -63,6 +63,12 @@
         <item name="android:windowBackground">@color/background</item>
     </style>
 
+    <!--发现栏目中的三个点的选择出现动画设置-->
+    <style name="popupwindow">
+        <item name="android:windowEnterAnimation">@anim/popup_window_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_window_exit</item>
+    </style>
+
 
 
 
