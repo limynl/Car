@@ -40,7 +40,7 @@
             android:src="@mipmap/found_send_mood"
             android:layout_alignParentRight="true"
             android:layout_marginTop="13dp"
-            android:layout_marginRight="9dp"/>
+            android:layout_marginRight="20dp"/>
 
         </RelativeLayout>
 

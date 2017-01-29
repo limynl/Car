@@ -1,22 +1,22 @@
 package com.team.car.fragment.home;
 
 
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RadioButton;
+import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.team.car.R;
 import com.team.car.fragment.BaseFragment;
-import com.team.car.utils.volley.VolleyListenerInterface;
-import com.team.car.utils.volley.VolleyRequestUtil;
+import com.team.car.services.LocationServices;
 import com.team.car.widgets.ToastUtil;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Lmy on 2017/1/16.
@@ -26,16 +26,94 @@ import java.util.Map;
 public class homeFragment extends BaseFragment {
     private static final String TAG = homeFragment.class.getSimpleName();
     private ToastUtil toastUtil = new ToastUtil();
+
+    private TextView location;//保存当前位置
+    private LocationReceive locationReceive;
+    private LocationServices.LocationBinder locationBinder;
+
+    private ServiceConnection locationConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            locationBinder = (LocationServices.LocationBinder) service;
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            toastUtil.Short(context, "位置定位失败").show();
+        }
+    };
+
     @Override
     protected View initView() {
         Log.e(TAG, "homeFragment创建了");
 
         View view = View.inflate(context, R.layout.activity_home, null);
-        ImageView imageView = (ImageView)view.findViewById(R.id.ceshi);
-        RadioButton radioButton = (RadioButton)view.findViewById(R.id.click);
+        location = (TextView)view.findViewById(R.id.main_location);
+        return view;
+    }
+
+    @Override
+    public void initDate() {
+        super.initDate();
+        initialLocation();
+    }
+
+    private void initialLocation() {
+
+        locationReceive = new LocationReceive();//注册广播
+        IntentFilter intentFilter = new IntentFilter();//添加过滤器
+        intentFilter.addAction(LocationServices.test_location);
+        context.registerReceiver(locationReceive, intentFilter);
+        Intent locationIntent = new Intent(context, LocationServices.class);
+        context.bindService(locationIntent, locationConn, Service.BIND_AUTO_CREATE);//绑定服务
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        locationBinder.stopLocation();
+        context.unbindService(locationConn);
+        context.unregisterReceiver(locationReceive);
+    }
+
+    class LocationReceive extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(LocationServices.test_location)){
+                location.setText(intent.getStringExtra(LocationServices.test_location));
+                toastUtil.Long(context, intent.getStringExtra("detailLocation"));
+            }
+        }
+    }
+}
 
 
-        //以下为测试Volley框架代码
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+//以下为测试Volley框架代码
         radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +147,7 @@ public class homeFragment extends BaseFragment {
             }
         });
 
-        return view;
-    }
-}
+
+
+
+* */

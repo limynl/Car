@@ -18,12 +18,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -54,6 +51,7 @@ import pl.droidsonroids.gif.GifImageView;
  */
 
 public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+    private static final String TAG = MainActivity.class.getSimpleName();
     private View headerView;//侧滑头布局
     private ToastUtil toastUtil = new ToastUtil();
     private CoordinatorLayout right;
@@ -93,7 +91,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +112,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        move(drawer);//菜单与主界面一起滑动
         navigationView.setItemIconTintList(null);//设置菜单列表图标颜色为图片的本来颜色
 
         //以下可以设置侧滑部分的信息
@@ -133,7 +129,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         initView(); //初始化
         initFragment(); //初始化Fragment
         setListener(); //设置RadioGroup的监听
-        initial();//初始化天气
+        initialWeather();//初始化天气
     }
 
     /**
@@ -152,7 +148,9 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
                 break;
             case R.id.btnSstq:{
                 toastUtil.Short(MainActivity.this, "天气预报").show();
-                startActivity(new Intent(MainActivity.this, WeatherActivity.class));
+                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                intent.putExtra("city", city);
+                startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
             }
                 break;
@@ -251,34 +249,24 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
      * @param from
      * @param to
      */
-    private void switchFragment(Fragment from, Fragment to)
-    {
-        if(from != to)
-        {
-            //实现切换
-            content = to;
+    private void switchFragment(Fragment from, Fragment to) {
+        if(from != to) {
+            content = to;//记录上一个fragment
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            //判断是否被添加
-            if(!to.isAdded())
-            {
-                //to没被添加，from隐藏,添加to
-                if(from != null)
-                {
+            if(!to.isAdded()) {//判断要显示的Fragment是否被添加
+                //如果没有添加，则将上一个fragment隐藏，再添加要显示的fragment
+                if(from != null) {//先进行判空操作，是不是第一次进入主界面
                     ft.hide(from);
                 }
-                if(to != null)
-                {
+                if(to != null) {
                     ft.add(R.id.fl_content,to).commit();
                 }
             }else{
-                //to已经被添加，from隐藏
-                if(from != null)
-                {
+                //如果要显示的界面添加过，则将上一个界面隐藏，将下一个要显示的显示出来即可
+                if(from != null) {
                     ft.hide(from);
                 }
-                //显示to
-                if(to != null)
-                {
+                if(to != null) {
                     ft.show(to).commit();
                 }
             }
@@ -288,8 +276,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     /**
      * 初始化Fragment(即底部的四个tab选项)
      */
-    private void initFragment()
-    {
+    private void initFragment() {
         baseFragment = new ArrayList<BaseFragment>();
         baseFragment.add(new homeFragment());
         baseFragment.add(new manageFragment());
@@ -297,63 +284,19 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         baseFragment.add(new foundFragment());
     }
 
-    /**
-        主界面与菜单一起滑动
-     */
-    private void move(DrawerLayout drawer) {
-        right.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(isDrawer){
-                    return left.dispatchTouchEvent(motionEvent);
-                }else{
-                    return false;
-                }
-            }
-        });
-        drawer.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                isDrawer=true;
-                //获取屏幕的宽高
-                WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-                Display display = manager.getDefaultDisplay();
-                //设置右面的布局位置  根据左面菜单的right作为右面布局的left   左面的right+屏幕的宽度（或者right的宽度这里是相等的）为右面布局的right
-                right.layout(left.getRight(), 0, left.getRight() + display.getWidth(), display.getHeight());
-            }
-            @Override
-            public void onDrawerOpened(View drawerView) {}
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                isDrawer=false;
-            }
-            @Override
-            public void onDrawerStateChanged(int newState) {}
-        });
-    }
 
     /**
      *初始化跟天气相关控件
      */
-    private void initial() {
+    private void initialWeather() {
         tvWeather = (TextView) headerView.findViewById(R.id.weather_text);
         tvCity = (TextView) headerView.findViewById(R.id.city_text);
         mReceiver = new NetReceiver();//网络接受
         mFilter = new IntentFilter();
-        btnSstq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, WeatherActivity.class);
-                intent.putExtra("city", city);
-                startActivity(intent);
-            }
-        });
-
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         MainActivity.this.registerReceiver(mReceiver, mFilter);
         registerMyReceiver();
-        weatherIntent = new Intent(this, WeatherService.class);
+        weatherIntent = new Intent(MainActivity.this, WeatherService.class);
         bindService(weatherIntent, conn, Service.BIND_AUTO_CREATE);
     }
 
@@ -369,10 +312,10 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (WeatherService.ACTION_UPDATE_WEATHER.equals(action)) {
+            if (WeatherService.ACTION_UPDATE_WEATHER.equals(action)) {//接受天气预报的城市
                 weather = intent.getStringExtra(WeatherService.ACTION_UPDATE_WEATHER);
                 tvWeather.setText(weather);
-            } else if (WeatherService.ACTION_UPDATE_CITY.equals(action)) {
+            } else if (WeatherService.ACTION_UPDATE_CITY.equals(action)) {//接受相应的天气
                 city = intent.getStringExtra(WeatherService.ACTION_UPDATE_CITY);
                 tvCity.setText(city);
             }

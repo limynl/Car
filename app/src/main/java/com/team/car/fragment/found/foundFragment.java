@@ -1,7 +1,6 @@
 package com.team.car.fragment.found;
 
 import android.app.ActionBar.LayoutParams;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.activitys.user.SettingActivity;
 import com.team.car.fragment.BaseFragment;
 import com.team.car.fragment.found.childfragment.carDynamicFragment;
 import com.team.car.fragment.found.childfragment.newThingFragment;
@@ -40,7 +38,7 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     private RadioButton newThing;//新鲜事
     private RadioButton carDynamic;//车动态
 
-    private PopupWindow popupWindow ;
+    private PopupWindow popupWindow ;//弹窗视图
     private View mPopupWindowView;
     private TextView sendMood;
     private TextView sendHelp;
@@ -96,7 +94,6 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.found_send_mood:
                 toastUtil.Short(context, "发动态").show();
-                startActivity(new Intent(context, SettingActivity.class));
                 popupWindow.dismiss();
                 break;
             case R.id.found_send_help:
@@ -193,7 +190,7 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     private void switchFragment(Fragment fromFragment, Fragment toFragment) {
         if(fromFragment != toFragment) {
             content = toFragment;//存储上一个Fragment
-            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();//在fragment中使用fragment一定要使用
             if(!toFragment.isAdded()) {//判断要显示的Fragment是否被添加
                 //toFragment没被添加，先将fromFragment隐藏,再添加toFragment
                 if(fromFragment != null) {//先进行判空操作(前一个fragment是否被添加)，防止空指针异常

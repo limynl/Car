@@ -16,7 +16,6 @@ import com.mob.mobapi.apis.Weather;
 import com.mob.tools.network.KVPair;
 import com.mob.tools.network.NetworkHelper;
 import com.mob.tools.utils.Hashon;
-import com.team.car.R;
 import com.team.car.activitys.MainActivity;
 import com.team.car.widgets.ToastUtil;
 
@@ -44,8 +43,6 @@ public class WeatherService extends Service implements APICallback {
     private String exerciseIndex;
     private boolean flag = true;
     private boolean isClear = false;
-
-    int smallIcon = R.mipmap.ic_launcher;
 
     private static final int updateWeather = 1;
     private static final int updateCity = 2;

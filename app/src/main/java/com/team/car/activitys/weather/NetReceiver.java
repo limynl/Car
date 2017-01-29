@@ -5,13 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
+import com.team.car.widgets.ToastUtil;
+
 /**
  * Created by Lmy on 2017/1/24.
  * email 1434117404@qq.com
  */
 
 public class NetReceiver extends BroadcastReceiver {
-   private   String netType=""; //网络类型
+    private static final String TAG = NetReceiver.class.getSimpleName();
+    private ToastUtil toastUtil = new ToastUtil();
+    private   String netType=""; //网络类型
+
     @Override
     public void onReceive(Context context, Intent intent) {
      String action= intent.getAction();
@@ -22,28 +27,20 @@ public class NetReceiver extends BroadcastReceiver {
             if (isConnected) {
                 if(isConnectedTypeWifi&&NetUtils.getConnectedType(context)==1){
                     this.setNetType("wifinet");
-                }
-                else if(isConnectedTypeMobile&&NetUtils.getConnectedType(context)==0){
+                }else if(isConnectedTypeMobile&&NetUtils.getConnectedType(context)==0){
                     this.setNetType("mobilenet");
                 }
-                //Toast.makeText(context, "已经连接网络", Toast.LENGTH_LONG).show();
+                toastUtil.Short(context, "网络已连接").show();
             } else {
-//	        	Toast.makeText(context, "已经断开网络", Toast.LENGTH_LONG).show();
+                toastUtil.Short(context, "网络已断开").show();
                 this.setNetType("nonet");
             }
-
         }
-
     }
-
-
     public String getNetType() {
         return netType;
     }
-
     public void setNetType(String netType) {
         this.netType = netType;
     }
-
-
 }

@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="9dp"
-        android:paddingBottom="8dp"
-        android:background="#7ADFB8">
+        android:paddingBottom="9dp"
+        android:background="#7ADFB8"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,11 +22,25 @@
             android:layout_centerHorizontal="true"/>
 
         <ImageView
+            android:id="@+id/icon_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tab_home"
+            android:src="@mipmap/main_location"
             android:layout_alignParentLeft="true"
-            android:layout_marginRight="15dp" />
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/main_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_toRightOf="@id/icon_location"
+            android:layout_marginLeft="7dp"
+            android:text=" "
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
+
     </RelativeLayout>
 
     <ImageView
