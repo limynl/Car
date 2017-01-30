@@ -1,4 +1,4 @@
-package com.team.car.activitys.weather;
+package com.team.car.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -94,7 +94,6 @@ public class WeatherService extends Service implements APICallback {
         com.mob.mobapi.apis.Weather api = (com.mob.mobapi.apis.Weather) MobAPI.getAPI(com.mob.mobapi.apis.Weather.NAME);
         api.getSupportedCities(this);
         clearIntent = new Intent(this, MainActivity.class);
-//        admain = new NotificationAdmain(this,NOTIFICATION_ID);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

@@ -34,15 +34,12 @@ public class LocationServices extends Service{
     private String strLocationAddrStr;//定位点的详细地址(包括国家和以上省市区等信息)
     private LocationClient mLocationClient =null;//定位客户端
     public MyLocationListener mMyLocationListener = new MyLocationListener();
-
     private boolean flag = true;
     private LocationBinder binder;
-
     private TimerTask task = null;
     private Timer timer = null;
-
-//    public static final String ACTION_UPDATE_LOCATION = "com.team.car.location.UPDATE_LOCATION";
-    public static final String test_location = "com.team.car.location.UPDATE_LOCATION";
+    private boolean isStop = false;
+    public static final String ACTION_UPDATE_LOCATION = "com.team.car.location.UPDATE_LOCATION";
     private static final int updateLocation = 1;
 
     private Handler handler = new Handler() {
@@ -62,6 +59,9 @@ public class LocationServices extends Service{
         mLocationClient.setLocOption(setLocationClientOption());
         mLocationClient.registerLocationListener(mMyLocationListener);
         mLocationClient.start();
+//        if (!isStop) {
+//            startTimer();
+//        }
     }
 
     @Nullable
@@ -72,20 +72,50 @@ public class LocationServices extends Service{
     }
 
     public void updateLocation() {
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                mLocationClient.start();
-            }
-        };
-        timer = new Timer();
-        timer.schedule(task, 10000);
+        if (!isStop) {
+            startTimer();
+        }
         Intent intent = new Intent();
-        intent.setAction(test_location);
-        intent.putExtra(test_location, strLocationDistrict);
+        intent.setAction(ACTION_UPDATE_LOCATION);
+        intent.putExtra(ACTION_UPDATE_LOCATION, strLocationDistrict);
         intent.putExtra("detailLocation", strLocationAddrStr);
         sendBroadcast(intent);
         handler.sendEmptyMessageDelayed(updateLocation, 10000);
+    }
+
+    private void startTimer() {
+        isStop = true;//定时器启动后，修改标识，关闭定时器的开关
+        if (timer == null) {
+            timer = new Timer();
+        }
+        if (task == null) {
+            task = new TimerTask() {
+
+                @Override
+                public void run() {
+                    do {
+                        try {
+                            mLocationClient.start();
+                            Thread.sleep(1000 * 3);//3秒后再次执行
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } while (isStop);
+                }
+            };
+        }
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        if (task != null) {
+            task.cancel();
+            task = null;
+        }
+        isStop = false;//重新打开定时器开关
     }
 
     /**
@@ -179,8 +209,11 @@ public class LocationServices extends Service{
             mLocationClient.stop();//停止定位服务
         }
         flag = false;
+        if (isStop) {
+            Log.i("tag", "定时器服务停止");
+            stopTimer();
+        }
     }
-
 
     public class LocationBinder extends Binder {
         public void stopLocation(){

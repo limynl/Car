@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.team.car.R;
+import com.team.car.services.WeatherService;
 
 import java.util.ArrayList;
 

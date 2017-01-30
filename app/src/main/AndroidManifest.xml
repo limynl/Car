@@ -189,7 +189,7 @@
         <activity android:name=".activitys.weather.WeatherActivity"/>
 
         <!--注册服务-->
-        <service android:name=".activitys.weather.WeatherService"/>
+        <service android:name=".services.WeatherService"/>
 
         <!--实现重复定位-->
         <service

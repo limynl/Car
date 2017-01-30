@@ -30,7 +30,7 @@ import com.team.car.activitys.user.SettingActivity;
 import com.team.car.activitys.user.UserMessageActivity;
 import com.team.car.activitys.weather.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
-import com.team.car.activitys.weather.WeatherService;
+import com.team.car.services.WeatherService;
 import com.team.car.fragment.BaseFragment;
 import com.team.car.fragment.found.foundFragment;
 import com.team.car.fragment.home.homeFragment;
