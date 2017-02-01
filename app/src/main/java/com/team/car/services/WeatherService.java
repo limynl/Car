@@ -16,7 +16,7 @@ import com.mob.mobapi.apis.Weather;
 import com.mob.tools.network.KVPair;
 import com.mob.tools.network.NetworkHelper;
 import com.mob.tools.utils.Hashon;
-import com.team.car.activitys.MainActivity;
+import com.team.car.activitys.user.UserMainActivity;
 import com.team.car.widgets.ToastUtil;
 
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class WeatherService extends Service implements APICallback {
         MobAPI.initSDK(this, "1a0c862622d16");
         com.mob.mobapi.apis.Weather api = (com.mob.mobapi.apis.Weather) MobAPI.getAPI(com.mob.mobapi.apis.Weather.NAME);
         api.getSupportedCities(this);
-        clearIntent = new Intent(this, MainActivity.class);
+        clearIntent = new Intent(this, UserMainActivity.class);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

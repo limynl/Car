@@ -1,4 +1,4 @@
-package com.team.car.activitys;
+package com.team.car.activitys.user;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -26,8 +26,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.activitys.user.SettingActivity;
-import com.team.car.activitys.user.UserMessageActivity;
 import com.team.car.activitys.weather.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
 import com.team.car.services.WeatherService;
@@ -50,8 +48,8 @@ import pl.droidsonroids.gif.GifImageView;
  * email 1434117404@qq.com
  */
 
-public class MainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
-    private static final String TAG = MainActivity.class.getSimpleName();
+public class UserMainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+    private static final String TAG = UserMainActivity.class.getSimpleName();
     private View headerView;//侧滑头布局
     private ToastUtil toastUtil = new ToastUtil();
     private CoordinatorLayout right;
@@ -79,7 +77,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
 
     private static Boolean isExit = false;//是否退出应用程序
 
-    //创建一个服务连接
+    //创建一个服务连接,用于更新天气
     private ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -87,7 +85,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         }
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            toastUtil.Short(MainActivity.this, "天气部分出现错误!").show();
+            toastUtil.Short(UserMainActivity.this, "天气部分出现错误!").show();
         }
     };
 
@@ -95,14 +93,6 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);//显示ActionBar
-        //取消显示标题
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("汽车服务");
-        toolbar.setTitleMarginStart(20);
-//        toolbar.setLogo(R.mipmap.head);
-        toolbar.setNavigationIcon(R.mipmap.head);*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         right = (CoordinatorLayout) findViewById(R.id.right);
         left = (NavigationView) findViewById(R.id.nav_view);
@@ -141,14 +131,14 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         switch (v.getId()){
             case R.id.user_head:
             {
-                toastUtil.Short(MainActivity.this, "个人中心").show();
-                startActivity(new Intent(MainActivity.this, UserMessageActivity.class));
+                toastUtil.Short(UserMainActivity.this, "个人中心").show();
+                startActivity(new Intent(UserMainActivity.this, UserMessageActivity.class));
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
                 break;
             case R.id.btnSstq:{
-                toastUtil.Short(MainActivity.this, "天气预报").show();
-                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                toastUtil.Short(UserMainActivity.this, "天气预报").show();
+                Intent intent = new Intent(UserMainActivity.this, WeatherActivity.class);
                 intent.putExtra("city", city);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
@@ -167,16 +157,16 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.add_car) {
-            toastUtil.Long(MainActivity.this, "添加爱车").show();
+            toastUtil.Long(UserMainActivity.this, "添加爱车").show();
         } else if (id == R.id.integral) {
-            toastUtil.Long(MainActivity.this, "我的资产").show();
+            toastUtil.Long(UserMainActivity.this, "我的资产").show();
         } else if (id == R.id.share) {
-            toastUtil.Long(MainActivity.this, "分享App").show();
+            toastUtil.Long(UserMainActivity.this, "分享App").show();
         } else if (id == R.id.online_complaint) {
-            toastUtil.Long(MainActivity.this, "在线投诉").show();
+            toastUtil.Long(UserMainActivity.this, "在线投诉").show();
         }else if (id == R.id.setting){
-            toastUtil.Long(MainActivity.this, "设置").show();
-            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            toastUtil.Long(UserMainActivity.this, "设置").show();
+            Intent intent = new Intent(UserMainActivity.this, SettingActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
         }
@@ -294,9 +284,9 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         mReceiver = new NetReceiver();//网络接受
         mFilter = new IntentFilter();
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        MainActivity.this.registerReceiver(mReceiver, mFilter);
+        UserMainActivity.this.registerReceiver(mReceiver, mFilter);
         registerMyReceiver();
-        weatherIntent = new Intent(MainActivity.this, WeatherService.class);
+        weatherIntent = new Intent(UserMainActivity.this, WeatherService.class);
         bindService(weatherIntent, conn, Service.BIND_AUTO_CREATE);
     }
 
@@ -305,7 +295,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WeatherService.ACTION_UPDATE_WEATHER);
         intentFilter.addAction(WeatherService.ACTION_UPDATE_CITY);
-        MainActivity.this.registerReceiver(progressReceiver, intentFilter);
+        UserMainActivity.this.registerReceiver(progressReceiver, intentFilter);
     }
 
     class ProgressReceiver extends BroadcastReceiver {
@@ -330,8 +320,8 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
         unbindService(conn);
 
         //广播解除绑定
-        MainActivity.this.unregisterReceiver(mReceiver);
-        MainActivity.this.unregisterReceiver(progressReceiver);
+        UserMainActivity.this.unregisterReceiver(mReceiver);
+        UserMainActivity.this.unregisterReceiver(progressReceiver);
     }
 
     /**
@@ -346,7 +336,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
             Timer timer = null;
             if(isExit == false){
                 isExit = true;
-                toastUtil.Short(MainActivity.this, "再按一次退出应用程序^_^").show();
+                toastUtil.Short(UserMainActivity.this, "再按一次退出应用程序^_^").show();
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
@@ -355,7 +345,7 @@ public class MainActivity extends FragmentActivity implements NavigationView.OnN
                     }
                 }, 2000);
             }else{
-                MainActivity.this.finish();
+                UserMainActivity.this.finish();
                 System.exit(0);
             }
         }

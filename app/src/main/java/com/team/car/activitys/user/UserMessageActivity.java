@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team.car.R;
-import com.team.car.activitys.MainActivity;
 import com.team.car.widgets.CleanableEditText;
 import com.team.car.widgets.ToastUtil;
 import com.team.car.widgets.dialogview.SVProgressHUD;
@@ -75,7 +74,7 @@ public class UserMessageActivity extends Activity {
             }
                 break;
             case R.id.user_message_back:{
-                startActivity(new Intent(UserMessageActivity.this, MainActivity.class));
+                startActivity(new Intent(UserMessageActivity.this, UserMainActivity.class));
                 finish();
                 overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
             }
@@ -101,7 +100,7 @@ public class UserMessageActivity extends Activity {
                     }
                 }).start();
                 SVProgressHUD.isCancel(UserMessageActivity.this, true);
-                startActivity(new Intent(UserMessageActivity.this, MainActivity.class));
+                startActivity(new Intent(UserMessageActivity.this, UserMainActivity.class));
                 toastUtil.Short(UserMessageActivity.this, "保存成功").show();
                 finish();
                 overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果

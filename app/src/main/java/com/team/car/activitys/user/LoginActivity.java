@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.mob.tools.utils.UIHandler;
 import com.team.car.R;
-import com.team.car.activitys.MainActivity;
 import com.team.car.widgets.ToastUtil;
 import com.team.car.widgets.dialogview.SVProgressHUD;
 import com.tencent.connect.UserInfo;
@@ -120,7 +119,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
                 Timer timer=new Timer();
                 timer.schedule(new wait(), 5000);
                 SVProgressHUD.isCancel(this, true);
-                startActivity(new Intent(context, MainActivity.class));
+                startActivity(new Intent(context, UserMainActivity.class));
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
             }
             break;
@@ -387,7 +386,9 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
             @Override
             public void onClick(View v) {
                 toastUtil.Long(LoginActivity.this, "用户注册").show();
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent.putExtra("user_register", "1");
+                startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 dialog.dismiss();
@@ -399,6 +400,11 @@ public class LoginActivity extends Activity implements View.OnClickListener,Plat
             @Override
             public void onClick(View v) {
                 toastUtil.Long(LoginActivity.this, "商家注册").show();
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent.putExtra("business_register", "2");
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 dialog.dismiss();
             }
         });

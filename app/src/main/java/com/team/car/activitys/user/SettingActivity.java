@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.team.car.R;
-import com.team.car.activitys.MainActivity;
 import com.team.car.widgets.SlideSwitch;
 import com.team.car.widgets.ToastUtil;
 
@@ -60,7 +59,7 @@ public class SettingActivity extends Activity {
         switch (view.getId()) {
             case R.id.setting_back:
             {
-                startActivity(new Intent(SettingActivity.this, MainActivity.class));
+                startActivity(new Intent(SettingActivity.this, UserMainActivity.class));
                 finish();
                 overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
             }

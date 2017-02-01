@@ -29,6 +29,7 @@ import static com.mob.tools.utils.R.getStringRes;
  */
 
 public class RegisterActivity extends Activity implements View.OnClickListener{
+    private static final String TAG = RegisterActivity.class.getSimpleName();
     private ImageView topbar_left;
     private ToastUtil toastUtil = new ToastUtil();
 
@@ -40,11 +41,17 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
     private String iCord;
     private int time = 60;//两次获取验证码的时间间隔
     private boolean flag = true;//验证码是否正确标记
+    private int category;//注册的类别
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register);
+        //获得注册的类别，用于判断是用户注册还是商家注册
+        Intent fIntent = getIntent();
+        Bundle bundle = fIntent.getExtras();
+        int category = Integer.parseInt(bundle.getString("user_register"));
+        Log.e(TAG, "注册类别: "+flag);
         init();//初始化控件
         //initSDK():初始化SDK，单例，可以多次调用；任何方法调用前，必须先初始化，相当于SDK入口
         SMSSDK.initSDK(RegisterActivity.this,"1a442baece8ba","8060130de4ada3e60349f2c342b08ad3");
@@ -189,6 +196,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
                             }
                         }
                     }.start();
+
+                    //这里可以添加用户
+
+
                     toastUtil.Short(RegisterActivity.this, "注册成功").show();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
