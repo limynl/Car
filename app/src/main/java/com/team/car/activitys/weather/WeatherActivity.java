@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -73,7 +74,7 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
         LinearLayout tqLinList = (LinearLayout) findViewById(R.id.tq_lin_list);
         tqLinList.getBackground().setAlpha(153);
         init();
-        MobAPI.initSDK(this, "1a0c862622d16");
+        MobAPI.initSDK(this, "1a0c862622d16");//120b650027878  1a0c862622d16
         Weather api = (Weather) MobAPI.getAPI(Weather.NAME);
         api.getSupportedCities(this);
         time = new Time();
@@ -235,6 +236,7 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
     public void onError(API api, int action, Throwable details) {
         details.printStackTrace();
         toastUtil.Short(WeatherActivity.this, "天气预报定位失败！").show();
+        Log.e(TAG, "onError: "+details.toString());
     }
 
     @Override

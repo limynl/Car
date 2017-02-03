@@ -1,4 +1,4 @@
-package com.team.car.activitys.weather;
+package com.team.car.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

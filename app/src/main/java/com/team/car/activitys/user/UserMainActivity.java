@@ -26,7 +26,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.activitys.weather.NetReceiver;
+import com.team.car.utils.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
 import com.team.car.services.WeatherService;
 import com.team.car.fragment.BaseFragment;
