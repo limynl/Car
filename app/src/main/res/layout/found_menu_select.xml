@@ -6,35 +6,37 @@
     android:background="#ffffff" >
     <TextView
         android:id="@+id/found_send_mood"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="发动态"
         android:textSize="15sp"
         android:drawableLeft="@mipmap/send_mood"
+        android:drawablePadding="5dp"
         android:gravity="center"
         android:textColor="#ffffff"
         android:background="@color/bgColor_overlay_black"
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.7dp"
         android:background="@color/line"/>
     <TextView
         android:id="@+id/found_send_help"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="求助"
         android:textSize="15sp"
         android:drawableLeft="@mipmap/send_help"
+        android:drawablePadding="5dp"
         android:gravity="center"
         android:textColor="#ffffff"
         android:background="@color/bgColor_overlay_black"
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
 
 </LinearLayout>

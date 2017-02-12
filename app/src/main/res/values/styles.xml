@@ -39,7 +39,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-
     <!--发现：顶部两个tab样式-->
     <style name="found_button_style">
         <item name="android:layout_width">wrap_content</item>
@@ -67,6 +66,37 @@
     <style name="popupwindow">
         <item name="android:windowEnterAnimation">@anim/popup_window_enter</item>
         <item name="android:windowExitAnimation">@anim/popup_window_exit</item>
+    </style>
+
+    <!--商店：顶部选择样式-->
+    <style name="shop_select_radiobbutton_style" >
+        <item name="android:textColor">@drawable/bottom_textcolor_drawable_selector</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:drawablePadding">0dp</item>
+    </style>
+
+    <!--商店：顶部弹出框条目样式-->
+    <style name="shop_item_message">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--商店：顶部PopupWindow弹出框样式-->
+    <style name="shop_popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/fade_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_anim</item>
     </style>
 
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:background="#ddd">
+
+
+    <ListView
+        android:id="@+id/shop_pop_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:divider="@null"
+        android:listSelector="#ccc"
+        android:cacheColorHint="@android:color/transparent"
+        android:scrollingCache="false"
+        android:fadingEdge="none"/>
+
+</LinearLayout>

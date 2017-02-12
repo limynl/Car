@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/shop_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:enabled="false"
+            android:background="@drawable/select_menu_bg"
+            android:text="信息"
+            style="@style/shop_item_message"/>
+        <View
+            android:id="@+id/v_line_vertical"
+            android:layout_width="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/shop_content"
+            android:layout_alignBottom="@id/shop_content"
+            android:visibility="gone"
+            android:background="#7ADFB8"/>
+
+        <ImageView
+            android:id="@+id/v_line_checked"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/shop_checked"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e6e6e6"
+        android:layout_marginLeft="30dp" />
+
+</LinearLayout>
+
+
+
+
