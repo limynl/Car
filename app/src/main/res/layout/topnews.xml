@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/top_news_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#44000000">
+
+        <TextView
+            android:id="@+id/top_news_title"
+            android:layout_centerVertical="true"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="8dp"
+            android:text="测试轮播图"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/ll_point_group"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

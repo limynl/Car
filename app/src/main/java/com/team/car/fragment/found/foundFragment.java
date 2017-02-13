@@ -19,6 +19,7 @@ import com.team.car.fragment.found.childfragment.carDynamicFragment;
 import com.team.car.fragment.found.childfragment.newThingFragment;
 import com.team.car.widgets.ToastUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,7 +146,11 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
      */
     private void initFragment(){
         mFragments = new ArrayList<Fragment>();
-        mFragments.add(new newThingFragment());
+        try {
+            mFragments.add(new newThingFragment());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         mFragments.add(new carDynamicFragment());
     }
 
