@@ -14,7 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.team.car.R;
-import com.team.car.fragment.BaseFragment;
+import com.team.car.base.fragment.BaseFragment;
 import com.team.car.fragment.shop.adapter.shopSelectAdapter;
 import com.team.car.widgets.ToastUtil;
 

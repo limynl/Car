@@ -1,4 +1,4 @@
-package com.team.car.fragment;
+package com.team.car.base.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

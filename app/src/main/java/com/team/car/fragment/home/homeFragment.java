@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.fragment.BaseFragment;
+import com.team.car.base.fragment.BaseFragment;
 import com.team.car.services.LocationServices;
 import com.team.car.widgets.ToastUtil;
 

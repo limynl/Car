@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.fragment.BaseFragment;
+import com.team.car.base.fragment.BaseFragment;
 import com.team.car.fragment.found.childfragment.carDynamicFragment;
 import com.team.car.fragment.found.childfragment.newThingFragment;
 import com.team.car.widgets.ToastUtil;

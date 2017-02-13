@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.team.car.fragment.BaseFragment;
+import com.team.car.base.fragment.BaseFragment;
 
 /**
  * Created by Lmy on 2017/1/16.

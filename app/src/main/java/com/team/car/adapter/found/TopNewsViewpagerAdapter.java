@@ -1,4 +1,4 @@
-package com.team.car.adapter;
+package com.team.car.adapter.found;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.team.car.R;
-import com.team.car.entity.TestContentNewsBean;
+import com.team.car.entity.found.TestContentNewsBean;
 
 import java.util.List;
 

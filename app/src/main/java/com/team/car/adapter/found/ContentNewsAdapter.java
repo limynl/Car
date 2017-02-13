@@ -1,4 +1,4 @@
-package com.team.car.adapter;
+package com.team.car.adapter.found;
 
 import android.content.Context;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.team.car.R;
-import com.team.car.entity.TestContentNewsBean;
+import com.team.car.entity.found.TestContentNewsBean;
 
 import org.xutils.image.ImageOptions;
 import org.xutils.x;

@@ -1,4 +1,4 @@
-package com.team.car.entity;
+package com.team.car.entity.found;
 
 /**
  * Created by Lmy on 2017/2/10.

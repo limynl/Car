@@ -22,9 +22,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.team.car.R;
 import com.team.car.activitys.found.NewsDetailActivity;
-import com.team.car.adapter.ContentNewsAdapter;
-import com.team.car.adapter.TopNewsViewpagerAdapter;
-import com.team.car.entity.TestContentNewsBean;
+import com.team.car.adapter.found.ContentNewsAdapter;
+import com.team.car.adapter.found.TopNewsViewpagerAdapter;
+import com.team.car.entity.found.TestContentNewsBean;
 import com.team.car.widgets.ToastUtil;
 
 import org.json.JSONArray;

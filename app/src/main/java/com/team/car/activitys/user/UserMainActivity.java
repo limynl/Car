@@ -29,7 +29,7 @@ import com.team.car.R;
 import com.team.car.utils.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
 import com.team.car.services.WeatherService;
-import com.team.car.fragment.BaseFragment;
+import com.team.car.base.fragment.BaseFragment;
 import com.team.car.fragment.found.foundFragment;
 import com.team.car.fragment.home.homeFragment;
 import com.team.car.fragment.manager.manageFragment;
