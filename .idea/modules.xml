@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Car.iml" filepath="$PROJECT_DIR$/Car.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PullToRefresh_library/PullToRefresh_library.iml" filepath="$PROJECT_DIR$/PullToRefresh_library/PullToRefresh_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

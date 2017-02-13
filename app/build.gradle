@@ -76,4 +76,5 @@ dependencies {
     compile files('libs/jpush-android-2.1.7.jar')
     compile files('libs/BaiduNaviSDK_3.1.0.jar')
     compile files('libs/baidumapapi_v3_5_0.jar')
+    compile project(':PullToRefresh_library')
 }
