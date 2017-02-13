@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 import com.team.car.R;
 import com.team.car.utils.MarqueeText;
+import com.team.car.widgets.dialogview.SVProgressHUD;
 
 /**
  * Created by Lmy on 2017/2/13.
@@ -33,6 +34,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_news_detail);
         Log.e(TAG, "新闻详情页面创建了");
+        SVProgressHUD.showWithStatus(NewsDetailActivity.this,"加载中...");
         initView();
         setData();
     }
@@ -42,7 +44,6 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         showDetailNews = (PullToRefreshWebView) findViewById(R.id.show_detail_news);
         webView = showDetailNews.getRefreshableView();
         contentTitle = (MarqueeText) findViewById(R.id.found_detail_content_title);
-
         back.setOnClickListener(this);
     }
 
@@ -59,8 +60,15 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         //禁止从当前网页跳转到系统的浏览器中
         webView.setWebViewClient(new WebViewClient(){
             @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                SVProgressHUD.isCancel(NewsDetailActivity.this, true);
+            }
+
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                SVProgressHUD.isCancel(NewsDetailActivity.this, true);
                 return true;
             }
         });

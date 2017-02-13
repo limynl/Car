@@ -7,26 +7,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.team.car.R;
 import com.team.car.activitys.found.NewsDetailActivity;
+import com.team.car.adapter.ContentNewsAdapter;
+import com.team.car.adapter.TopNewsViewpagerAdapter;
 import com.team.car.entity.TestContentNewsBean;
 import com.team.car.widgets.ToastUtil;
 
@@ -60,7 +57,7 @@ public class newThingFragment extends Fragment {
     private TextView title;
     private LinearLayout ll_point_group;
     private ListView listView;
-    private MyTestContentNewsAdapter adapter;
+    private ContentNewsAdapter adapter;
     private ImageOptions imageOptions;//配置listView中的图片
 
     //得到“头条中的所有数据”
@@ -74,15 +71,23 @@ public class newThingFragment extends Fragment {
 
     //用于计数
     private static int count = 6;
+
+    //刷新控件
     private PullToRefreshListView mPullRefreshListView;
 
+    //Viewpager中的红点上一次高亮显示的位置
+    private int prePosition;
+
+    /**
+     * 处理上拉加载更多
+     */
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch(msg.what){
                 case 1:
-                    Toast.makeText(context, "没有更多", Toast.LENGTH_SHORT).show();
+                    toastUtil.Short(context, "亲，已经到底了...").show();
                     mPullRefreshListView.onRefreshComplete();
                     break;
                 case 2:
@@ -93,6 +98,10 @@ public class newThingFragment extends Fragment {
         }
     };
 
+    /**
+     * 配置xUtils中的属性
+     * @throws UnsupportedEncodingException
+     */
     public newThingFragment() throws UnsupportedEncodingException {
         imageOptions = new ImageOptions.Builder()
                 .setSize(org.xutils.common.util.DensityUtil.dip2px(110), org.xutils.common.util.DensityUtil.dip2px(80))
@@ -105,6 +114,10 @@ public class newThingFragment extends Fragment {
                 .build();
     }
 
+    /**
+     * 初始化上下文对象
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,9 +132,7 @@ public class newThingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.e(TAG, "newThingFragment创建了");
-        toastUtil.Short(getContext(), "test上下文对象").show();
         View view = View.inflate(context, R.layout.activity_new_thing, null);
-
         mPullRefreshListView = (PullToRefreshListView) view.findViewById(R.id.pull_refresh_list);
         listView = mPullRefreshListView.getRefreshableView();
 
@@ -133,7 +144,7 @@ public class newThingFragment extends Fragment {
         listView.addHeaderView(topNews);
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {//下拉刷新
                 list.clear();
                 contentList.clear();
                 getDataFromNet(url);//下拉刷新，相当于再次进行数据的请求
@@ -141,12 +152,12 @@ public class newThingFragment extends Fragment {
             }
 
             @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {//上拉加载更多
                 getMoreData();
             }
         });
 
-        mPullRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mPullRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {//设置新闻列表点击事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TestContentNewsBean news = contentList.get(position - 2);
@@ -162,6 +173,10 @@ public class newThingFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 配置数据
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -182,7 +197,7 @@ public class newThingFragment extends Fragment {
             public void onSuccess(String result) {
                 List<TestContentNewsBean> dataFromJson = getDataFromJson(result);
                 list = dataFromJson;
-                viewPager.setAdapter(new MyTopNewsAdapter());
+                viewPager.setAdapter(new TopNewsViewpagerAdapter(context, list));
                 ll_point_group.removeAllViews();//移除所有的红点
                 for (int j = 0; j < list.size(); j++) {
                     ImageView imageView = new ImageView(context);
@@ -225,14 +240,12 @@ public class newThingFragment extends Fragment {
             public void onSuccess(String result) {
                 Log.e(TAG, "onSuccess: "+result);
                 processData(result);//解析和处理显示数据
-//                listView.onRefreshFinish(true, 0);//刷新成功，隐藏下拉刷新控件，重新显示数据，更新时间
                 mPullRefreshListView.onRefreshComplete();
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e(TAG, "onError: "+ex.toString());
-//                listView.onRefreshFinish(false, 0);//刷新失败，隐藏下拉刷新控件，不更新时间，并且toast提示更新失败
                 mPullRefreshListView.onRefreshComplete();
             }
 
@@ -248,8 +261,6 @@ public class newThingFragment extends Fragment {
         });
     }
 
-    private int prePosition;//上一次高亮显示的位置
-
     /**
      * 为list添加数据
      * @param json 要显示的json数据
@@ -257,7 +268,7 @@ public class newThingFragment extends Fragment {
     private void processData(String json) {
         contentList = getDataFromJson(json);
         Log.e(TAG, "打印新闻列表的数据" + contentList.toString());
-        adapter = new MyTestContentNewsAdapter();//设置listview的适配器
+        adapter = new ContentNewsAdapter(context, contentList, imageOptions);//设置listview的适配器
         listView.setAdapter(adapter);
     }
 
@@ -284,146 +295,53 @@ public class newThingFragment extends Fragment {
     }
 
     /**
-     * 新闻的数据适配器
+     * 顶部轮播图页面改变事件
      */
-    class MyTestContentNewsAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return contentList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-            if (convertView == null) {
-                convertView = View.inflate(context, R.layout.found_news_item, null);
-                viewHolder = new ViewHolder();
-                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.new_icon);
-                viewHolder.newTitle = (TextView) convertView.findViewById(R.id.new_title);
-                viewHolder.newSrc = (TextView) convertView.findViewById(R.id.new_src);
-                viewHolder.newTime = (TextView) convertView.findViewById(R.id.new_time);
-                viewHolder.browseNumber = (TextView) convertView.findViewById(R.id.new_browse_number);
-                convertView.setTag(viewHolder);
-            }else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            //显示相应的数据
-            TestContentNewsBean newsBean = contentList.get(position);
-            x.image().bind(viewHolder.imageView, newsBean.getImageUrl(), imageOptions);//请求图片
-            viewHolder.newTitle.setText(newsBean.getTitle());
-            viewHolder.newSrc.setText(newsBean.getSrc());
-            String[] times = newsBean.getTime().split("-");
-            viewHolder.newTime.setText(times[1] + "/" + times[2]);
-            int browseNumber = (int)(100+Math.random()*(999));
-            viewHolder.browseNumber.setText(browseNumber + "");
-            return convertView;
-        }
-    }
-
     class MyOnPageChangeListener implements ViewPager.OnPageChangeListener{
-
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
         @Override
         public void onPageSelected(int position) {
-            //1.设置文本
-            title.setText(list.get(position).getTitle());
-            //2对应页面的红点高亮
-            //将之前的点变成灰色
-            ll_point_group.getChildAt(prePosition).setEnabled(false);
-            //将当前点变成红色
-            ll_point_group.getChildAt(position).setEnabled(true);
-            //记录更新上一次的位置
-            prePosition = position;
+            title.setText(list.get(position).getTitle());//设置文本
+            ll_point_group.getChildAt(prePosition).setEnabled(false);//对应页面的红点高亮，将之前的点变成灰色
+            ll_point_group.getChildAt(position).setEnabled(true);//将当前点变成红色
+            prePosition = position;//记录更新上一次的位置
         }
 
         @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
+        public void onPageScrollStateChanged(int state) {}
     }
 
-    class MyTopNewsAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            ImageView imageView = new ImageView(context);
-            imageView.setBackgroundResource(R.mipmap.news_pic_default);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            container.addView(imageView);
-            TestContentNewsBean testBean = list.get(position);
-            String imageUrl = testBean.getImageUrl();
-//            x.image().bind(imageView, imageUrl);
-            Glide.with(context)
-                    .load(imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imageView);
-            return imageView;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-    }
-
-    class ViewHolder{
-        public ImageView imageView;
-        public TextView newSrc;
-        public TextView newTitle;
-        public TextView newTime;
-        public TextView browseNumber;
-    }
-
+    /**
+     * 得到新闻列表中的所有数据
+     */
     private void getAllDataList(){
         String testUrl = "http://api.jisuapi.com/news/get?channel=" + channel + "&start=0&num=40&appkey=d6c1207126bca7d5";
         RequestParams params = new RequestParams(testUrl);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                JSONObject jsonNews = null;
-                TestContentNewsBean newsBean = null;
-                try {
-                    jsonNews = new JSONObject(result);
-                    jsonNews = jsonNews.getJSONObject("result");
-                    JSONArray jsonArrayNews = jsonNews.getJSONArray("list");
-                    for (int s = 0; s < jsonArrayNews.length(); s++) {
-                        jsonNews = jsonArrayNews.getJSONObject(s);
-                        newsBean = new TestContentNewsBean();
-                        newsBean.setImageUrl(jsonNews.getString("pic"));
-                        newsBean.setTitle(jsonNews.getString("title"));
-                        newsBean.setSrc(jsonNews.getString("src"));
-                        newsBean.setTime(jsonNews.getString("time"));
-                        newsBean.setContentUrl(jsonNews.getString("url"));
-                        allDataList.add(newsBean);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                allDataList = getDataFromJson(result);
+//                JSONObject jsonNews = null;
+//                TestContentNewsBean newsBean = null;
+//                try {
+//                    jsonNews = new JSONObject(result);
+//                    jsonNews = jsonNews.getJSONObject("result");
+//                    JSONArray jsonArrayNews = jsonNews.getJSONArray("list");
+//                    for (int s = 0; s < jsonArrayNews.length(); s++) {
+//                        jsonNews = jsonArrayNews.getJSONObject(s);
+//                        newsBean = new TestContentNewsBean();
+//                        newsBean.setImageUrl(jsonNews.getString("pic"));
+//                        newsBean.setTitle(jsonNews.getString("title"));
+//                        newsBean.setSrc(jsonNews.getString("src"));
+//                        newsBean.setTime(jsonNews.getString("time"));
+//                        newsBean.setContentUrl(jsonNews.getString("url"));
+//                        allDataList.add(newsBean);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {}
@@ -434,7 +352,11 @@ public class newThingFragment extends Fragment {
         });
     }
 
-    //用于解析数据
+    /**
+     * 用于解析json数据
+     * @param json 相应的json数据
+     * @return 返回json数据中对应的list集合
+     */
     private List<TestContentNewsBean> getDataFromJson(String json){
         List<TestContentNewsBean> dataList = new ArrayList<TestContentNewsBean>();
         JSONObject jsonNews = null;
@@ -458,7 +380,5 @@ public class newThingFragment extends Fragment {
         }
         return dataList;
     }
-
-
 
 }

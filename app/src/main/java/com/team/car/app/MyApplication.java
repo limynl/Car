@@ -1,4 +1,4 @@
-package com.team.car.utils;
+package com.team.car.app;
 
 import android.app.Application;
 
