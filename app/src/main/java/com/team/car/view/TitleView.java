@@ -33,9 +33,6 @@ import com.team.car.utils.DisplayMetricsUtil;
  * </code>
  * 
  * 注：不需要自定义视图TitleView的XML里无需写内容
- *
- * Created by Lmy on 2017/1/20.
- * email 1434117404@qq.com
  */
 public class TitleView extends FrameLayout {
 	public final static String CUSTOM_VIEW_TYPE_LEFT = "left";
