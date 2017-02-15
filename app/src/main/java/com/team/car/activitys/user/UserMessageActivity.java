@@ -34,6 +34,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Created by Lmy on 2017/1/20.
+ * email 1434117404@qq.com
+ */
+
 public class UserMessageActivity extends Activity {
     @Bind(R.id.user_head)
     ImageView userHead;//头像
@@ -295,6 +300,5 @@ public class UserMessageActivity extends Activity {
         userHead.setMaxWidth(90);
         userHead.setVisibility(ImageView.VISIBLE);
     }
-
 
 }

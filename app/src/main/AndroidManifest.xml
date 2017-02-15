@@ -190,6 +190,7 @@
         <activity android:name=".activitys.business.BusinessMainActivity"/>
         <activity android:name=".activitys.car.AddCarActivity"/>
         <activity android:name=".activitys.found.NewsDetailActivity"/>
+        <activity android:name=".activitys.found.carDynamicActivity"/>
 
         <!--注册服务-->
         <service android:name=".services.WeatherService"/>

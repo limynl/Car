@@ -1,6 +1,7 @@
 package com.team.car.fragment.found;
 
 import android.app.ActionBar.LayoutParams;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.team.car.R;
+import com.team.car.activitys.found.carDynamicActivity;
 import com.team.car.base.fragment.BaseFragment;
 import com.team.car.fragment.found.childfragment.carDynamicFragment;
 import com.team.car.fragment.found.childfragment.newThingFragment;
@@ -44,6 +46,8 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
     private TextView sendMood;
     private TextView sendHelp;
 
+    private Intent intent;
+
     private View view;//主视图
 
     /**
@@ -62,9 +66,9 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
 
         //弹框中相应控件的初始化
         sendMood = (TextView) mPopupWindowView.findViewById(R.id.found_send_mood);
-        sendMood.getBackground().setAlpha(100);
+        sendMood.getBackground().setAlpha(50);
         sendHelp = (TextView) mPopupWindowView.findViewById(R.id.found_send_help);
-        sendHelp.getBackground().setAlpha(100);
+        sendHelp.getBackground().setAlpha(50);
 
         return view;
     }
@@ -93,9 +97,12 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
                 toastUtil.Short(getContext(), "点击我查看更多^_^").show();
                 showPopupWindow();
                 break;
-            case R.id.found_send_mood:
+            case R.id.found_send_mood:{
                 toastUtil.Short(context, "发动态").show();
                 popupWindow.dismiss();
+                intent = new Intent(context, carDynamicActivity.class);
+                startActivity(intent);
+            }
                 break;
             case R.id.found_send_help:
                 toastUtil.Short(context, "求救").show();

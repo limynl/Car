@@ -17,7 +17,7 @@
         <item
             android:id="@+id/online_complaint"
             android:icon="@mipmap/complaint"
-            android:title="在线投诉" />
+            android:title="在线客服" />
     </group>
 
     <group android:id="@+id/second_group">

@@ -26,5 +26,11 @@
     <string name="select_time">选择时间</string>
     <string name="current_time">当前时间</string>
 
+    <string-array name="release">
+        <item>相片</item>
+        <item>小视频</item>
+    </string-array>
+
+    <string name="send_back_right">\ue628</string>
 
 </resources>

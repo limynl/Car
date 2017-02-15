@@ -79,4 +79,25 @@ dependencies {
     compile project(':PullToRefresh_library')
     compile 'org.xutils:xutils:3.3.36'
     compile files('libs/glide-3.7.0.jar')
+
+    //图片加载框架
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //网易七鱼客服
+    compile 'com.qiyukf.unicorn:unicorn:2.9.0'
+    // 多图选择与九宫格图片展示
+    compile 'com.lzy.widget:ninegridview:0.2.0'
+    compile 'com.lzy.widget:imagepicker:0.3.2'
+    //RecyclerView（非下拉刷新上拉加载）
+    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+    compile 'com.mabeijianxi:small-video-record:1.0.8'
+    //material dialog
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar') {
+        transitive = true
+    }
+}
+
+repositories {
+    maven {
+        url 'https://dl.bintray.com/wangyuwei/maven'
+    }
 }

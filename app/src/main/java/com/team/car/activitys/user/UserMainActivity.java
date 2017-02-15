@@ -24,7 +24,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.qiyukf.unicorn.api.ConsultSource;
+import com.qiyukf.unicorn.api.Unicorn;
 import com.team.car.R;
 import com.team.car.utils.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
@@ -163,7 +166,12 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
         } else if (id == R.id.share) {
             toastUtil.Long(UserMainActivity.this, "分享App").show();
         } else if (id == R.id.online_complaint) {
-            toastUtil.Long(UserMainActivity.this, "在线投诉").show();
+            toastUtil.Long(UserMainActivity.this, "在线客服").show();
+            ConsultSource source = new ConsultSource(null, null, null);
+            if(!Unicorn.isServiceAvailable()){
+                Toast.makeText(UserMainActivity.this, "客服接口有问题，请稍后再试", Toast.LENGTH_SHORT).show();
+            }
+            Unicorn.openServiceActivity(UserMainActivity.this, "车应用客服", source);
         }else if (id == R.id.setting){
             toastUtil.Long(UserMainActivity.this, "设置").show();
             Intent intent = new Intent(UserMainActivity.this, SettingActivity.class);

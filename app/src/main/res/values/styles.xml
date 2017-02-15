@@ -100,6 +100,28 @@
     </style>
 
 
+    <!--<style name="main_menu_animstyle">-->
+        <!--<item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>-->
+    <!--</style>-->
+
+    <!--<style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/photo_choose_bg</item>
+    </style>-->
+
+
+    <style name="titleBarText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">#FF6600</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+
 
 
 </resources>

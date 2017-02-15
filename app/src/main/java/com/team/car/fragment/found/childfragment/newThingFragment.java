@@ -323,25 +323,6 @@ public class newThingFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 allDataList = getDataFromJson(result);
-//                JSONObject jsonNews = null;
-//                TestContentNewsBean newsBean = null;
-//                try {
-//                    jsonNews = new JSONObject(result);
-//                    jsonNews = jsonNews.getJSONObject("result");
-//                    JSONArray jsonArrayNews = jsonNews.getJSONArray("list");
-//                    for (int s = 0; s < jsonArrayNews.length(); s++) {
-//                        jsonNews = jsonArrayNews.getJSONObject(s);
-//                        newsBean = new TestContentNewsBean();
-//                        newsBean.setImageUrl(jsonNews.getString("pic"));
-//                        newsBean.setTitle(jsonNews.getString("title"));
-//                        newsBean.setSrc(jsonNews.getString("src"));
-//                        newsBean.setTime(jsonNews.getString("time"));
-//                        newsBean.setContentUrl(jsonNews.getString("url"));
-//                        allDataList.add(newsBean);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {}

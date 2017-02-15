@@ -34,4 +34,9 @@
     <color name="tq_item_color">#424242</color>
     <color name="light_grey">#D3D3D3</color>
 
+    <!--发表动态-->
+    <color name="white1">#FFFFFF</color>
+    <color name="main_bg_color1">#41a5f6</color>
+    <color name="white3">#EEEEEE</color>
+
 </resources>
