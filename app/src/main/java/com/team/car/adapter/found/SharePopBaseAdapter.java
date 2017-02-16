@@ -9,20 +9,21 @@ import android.widget.TextView;
 
 import com.team.car.R;
 import com.team.car.activitys.found.NewsDetailActivity;
-import com.team.car.entity.found.ShareBean;
+import com.team.car.entity.found.SharePopBean;
 
 import java.util.List;
 
 /**
+ * 分享的PopupWindow的适配器
  * Created by Lmy on 2017/2/16.
  * email 1434117404@qq.com
  */
 
-public class ShareBaseAdapter extends BaseAdapter {
+public class SharePopBaseAdapter extends BaseAdapter {
     private Context context;
-    private List<ShareBean> list;
+    private List<SharePopBean> list;
 
-    public ShareBaseAdapter(NewsDetailActivity context, List<ShareBean> list) {
+    public SharePopBaseAdapter(NewsDetailActivity context, List<SharePopBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -54,7 +55,7 @@ public class ShareBaseAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ShareBean shareBean = list.get(position);
+        SharePopBean shareBean = list.get(position);
         viewHolder.shareIcon.setImageResource(shareBean.getIconId());
         viewHolder.shareName.setText(shareBean.getName());
         return convertView;

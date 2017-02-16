@@ -1,18 +1,19 @@
 package com.team.car.entity.found;
 
 /**
+ * 分享的PopupWindow的bean
  * Created by Lmy on 2017/2/16.
  * email 1434117404@qq.com
  */
 
-public class ShareBean {
-    private int iconId;
-    private String name;
+public class SharePopBean {
+    private int iconId;//图片id
+    private String name;//对应的名称
 
-    public ShareBean() {
+    public SharePopBean() {
     }
 
-    public ShareBean(int iconId, String name) {
+    public SharePopBean(int iconId, String name) {
         this.iconId = iconId;
         this.name = name;
     }
@@ -32,6 +33,7 @@ public class ShareBean {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public String toString() {

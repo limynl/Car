@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 import com.team.car.R;
-import com.team.car.adapter.found.ShareBaseAdapter;
-import com.team.car.entity.found.ShareBean;
+import com.team.car.adapter.found.SharePopBaseAdapter;
+import com.team.car.entity.found.SharePopBean;
 import com.team.car.utils.MarqueeText;
 import com.team.car.widgets.dialogview.SVProgressHUD;
 
@@ -60,8 +60,8 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     private int[] iconId = {R.drawable.ssdk_oks_classic_qq, R.drawable.ssdk_oks_classic_qzone,
                             R.drawable.ssdk_oks_classic_sinaweibo, R.drawable.ssdk_oks_classic_wechat,
                             R.drawable.ssdk_oks_classic_wechatmoments};
-    private List<ShareBean> shareBeanList = new ArrayList<ShareBean>();
-    private ShareBaseAdapter shareBaseAdapter;
+    private List<SharePopBean> shareBeanList = new ArrayList<SharePopBean>();
+    private SharePopBaseAdapter shareBaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +81,14 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         webView = showDetailNews.getRefreshableView();
         contentTitle = (MarqueeText) findViewById(R.id.found_detail_content_title);
 
-        shareBeanList.add(new ShareBean(iconId[0], names[0]));
-        shareBeanList.add(new ShareBean(iconId[1], names[1]));
-        shareBeanList.add(new ShareBean(iconId[2], names[2]));
-        shareBeanList.add(new ShareBean(iconId[3], names[3]));
-        shareBeanList.add(new ShareBean(iconId[4], names[4]));
+        shareBeanList.add(new SharePopBean(iconId[0], names[0]));
+        shareBeanList.add(new SharePopBean(iconId[1], names[1]));
+        shareBeanList.add(new SharePopBean(iconId[2], names[2]));
+        shareBeanList.add(new SharePopBean(iconId[3], names[3]));
+        shareBeanList.add(new SharePopBean(iconId[4], names[4]));
         popView=getLayoutInflater().inflate(R.layout.share_grid,null);
         gv=(GridView)popView.findViewById(R.id.share_grid);
-        shareBaseAdapter = new ShareBaseAdapter(NewsDetailActivity.this, shareBeanList);
+        shareBaseAdapter = new SharePopBaseAdapter(NewsDetailActivity.this, shareBeanList);
         gv.setAdapter(shareBaseAdapter);
 
         back.setOnClickListener(this);
