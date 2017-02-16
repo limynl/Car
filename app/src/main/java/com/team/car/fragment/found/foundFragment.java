@@ -25,6 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 /**
  * Created by Lmy on 2017/1/16.
  * email 1434117404@qq.com
@@ -107,6 +109,9 @@ public class foundFragment extends BaseFragment implements View.OnClickListener{
             case R.id.found_send_help:
                 toastUtil.Short(context, "求救").show();
                 popupWindow.dismiss();
+                OnekeyShare oks = new OnekeyShare();
+                oks.setText("haha....");
+                oks.show(context);
                 break;
         }
     }

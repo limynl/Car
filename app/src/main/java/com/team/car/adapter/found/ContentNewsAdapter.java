@@ -1,6 +1,7 @@
 package com.team.car.adapter.found;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,7 +14,10 @@ import com.team.car.entity.found.TestContentNewsBean;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 发现栏目中新鲜事的新闻条目适配器
@@ -22,9 +26,11 @@ import java.util.List;
  */
 
 public class ContentNewsAdapter extends BaseAdapter {
+    private static final String TAG = ContentNewsAdapter.class.getSimpleName();
     private Context context;
     private List<TestContentNewsBean> contentList;
     private ImageOptions imageOptions;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);//获取系统时间
 
     public ContentNewsAdapter(Context context, List<TestContentNewsBean> contentList, ImageOptions imageOptions){
         this.context = context;
@@ -65,9 +71,18 @@ public class ContentNewsAdapter extends BaseAdapter {
         //显示相应的数据
         TestContentNewsBean newsBean = contentList.get(position);
         x.image().bind(viewHolder.imageView, newsBean.getImageUrl(), imageOptions);//请求图片
-        viewHolder.newTitle.setText(newsBean.getTitle());
-        viewHolder.newSrc.setText(newsBean.getSrc());
-        String[] times = newsBean.getTime().split("-");
+        if(!TextUtils.isEmpty(newsBean.getTitle())){
+            viewHolder.newTitle.setText(newsBean.getTitle());
+        }
+        if(!TextUtils.isEmpty(newsBean.getSrc())){
+            viewHolder.newSrc.setText(newsBean.getSrc());
+        }
+        String[] times = new String[4];
+        if(!TextUtils.isEmpty(newsBean.getTime())){
+            times = newsBean.getTime().split(" ")[0].split("-");
+        }else{
+            times = sdf.format(new Date()).split(" ")[0].split("-");
+        }
         viewHolder.newTime.setText(times[1] + "/" + times[2]);
         int browseNumber = (int)(100+Math.random()*(999));
         viewHolder.browseNumber.setText(browseNumber + "");

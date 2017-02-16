@@ -83,6 +83,7 @@ public class TestContentNewsBean {
         this.browseNumber = browseNumber;
     }
 
+
     @Override
     public String toString() {
         return "TestContentNewsBean{" +

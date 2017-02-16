@@ -36,7 +36,11 @@
 
     <!--发表动态-->
     <color name="white1">#FFFFFF</color>
-    <color name="main_bg_color1">#41a5f6</color>
+    <color name="main_bg_color1">#7ADFB8</color>
     <color name="white3">#EEEEEE</color>
+
+    <!--动态列表-->
+    <color name="red">#FF0000</color>
+    <color name="gray">#808080</color>
 
 </resources>

@@ -30,7 +30,7 @@
     <com.team.car.view.WavyLineView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:strokeColor="#FF4081"
+        app:strokeColor="#f5821f"
         app:strokeWidth="1dp"
         app:amplitude="8dp"
         android:id="@+id/release_wavyLine"/>
