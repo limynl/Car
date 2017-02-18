@@ -25,9 +25,9 @@ public abstract class VolleyListenerInterface {
 
     /**
      * 有参构造函数
-     * @param context
-     * @param mSuccessListener
-     * @param mErrorListener
+     * @param context 上下文
+     * @param mSuccessListener 请求成功监听回调
+     * @param mErrorListener 请求失败监听回调
      */
     public VolleyListenerInterface(Context context, Response.Listener<String> mSuccessListener, Response.ErrorListener mErrorListener){
         this.context = context;
@@ -37,13 +37,13 @@ public abstract class VolleyListenerInterface {
 
     /**
      * 请求成功时的回调函数
-     * @param result
+     * @param result 正确数据
      */
     public abstract void onSuccess(String result);
 
     /**
      * 请求失败时的回调函数
-     * @param error
+     * @param error 错误数据
      */
     public abstract void onError(VolleyError error);
 
@@ -75,12 +75,4 @@ public abstract class VolleyListenerInterface {
         };
         return mErrorListener;
     }
-
-
-
-
-
-
-
-
 }

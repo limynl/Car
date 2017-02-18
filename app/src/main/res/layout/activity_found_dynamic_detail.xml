@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:background="#F2F2F2"
         android:layout_height="match_parent"
-    android:backgroundTint="#e6e6e6">
+    android:backgroundTint="#bdbdbd">
 
         <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:layout_width="match_parent"

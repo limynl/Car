@@ -79,9 +79,8 @@ public class UserMessageActivity extends Activity {
             }
                 break;
             case R.id.user_message_back:{
-                startActivity(new Intent(UserMessageActivity.this, UserMainActivity.class));
-                finish();
-                overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
+                UserMessageActivity.this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
                 break;
             case R.id.choose_gender:{

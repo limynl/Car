@@ -39,7 +39,7 @@ public class carDynamicFragment extends Fragment {
     private XRecyclerView mRecyclerView;//刷新控件
     private CommonRecyclerAdapter<InfoModel> mAdapter;
     private List<InfoModel> mInfoModels;//所有动态的集合
-    private List<InfoModel> test;//
+    private List<InfoModel> test;//测试数据
     private int start = 0;
     private int count = 10;//设置一次获取的条目数
     private View footerView;//脚布局
@@ -55,6 +55,13 @@ public class carDynamicFragment extends Fragment {
         context = getContext();
     }
 
+    /**
+     * 加载主布局
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +70,10 @@ public class carDynamicFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 初始化相应的控件
+     * @param view
+     */
     private void initView(View view) {
         mRecyclerView = (XRecyclerView)view.findViewById(R.id.homework_recycler);
         mImageView = (ImageView) view.findViewById(R.id.no_content);

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:background="#7ADFB8">
+
+        <ImageView
+            android:id="@+id/add_car_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加爱车"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/add_car_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/add_car_finish"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/add_car_num_tv"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="车牌号码"
+                android:textColor="#424242"
+                android:textSize="15sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/add_car_num_tv"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/add_car_province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="川"
+                    android:textSize="18sp"
+                    android:drawableRight="@mipmap/select_car_number"
+                    android:drawablePadding="8dp"
+                    android:layout_marginRight="20dp"/>
+
+                <EditText
+                    android:id="@+id/add_car_num"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_login2"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:maxLength="10"
+                    android:hint="请填写"
+                    android:textColorHint="#A3A3A3"
+                    android:textColor="#A3A3A3"
+                    android:textSize="16sp" />
+
+                </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e0e0e0"/>
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="#424242"
+                android:text="车架号码" />
+
+            <EditText
+                android:id="@+id/add_car_frame_num"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_width="190dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_login2"
+                android:inputType="text"
+                android:singleLine="true"
+                android:maxLength="10"
+                android:hint="请填写"
+                android:textColorHint="#A3A3A3"
+                android:textColor="#A3A3A3"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e0e0e0"/>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textColor="#424242"
+                android:text="发动机号" />
+
+            <EditText
+                android:id="@+id/add_car_engine_num"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_width="190dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_login2"
+                android:inputType="text"
+                android:singleLine="true"
+                android:maxLength="10"
+                android:hint="请填写"
+                android:textColorHint="#A3A3A3"
+                android:textColor="#A3A3A3"
+                android:textSize="16sp" />
+        </RelativeLayout>
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e0e0e0" />
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:text="注册日期" />
+
+            <RelativeLayout
+                android:id="@+id/add_car_select_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/add_car_register_data"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:textColor="#A3A3A3"
+                    android:textSize="16sp"
+                    android:text="请选择"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_open"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="18dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e0e0e0"/>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:text="品牌车系" />
+
+            <RelativeLayout
+                android:id="@+id/add_car_select_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/add_car_brand"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:textColor="#A3A3A3"
+                    android:textSize="16sp"
+                    android:text="请选择"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_open"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="18dp"/>
+
+                </RelativeLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e0e0e0"/>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:text="具体车型" />
+
+
+            <RelativeLayout
+                android:id="@+id/add_car_select_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/sub_add_car_specific_model"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:textColor="#A3A3A3"
+                    android:textSize="16sp"
+                    android:text="请选择"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/add_car_specific_model"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
+                    android:textColor="#A3A3A3"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_open"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="18dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e0e0e0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册日期为车辆上牌日期，可在行驶证上查看"
+            android:textSize="15sp"
+            android:drawableLeft="@mipmap/add_car_warning"
+            android:drawablePadding="8dp"
+            android:layout_marginTop="50dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

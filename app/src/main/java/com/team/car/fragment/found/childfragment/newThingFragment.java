@@ -52,9 +52,6 @@ public class newThingFragment extends Fragment {
 
     private String place = URLEncoder.encode("饭店","UTF-8");
     private String catgryor = URLEncoder.encode("北京","UTF-8");
-    //测试数据
-//    http://api.map.baidu.com/place/v2/search?q=饭店region=北京output=json&ak=tZKipZ9dXjyWMUlbryzGYuSP1HIALCLE
-    private String test_url = "http://api.map.baidu.com/place/v2/search?q=" + place +"region=" + catgryor+ "output=json&ak=tZKipZ9dXjyWMUlbryzGYuSP1HIALCLE";
 
     private String channel = URLEncoder.encode("头条","UTF-8");
     private int startIndex = 0, numCount = 6;
@@ -187,7 +184,6 @@ public class newThingFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getTestData();
 
         getAllDataList();
         Log.e(TAG, "共有数据条数：" + allDataList.size());
@@ -371,20 +367,5 @@ public class newThingFragment extends Fragment {
         return dataList;
     }
 
-    private void getTestData(){
-        RequestParams params = new RequestParams(test_url);
-        x.http().get(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e(TAG, "测试百度数据" + result);
-            }
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {}
-            @Override
-            public void onCancelled(CancelledException cex) {}
-            @Override
-            public void onFinished() {}
-        });
-    }
 
 }

@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.qiyukf.unicorn.api.ConsultSource;
 import com.qiyukf.unicorn.api.Unicorn;
 import com.team.car.R;
+import com.team.car.activitys.car.ShowCarActivity;
 import com.team.car.utils.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
 import com.team.car.services.WeatherService;
@@ -53,8 +54,9 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class UserMainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
     private static final String TAG = UserMainActivity.class.getSimpleName();
-    private View headerView;//侧滑头布局
     private ToastUtil toastUtil = new ToastUtil();
+    private Intent intent;//用于跳转
+    private View headerView;//侧滑头布局
     private CoordinatorLayout right;
     private NavigationView left;
     private boolean isDrawer=false;
@@ -70,7 +72,6 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
     private ProgressReceiver progressReceiver;//广播接收器
     private String city = null, weather;//存储城市和天气信息
     private String ip;//通过ip获取天气
-    private Intent intent;//用于跳转
     private NetReceiver mReceiver;//广播接收器
     private IntentFilter mFilter;//过滤器
     private WeatherService.WeatherBinder binder;
@@ -161,6 +162,9 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
         int id = item.getItemId();
         if (id == R.id.add_car) {
             toastUtil.Long(UserMainActivity.this, "添加爱车").show();
+            Intent intent = new Intent(UserMainActivity.this, ShowCarActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
         } else if (id == R.id.integral) {
             toastUtil.Long(UserMainActivity.this, "我的资产").show();
         } else if (id == R.id.share) {

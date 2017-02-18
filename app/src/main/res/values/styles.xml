@@ -128,7 +128,4 @@
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
     </style>
 
-
-
-
 </resources>

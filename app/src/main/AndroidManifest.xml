@@ -13,14 +13,13 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <!--shareSDK所需权限-->
+    <!-- shareSDK所需权限 -->
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-
-    <!--Required 一些系统要求的权限，如访问网络等-->
+    <!-- Required 一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.example.fd.ourapplication.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -56,7 +55,6 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 摄影机 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -86,33 +84,23 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 存储卡的权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--添加操作闪光灯的权限-->
+    <!-- 添加操作闪光灯的权限 -->
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <!--添加操作震动器的权限-->
+    <!-- 添加操作震动器的权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!--支付宝相关权限-->
+    <!-- 支付宝相关权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
-
-
-
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-
-
-
-
 
     <application
         android:name=".app.MyApplication"
@@ -121,7 +109,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="tZKipZ9dXjyWMUlbryzGYuSP1HIALCLE" />
@@ -135,6 +122,7 @@
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -178,36 +166,38 @@
         </activity>
         <activity
             android:name=".activitys.user.UserMainActivity"
-            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:supportsRtl="true"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
-        <!--注册activity界面-->
+            android:theme="@style/Theme.AppCompat" />
+        <!-- 注册activity界面 -->
         <activity android:name=".activitys.user.RegisterActivity" />
         <activity android:name=".activitys.user.SettingActivity" />
-        <activity android:name=".activitys.user.UserMessageActivity"/>
-        <activity android:name=".activitys.weather.SelectCity"/>
-        <activity android:name=".activitys.weather.WeatherActivity"/>
-        <activity android:name=".activitys.business.BusinessMainActivity"/>
-        <activity android:name=".activitys.car.AddCarActivity"/>
-        <activity android:name=".activitys.found.NewsDetailActivity"/>
-        <activity android:name=".activitys.found.carDynamicActivity"/>
+        <activity android:name=".activitys.user.UserMessageActivity" />
+        <activity android:name=".activitys.weather.SelectCity" />
+        <activity android:name=".activitys.weather.WeatherActivity" />
+        <activity android:name=".activitys.business.BusinessMainActivity" />
+        <activity android:name=".activitys.car.ShowCarActivity" />
+        <activity android:name=".activitys.car.AddCarActivity" />
+        <activity android:name=".activitys.found.NewsDetailActivity" />
+        <activity android:name=".activitys.found.carDynamicActivity" />
+        <activity android:name=".activitys.car.CarBrandSelectActivity" />
+        <activity android:name=".activitys.car.CarBrandSelectTwoActivity" />
+        <activity android:name=".activitys.car.CarBrandSelectThreeActivity"/>
 
-        <!--注册服务-->
-        <service android:name=".services.WeatherService"/>
+        <!-- 注册服务 -->
+        <service android:name=".services.WeatherService" />
 
-        <!--实现重复定位-->
+        <!-- 实现重复定位 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
-        </service>
+            android:process=":remote" />
 
-        <!--注册自己的服务-->
+        <!-- 注册自己的服务 -->
         <service
-            android:name="com.team.car.services.LocationServices"
+            android:name=".services.LocationServices"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true" />
 
     </application>
 

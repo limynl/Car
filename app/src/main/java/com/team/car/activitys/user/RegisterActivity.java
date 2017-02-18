@@ -13,10 +13,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.team.car.R;
+import com.team.car.utils.volley.VolleyListenerInterface;
+import com.team.car.utils.volley.VolleyRequestUtil;
 import com.team.car.widgets.CleanableEditText;
 import com.team.car.widgets.ToastUtil;
 import com.team.car.widgets.dialogview.SVProgressHUD;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -34,6 +43,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
     private ToastUtil toastUtil = new ToastUtil();
 
     private CleanableEditText phoneNumber;//手机号
+    private CleanableEditText password;//密码
     private CleanableEditText code;//验证码
     private Button getCord;//获取验证码按钮
     private TextView saveCord;//验证按钮
@@ -77,6 +87,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
     }
     private void init() {
         phoneNumber = (CleanableEditText) findViewById(R.id.phone_number);
+        password = (CleanableEditText) findViewById(R.id.password);
         code = (CleanableEditText) findViewById(R.id.code);
         getCord = (Button) findViewById(R.id.getCord);
         saveCord = (TextView) findViewById(R.id.btn_register);
@@ -90,14 +101,18 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.getCord:
                 if(!TextUtils.isEmpty(phoneNumber.getText().toString().trim())){
-                    if(phoneNumber.getText().toString().trim().length()==11){
-                        iPhone = phoneNumber.getText().toString().trim();
-                        //用于向服务器请求发送验证码的服务，需要接受传递国家代号和接受验证码的手机号码，支持此服务的国家代码在getSupportedCountries中获取
-                        SMSSDK.getVerificationCode("86",iPhone);
-                        code.requestFocus();
+                    if(!TextUtils.isEmpty(password.getText().toString().trim())) {
+                        if (phoneNumber.getText().toString().trim().length() == 11) {
+                            iPhone = phoneNumber.getText().toString().trim();
+                            //用于向服务器请求发送验证码的服务，需要接受传递国家代号和接受验证码的手机号码，支持此服务的国家代码在getSupportedCountries中获取
+                            SMSSDK.getVerificationCode("86", iPhone);
+                            code.requestFocus();
+                        } else {
+                            toastUtil.Short(RegisterActivity.this, "电话号码位数不对！").show();
+                            phoneNumber.requestFocus();
+                        }
                     }else{
-                        toastUtil.Short(RegisterActivity.this, "请输入完整电话号码").show();
-                        phoneNumber.requestFocus();
+                        toastUtil.Short(RegisterActivity.this, "密码不能为空").show();
                     }
                 }else{
                     toastUtil.Short(RegisterActivity.this, "请输入您的电话号码").show();
@@ -105,21 +120,25 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
                 }
                 break;
             case R.id.btn_register:
-                if(!TextUtils.isEmpty(code.getText().toString().trim())){
-                    if(!TextUtils.isEmpty(code.getText().toString().trim())){
-                        if(code.getText().toString().trim().length()==4){
-                            SVProgressHUD.showWithStatus(RegisterActivity.this,"Loading...");
-                            iCord = code.getText().toString().trim();
-                            //用于向服务器接受提交接收到的验证码，验证成功后会通过EventHandler返回国家代码和电话号码
-                            SMSSDK.submitVerificationCode("86", iPhone, iCord);
-                            flag = false;
+                if(!TextUtils.isEmpty(phoneNumber.getText().toString().trim())){
+                    if(!TextUtils.isEmpty(password.getText().toString().trim())){
+                        if(!TextUtils.isEmpty(code.getText().toString().trim())){
+                            if(code.getText().toString().trim().length()==4){
+                                SVProgressHUD.showWithStatus(RegisterActivity.this,"请稍等...");
+                                iCord = code.getText().toString().trim();
+                                //用于向服务器接受提交接收到的验证码，验证成功后会通过EventHandler返回国家代码和电话号码
+                                SMSSDK.submitVerificationCode("86", iPhone, iCord);
+                                flag = false;
+                            }else{
+                                toastUtil.Short(RegisterActivity.this, "请输入完整验证码").show();
+                                code.requestFocus();
+                            }
                         }else{
-                            toastUtil.Short(RegisterActivity.this, "请输入完整验证码").show();
+                            toastUtil.Short(RegisterActivity.this, "请输入验证码").show();
                             code.requestFocus();
                         }
                     }else{
-                        toastUtil.Short(RegisterActivity.this, "请输入验证码").show();
-                        code.requestFocus();
+                        toastUtil.Short(RegisterActivity.this, "请输入密码！").show();
                     }
                 }else{
                     toastUtil.Short(RegisterActivity.this, "请输入电话号码").show();
@@ -136,7 +155,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
                 break;
         }
     }
-    //验证码送成功后提示文字
+    //验证码送成功后文字提示
     private void reminderText() {
         handlerText.sendEmptyMessageDelayed(1, 0);
     }
@@ -173,31 +192,13 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
             if (result == SMSSDK.RESULT_COMPLETE) {//回调完成
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {//提交验证码成功,验证通过
                     handlerText.sendEmptyMessage(2);
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                Thread.sleep(10000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
-                    SVProgressHUD.isCancel(RegisterActivity.this, true);
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
 
-                    //这里可以添加用户
+                    //这里可以添加用户,进行保存
+                    registerUser();
+
+                    SVProgressHUD.isCancel(RegisterActivity.this, true);//取消ProgressBar
+
+
 
 
                     toastUtil.Short(RegisterActivity.this, "注册成功").show();
@@ -227,12 +228,39 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
             }
         }
     };
+
+    /**
+     * 将用户的信息保存到服务器中
+     */
+    private void registerUser() {
+        String registerUserUrl  = "";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("username", phoneNumber.getText().toString());
+        map.put("passWord", password.getText().toString());
+        VolleyRequestUtil.RequestPost(RegisterActivity.this, registerUserUrl, "registerUser", map, new VolleyListenerInterface() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String json = jsonObject.optString("");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.e(TAG, "onError: " + error.toString());
+                toastUtil.Short(RegisterActivity.this, "注册出现异常").show();
+            }
+        });
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //unregisterAllEventHandler()：反注册函数，实现反注册，且必须和registerEventHandler配套使用，否则可能造成内存泄漏
         SMSSDK.unregisterAllEventHandler();
     }
-
-
 }
