@@ -112,6 +112,7 @@ public class AddCarActivity extends Activity implements View.OnClickListener, Ad
         addCarSelectBrand.setOnClickListener(this);
         addCarSelectModel.setOnClickListener(this);
 
+
         Bundle bundle = getIntent().getExtras();
         flag = bundle.getInt("flag");
         if (flag == 2){
