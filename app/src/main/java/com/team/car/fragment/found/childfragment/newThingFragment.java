@@ -366,6 +366,4 @@ public class newThingFragment extends Fragment {
         }
         return dataList;
     }
-
-
 }

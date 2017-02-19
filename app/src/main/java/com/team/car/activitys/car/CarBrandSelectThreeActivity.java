@@ -85,6 +85,7 @@ public class CarBrandSelectThreeActivity extends Activity implements View.OnClic
         switch (v.getId()){
             case R.id.car_brand_select_three_back:{
                 this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
             break;
         }

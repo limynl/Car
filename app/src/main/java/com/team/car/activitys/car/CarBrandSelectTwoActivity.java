@@ -42,6 +42,7 @@ public class CarBrandSelectTwoActivity extends Activity implements View.OnClickL
     private List<String> listModel;//存放该品牌汽车的具体车型，并将其传到起始界面，用于用户进一步选择车型
     private int location;//上一个界面点击的位置，当前界面用与获取到该brand的具体信息
     private String brand;//上一个Activity传过来的brand的一部份，当前界面进行拼接，组成该车的 品牌车系
+    private String iconUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class CarBrandSelectTwoActivity extends Activity implements View.OnClickL
         final Bundle bundle = this.getIntent().getExtras();
         location = bundle.getInt("position");
         brand = bundle.getString("brand");
+        iconUrl = bundle.getString("iconUrl");
         String url = "http://api.jisuapi.com/car/carlist?appkey=d6c1207126bca7d5&parentid=" + location;
 
         RequestParams params = new RequestParams(url);
@@ -135,6 +137,7 @@ public class CarBrandSelectTwoActivity extends Activity implements View.OnClickL
                 Bundle b = new Bundle();
                 b.putString("brands", brand);
                 b.putSerializable("model", (Serializable) listModel);
+                b.putString("iconUrl", iconUrl);
                 intent.putExtras(b);
                 setResult(3, intent);
                 CarBrandSelectTwoActivity.this.finish();
@@ -148,6 +151,7 @@ public class CarBrandSelectTwoActivity extends Activity implements View.OnClickL
         switch (v.getId()){
             case R.id.car_brand_select_two_back:{
                 this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         }
     }

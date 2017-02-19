@@ -118,6 +118,7 @@ public class CarBrandSelectActivity extends Activity implements View.OnClickList
                 Bundle bundle = new Bundle();
                 bundle.putInt("position", (position + 1));
                 bundle.putString("brand", ((CarBrandSelectBean) adapter.getItem(position)).getCarBrand());
+                bundle.putString("iconUrl", ((CarBrandSelectBean) adapter.getItem(position)).getCarLogo());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 2);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -190,6 +191,7 @@ public class CarBrandSelectActivity extends Activity implements View.OnClickList
         switch (v.getId()){
             case R.id.car_brand_select_back:{
                 this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
             break;
         }

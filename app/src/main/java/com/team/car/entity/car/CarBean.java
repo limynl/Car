@@ -1,11 +1,13 @@
 package com.team.car.entity.car;
 
+import java.io.Serializable;
+
 /**
  * Created by Lmy on 2017/2/16.
  * email 1434117404@qq.com
  */
 
-public class CarBean {
+public class CarBean implements Serializable{
     private int carId;//车信息ID
     private String carNumber;//车牌号
     private String carIconUrl;//车图标
