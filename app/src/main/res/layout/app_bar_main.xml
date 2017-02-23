@@ -19,13 +19,13 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:background="#ff3d00"
+            android:background="#444153"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="汽车服务"
+                android:text="首页"
                 android:textSize="20sp"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center" />

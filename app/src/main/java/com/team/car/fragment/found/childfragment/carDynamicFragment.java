@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -35,7 +34,7 @@ public class carDynamicFragment extends Fragment {
     private ToastUtil toastUtil = new ToastUtil();
     private Context context;
 
-    String url = "http://139.199.23.142:8080/TestShowMessage1/logo.png";
+    private String url = "http://139.199.23.142:8080/TestShowMessage1/logo.png";
     private XRecyclerView mRecyclerView;//刷新控件
     private CommonRecyclerAdapter<InfoModel> mAdapter;
     private List<InfoModel> mInfoModels;//所有动态的集合
@@ -116,30 +115,14 @@ public class carDynamicFragment extends Fragment {
                 holder.setText(R.id.notice_item_name, "小李");
                 holder.setText(R.id.notice_item_time, "2/15");
                 holder.setText(R.id.notice_item_content, item.content);
-                holder.setText(R.id.notice_item_like, "赞 " + item.praiseCount);
-                holder.setText(R.id.notice_item_comment, "评论 " + item.commentCount);
-                if (item.isIPraised){//自己赞了该评论，就将其文本颜色设置为红色
-                    holder.setTextColor(R.id.notice_item_like, getResources().getColor(R.color.red));
-                }else{
-                    holder.setTextColor(R.id.notice_item_like, getResources().getColor(R.color.gray));
-                }
-                // 如果是视频
-                /*if (item.videoUrl != null && item.videoUrl.size() != 0){
-                    holder.setVisibility(R.id.videoImage,View.VISIBLE);
-                    holder.setVisibility(R.id.community_nineGrid,View.GONE);
-                    String imgUrl = Consts.API_SERVICE_HOST+item.picUrls.get(0).imageUrl;
-                    Log.e(TAG, "convert: imgUrl:"+imgUrl );
-                    holder.setImageByUrl(R.id.videoImage,imgUrl);
-                    final String videoUrl = Consts.API_SERVICE_HOST+item.videoUrl.get(0).videoUrl;
-                    Log.e(TAG, "convert: videoUrl:"+videoUrl );
-                    holder.setOnClckListener(R.id.videoImage, new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(getActivity(), VideoPlayerActivity.class).putExtra(
-                                    "path", videoUrl));
-                        }
-                    });
-                }else{*/
+//                holder.setText(R.id.notice_item_like, "赞 " + item.praiseCount);
+//                holder.setText(R.id.notice_item_comment, "评论 " + item.commentCount);
+//                if (item.isIPraised){//自己赞了该评论，就将其文本颜色设置为红色
+//                    holder.setTextColor(R.id.notice_item_like, getResources().getColor(R.color.red));
+//                }else{
+//                    holder.setTextColor(R.id.notice_item_like, getResources().getColor(R.color.gray));
+//                }
+
                 ArrayList<ImageInfo> imageInfoList = new ArrayList<>();
                 List<PicModel> picModels = item.picUrls;
                 if (picModels != null && picModels.size() != 0){
@@ -155,23 +138,23 @@ public class carDynamicFragment extends Fragment {
 //                Log.e(TAG,item.mainid+","+item.isIPraised);
 
                 //点赞
-                holder.setOnRecyclerItemClickListener(R.id.notice_item_like, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //点赞操作，将其传至服务器进行更新，并将当前赞的颜色改变
-                        insertPraised(item,holder);
-
-                    }
-                });
+//                holder.setOnRecyclerItemClickListener(R.id.notice_item_like, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //点赞操作，将其传至服务器进行更新，并将当前赞的颜色改变
+//                        insertPraised(item,holder);
+//
+//                    }
+//                });
 
                 //进入评论页面，进行评论，查看
-                holder.setOnRecyclerItemClickListener(R.id.notice_item_comment, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "进入评论详情", Toast.LENGTH_SHORT).show();
-//                        LookDetailActivity.start(getActivity(), mInfoModels.get(position));//开启评论详情页面
-                    }
-                });
+//                holder.setOnRecyclerItemClickListener(R.id.notice_item_comment, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(context, "进入评论详情", Toast.LENGTH_SHORT).show();
+////                        LookDetailActivity.start(getActivity(), mInfoModels.get(position));//开启评论详情页面
+//                    }
+//                });
             }
         };
 
@@ -212,7 +195,7 @@ public class carDynamicFragment extends Fragment {
      * 把赞的信息提交到服务器
      */
     private void insertPraised(final InfoModel item,final CommonRecyclerHolder holder) {
-        holder.setTextColor(R.id.notice_item_like, getResources().getColor(R.color.red));
+//        holder.setTextColor(R.id.notice_item_like, getResources().getColor(R.color.red));
         toastUtil.Short(context, "点赞成功").show();
 
         /*if (AppService.getInstance().getCurrentUser() == null) {

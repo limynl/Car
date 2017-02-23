@@ -8,17 +8,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.team.car.view.TitleView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/release_title"/>
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:background="#7ADFB8">
+
+        <ImageView
+            android:id="@+id/car_dynamic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/car_dynamic_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表动态"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/car_dynamic_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/add_car_finish"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <EditText
+        android:id="@+id/car_dynamic_content"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@android:color/transparent"
         android:hint="说点什么吧..."
-        android:id="@+id/release_edit"
         android:padding="5dp"
         android:maxHeight="150dp"
         android:textColor="#000000"
@@ -27,6 +58,15 @@
         android:maxLines="10"
         android:gravity="top"/>
 
+    <TextView
+        android:id="@+id/car_dynamcin_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="四川省成都市"
+        android:drawableLeft="@mipmap/location"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center"/>
+
     <com.team.car.view.WavyLineView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,13 +74,6 @@
         app:strokeWidth="1dp"
         app:amplitude="8dp"
         android:id="@+id/release_wavyLine"/>
-
-    <ImageView
-        android:src="@mipmap/ic_launcher"
-        android:visibility="gone"
-        android:id="@+id/iv_video_screenshot"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

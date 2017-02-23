@@ -2,5 +2,5 @@
 <resources>
 
     <integer name="svanimation_default_duration">300</integer>
-
+    <integer name="drop_down_menu_animation_duration">200</integer>
 </resources>

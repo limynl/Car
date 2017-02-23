@@ -1,193 +1,226 @@
 package com.team.car.activitys.user;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team.car.R;
-import com.team.car.widgets.CleanableEditText;
+import com.team.car.entity.user.UserBean;
+import com.team.car.utils.CommonAdapter;
+import com.team.car.utils.CropOption;
+import com.team.car.utils.ViewHolder;
 import com.team.car.widgets.ToastUtil;
-import com.team.car.widgets.dialogview.SVProgressHUD;
 import com.team.car.widgets.timechooses.CustomDatePicker;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static vi.com.gdi.bgl.android.java.EnvDrawText.buffer;
 
 /**
+ * 用户个人中心展示与修改
  * Created by Lmy on 2017/1/20.
  * email 1434117404@qq.com
  */
 
-public class UserMessageActivity extends Activity {
-    @Bind(R.id.user_head)
-    ImageView userHead;//头像
-    @Bind(R.id.user_message_nick)
-    CleanableEditText userMessageNick;//昵称
-    @Bind(R.id.user_message_name)
-    CleanableEditText userMessageName;//姓名
-    @Bind(R.id.user_message_number)
-    CleanableEditText userMessageNumber;//电话号码
-    @Bind(R.id.user_message_gender)
-    TextView userMessageGender;//性别
-    @Bind(R.id.user_message_age)
-    TextView userMessageAge;//年龄
-    @Bind(R.id.user_message_submit)
-    Button userMessageSubmit;//提交
-    ToastUtil toastUtil = new ToastUtil();
-    private CustomDatePicker customDatePicker1;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);//获取系统时间
-    String temp = sdf.format(new Date()).split(" ")[0];//暂存系统时间，用于初始化
+public class UserMessageActivity extends Activity implements View.OnClickListener{
+    private static final String TAG = UserMessageActivity.class.getSimpleName();
+    private ToastUtil toastUtil = new ToastUtil();
 
-    String gender;//用户性别
-    int userAge = 0;//用户年龄
+    private ImageView back;
+    private ImageView submit;
+    private CircleImageView userHead;
 
+    private EditText userNick;
+    private TextView usrGender;
+    private TextView userBirthday;
+    private EditText userAddress;
+
+    private RelativeLayout userGenderSelect;
+    private RelativeLayout userBirthdaySelect;
+
+    private CustomDatePicker customDatePicker;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);//获取系统时间
+    private String temp = sdf.format(new Date()).split(" ")[0];//暂存系统时间，用于初始化
+
+    private final int PHOTO_PICKED_FROM_CAMERA = 1; // 用来标识头像来自系统拍照
+    private final int PHOTO_PICKED_FROM_FILE = 2; // 用来标识从相册获取头像
+    private final int CROP_FROM_CAMERA = 3;//剪切图片
+    private Uri imgUri; // 用于存储图片
+
+    private Dialog dialog;//弹框
+    private Button chooseFromCamera;//选择按钮一
+    private Button chooseFromPhoto;//选择按钮二
+    private Button cancelDialog;//取消按钮
+    private View viewDialog;//弹框视图
+
+    private byte[] bitmapByte;//用户头像的byte数组
+    private String userHeadPhoto;//用户的头像字节数据流
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message);
-        ButterKnife.bind(this);
-        initDatePicker();
+        initView();//初始化视图
+        initDatePicker();//时间选择器
     }
 
-    @OnClick({R.id.user_head, R.id.user_message_back, R.id.choose_gender, R.id.choose_age, R.id.user_message_submit})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.user_head:{
-                showDialog();
-            }
-                break;
-            case R.id.user_message_back:{
+    /**
+     * 初始化视图
+     */
+    private void initView() {
+        back = (ImageView) findViewById(R.id.user_message_back);
+        submit = (ImageView) findViewById(R.id.user_message_submit);
+        userHead = (CircleImageView) findViewById(R.id.user_message_head);
+        userNick = (EditText) findViewById(R.id.user_message_nick);
+        usrGender = (TextView) findViewById(R.id.user_message_gender);
+        userBirthday = (TextView) findViewById(R.id.user_message_birthday);
+        userAddress = (EditText) findViewById(R.id.user_message_address);
+
+        userGenderSelect = (RelativeLayout) findViewById(R.id.user_gender_select);
+        userBirthdaySelect = (RelativeLayout) findViewById(R.id.user_birthday_select);
+
+        back.setOnClickListener(this);
+        submit.setOnClickListener(this);
+        userHead.setOnClickListener(this);
+        userGenderSelect.setOnClickListener(this);
+        userBirthdaySelect.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.user_message_back:{//返回主页
                 UserMessageActivity.this.finish();
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
-                break;
-            case R.id.choose_gender:{
-
+            break;
+            case R.id.user_message_submit:{//填写完成提交
+                UserBean userBean = new UserBean();
+//                userBean.setUserId();//进行用户的身份标识，传到服务器寻找当前的用户，进行匹配
+                userBean.setNickName(userNick.getText().toString());
+                userBean.setSex(usrGender.getText().toString());
+                userBean.setBirthDay(userBirthday.getText().toString());
+                userBean.setUserAddress(userAddress.getText().toString());
+                saveUserMessage(userBean);
             }
-                break;
-            case R.id.choose_age:{
-                customDatePicker1.show(temp);
-            }
-                break;
-            case R.id.user_message_submit:{
-                SVProgressHUD.showWithStatus(UserMessageActivity.this,"请稍等...");
-                new Thread(new Runnable() {
+            break;
+            case R.id.user_message_head:{//头像选取
+                showDialog("拍照", "从相册获取");
+                chooseFromCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    public void onClick(View v) {
+                        getIconFromCamera();//拍照获取图片
+                        dialog.dismiss();
                     }
-                }).start();
-                SVProgressHUD.isCancel(UserMessageActivity.this, true);
-                startActivity(new Intent(UserMessageActivity.this, UserMainActivity.class));
-                toastUtil.Short(UserMessageActivity.this, "保存成功").show();
-                finish();
-                overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
+                });
+
+                chooseFromPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getIconFromPhoto();//从相册获取图片
+                        dialog.dismiss();
+                    }
+                });
+
+                cancelDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toastUtil.Long(UserMessageActivity.this, "取消干啥啊...").show();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();//显示对话框主题
             }
-                break;
+            break;
+            case R.id.user_gender_select:{//性别选择
+                showDialog("男", "女");
+                chooseFromCamera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        usrGender.setText("男");
+                        dialog.dismiss();
+                    }
+                });
+
+                chooseFromPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        usrGender.setText("女");
+                        dialog.dismiss();
+                    }
+                });
+
+                cancelDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();//显示对话框主题
+            }
+            break;
+            case R.id.user_birthday_select:{//生日选择
+                customDatePicker.show(temp);
+            }
+            break;
         }
     }
 
-    //将用户的出生年月日转换为对应的年龄
+    /**
+     * 用户进行生日选择
+     */
     private void initDatePicker() {
-        final int[] age = new int[1];
-        final String[] nowTimes = sdf.format(new Date()).split(" ")[0].split("-");
-        Log.e("UserMessageActivity", "系统时间: " + nowTimes[0] + "-" + nowTimes[1] + "-" + nowTimes[2]);
-//        userMessageAge.setText(sdf.format(new Date()).split(" ")[0]);
-        customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+        customDatePicker = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
             @Override
-            public void handle(String time) { // 回调接口，获得选中的时间
-                temp = time.split(" ")[0];
-                userMessageAge.setText(time.split(" ")[0]);
-                String[] currentTime = time.split(" ")[0].split("-");
-                Log.e("UserMessageActivity", "选中的时间: " + currentTime[0] + "-" + currentTime[1] + "-" + currentTime[2]);
-                age[0] = Integer.parseInt(nowTimes[0]) - Integer.parseInt(currentTime[0]);
-                if(Integer.parseInt(nowTimes[0]) >= 2001){
-                    if(nowTimes[1].equals(currentTime[1] )&& nowTimes[2].equals(currentTime[2])){
-                        userMessageAge.setText(String.valueOf(age[0]));
-                        userAge = age[0];
-                    }if(!nowTimes[1].equals(currentTime[1])){
-                        if(Integer.parseInt(nowTimes[1]) > Integer.parseInt(currentTime[1])){
-                            userMessageAge.setText(String.valueOf(age[0] + 1));
-                            userAge = age[0] + 1;
-                        }else{
-                            userMessageAge.setText(String.valueOf(age[0]));
-                            userAge = age[0];
-                        }
-                    }if(nowTimes[1].equals(currentTime[1]) && !nowTimes[2].equals(currentTime[2])){
-                        if(Integer.parseInt(nowTimes[2]) > Integer.parseInt(currentTime[2])){
-                            userMessageAge.setText(String.valueOf(age[0] + 1));
-                            userAge = age[0] + 1;
-                        }else{
-                            userMessageAge.setText(String.valueOf(age[0]));
-                            userAge = age[0];
-                        }
-                    }
-                }else{
-                    age[0] = age[0] - 1;
-                    if(nowTimes[1].equals(currentTime[1] )&& nowTimes[2].equals(currentTime[2])){
-                        userMessageAge.setText(String.valueOf(age[0]));
-                        userAge = age[0];
-                    }if(!nowTimes[1].equals(currentTime[1])){
-                        if(Integer.parseInt(nowTimes[1]) > Integer.parseInt(currentTime[1])){
-                            userMessageAge.setText(String.valueOf(age[0] + 1));
-                            userAge = age[0] + 1;
-                        }else{
-                            userMessageAge.setText(String.valueOf(age[0]));
-                            userAge = age[0];
-                        }
-                    }if(nowTimes[1].equals(currentTime[1]) && !nowTimes[2].equals(currentTime[2])){
-                        if(Integer.parseInt(nowTimes[2]) > Integer.parseInt(currentTime[2])){
-                            userMessageAge.setText(String.valueOf(age[0] + 1));
-                            userAge = age[0] + 1;
-                        }else{
-                            userMessageAge.setText(String.valueOf(age[0]));
-                            userAge = age[0];
-                        }
-                    }
-                }
+            public void handle(String time) {
+                userBirthday.setText(time.split(" ")[0]);
             }
         }, "1900-01-01 00:00", sdf.format(new Date())); // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
-        customDatePicker1.showSpecificTime(false); // 不显示时和分
-        customDatePicker1.setIsLoop(true); // 不允许循环滚动
+        customDatePicker.showSpecificTime(false); // 不显示时和分
+        customDatePicker.setIsLoop(true); // 不允许循环滚动
     }
 
+    /**
+     * 弹框显示
+     */
+    private void showDialog(String value1, String value2) {
+        viewDialog = View.inflate(this,R.layout.photo_choose_dialog, null);
+        chooseFromCamera = (Button) viewDialog.findViewById(R.id.choose_one);
+        chooseFromCamera.setText(value1);
+        chooseFromPhoto = (Button) viewDialog.findViewById(R.id.choose_two);
+        chooseFromPhoto.setText(value2);
+        cancelDialog = (Button) viewDialog.findViewById(R.id.cancel);
 
-    private void showDialog() {
-        View view = View.inflate(this,R.layout.photo_choose_dialog, null);
-        Button user_choose = (Button) view.findViewById(R.id.choose_one);
-        user_choose.setText("拍照");
-        Button business_choose = (Button) view.findViewById(R.id.choose_two);
-        business_choose.setText("从图库选取");
-        Button cancel = (Button) view.findViewById(R.id.cancel);
-
-        final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
-        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(viewDialog, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         Window window = dialog.getWindow();
         // 设置显示动画
         window.setWindowAnimations(R.style.main_menu_animstyle);
@@ -201,103 +234,171 @@ public class UserMessageActivity extends Activity {
         dialog.onWindowAttributesChanged(wl);
         // 设置点击外围解散
         dialog.setCanceledOnTouchOutside(true);
-
-        //用户注册
-        user_choose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getImageFromCamera();
-                dialog.dismiss();
-            }
-        });
-
-        //商家注册
-        business_choose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getImageFromAlbum();
-                dialog.dismiss();
-            }
-        });
-
-        //取消
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toastUtil.Long(UserMessageActivity.this, "你点击了取消").show();
-                dialog.dismiss();
-            }
-        });
-        dialog.show();//显示对话框主题
     }
 
-    protected void getImageFromCamera() {//拍照获取图片
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
-            startActivityForResult(getImageByCamera, 2);
-        }
-        else {
-            toastUtil.Short(UserMessageActivity.this, "请确认已经插入SD卡").show();
-        }
+    /**
+     * 从相册获取图片
+     */
+    private void getIconFromPhoto(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, PHOTO_PICKED_FROM_FILE);
     }
 
-    protected void getImageFromAlbum() {//从本地图库选取照片
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
+    /**
+     * 拍照获取图片
+     */
+    private void getIconFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        imgUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"avatar_"+String.valueOf(System.currentTimeMillis())+".png"));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imgUri);
+        startActivityForResult(intent,PHOTO_PICKED_FROM_CAMERA);
     }
 
-    //回调方法
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (data != null) {
-            if (requestCode == 1 && resultCode == Activity.RESULT_OK){
-                toastUtil.Short(UserMessageActivity.this, "获取照片成功").show();
-                showYourPic(data);
-            }else if (requestCode == 2 && resultCode == Activity.RESULT_OK){
-                toastUtil.Short(UserMessageActivity.this, "拍照成功").show();
-                showYourPic(data);
-            }
-        }
-    }
-
-    //显示图片
-    private void showYourPic(Intent data) {
-        Uri selectedImage = data.getData();
-        String pic_path;
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-
-        if (picturePath.equals("")){
-            Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
+    /**
+     * 剪切图片
+     */
+    private void doCrop(){
+        final ArrayList<CropOption> cropOptions = new ArrayList<>();
+        final Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setType("image/*");
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent,0);
+        int size = list.size();
+        if (size == 0){
+            toastUtil.Short(UserMessageActivity.this, "当前不支持裁剪图片!").show();
             return;
         }
-        pic_path = picturePath; // 保存所添加的图片的路径
+        intent.setData(imgUri);
+        intent.putExtra("outputX",300);
+        intent.putExtra("outputY",300);
+        intent.putExtra("aspectX",1);
+        intent.putExtra("aspectY",1);
+        intent.putExtra("scale",true);
+        intent.putExtra("return-data",true);
+        //只有一张
+        if (size == 1){
+            Intent intent1 = new Intent(intent);
+            ResolveInfo res = list.get(0);
+            intent1.setComponent(new ComponentName(res.activityInfo.packageName,res.activityInfo.name));
+            startActivityForResult(intent1,CROP_FROM_CAMERA);
+            }else {
+            for (ResolveInfo res : list) {
+                CropOption co = new CropOption();
+                co.title = getPackageManager().getApplicationLabel(res.activityInfo.applicationInfo);
+                co.icon = getPackageManager().getApplicationIcon(res.activityInfo.applicationInfo);
+                co.appIntent = new Intent(intent);
+                co.appIntent.setComponent(new ComponentName(res.activityInfo.packageName,res.activityInfo.name));
+                cropOptions.add(co);
+            }
+            CommonAdapter<CropOption> adapter = new CommonAdapter<CropOption>(this,cropOptions,R.layout.layout_crop_selector) {
+                @Override
+                public void convert(ViewHolder holder, CropOption item) {
+                    holder.setImageDrawable(R.id.iv_icon,item.icon);
+                    holder.setText(R.id.tv_name,item.title);
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("choose a app");
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivityForResult(cropOptions.get(which).appIntent,CROP_FROM_CAMERA);
+                    }
+                });
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    if (imgUri != null){
+                        getContentResolver().delete(imgUri,null,null);
+                        imgUri = null;
+                    }
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            }
+        }
 
-        // 缩放图片, width, height 按相同比例缩放图片
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        // options 设为true时，构造出的bitmap没有图片，只有一些长宽等配置信息，但比较快，设为false时，才有图片
-        options.inJustDecodeBounds = true;
-        Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
-        int scale = (int) (options.outWidth / (float) 300);
-        if (scale <= 0)
-            scale = 1;
-        options.inSampleSize = scale;
-        options.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeFile(picturePath, options);
-//        load(bitmap);
-        userHead.setImageBitmap(bitmap);
-        userHead.setMaxHeight(90);
-        userHead.setMaxWidth(90);
-        userHead.setVisibility(ImageView.VISIBLE);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK){
+            return;
+        }
+        switch (requestCode) {
+            case PHOTO_PICKED_FROM_CAMERA:
+                doCrop();
+                break;
+            case PHOTO_PICKED_FROM_FILE:
+                imgUri = data.getData();
+                doCrop();
+                break;
+            case CROP_FROM_CAMERA:
+                if (data != null){
+                    setCropImg(data);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
+    /**
+     * 处理剪切后的图片，将其显示到头像处并转换为字节数据流
+     * @param picData
+     */
+    private void setCropImg(Intent picData){
+        Bundle bundle = picData.getExtras();
+        if (bundle != null){
+            Bitmap userHeadBitmap = bundle.getParcelable("data");
+            userHead.setImageBitmap(userHeadBitmap);
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                userHeadBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);//将bitmap一字节流输出 Bitmap.CompressFormat.PNG 压缩格式，100：压缩率，baos：字节流
+                bitmapByte = baos.toByteArray();
+                userHeadPhoto = Base64.encodeToString(bitmapByte, 0, buffer.length,Base64.DEFAULT);//将图片的字节流数据加密成base64字符输出
+                baos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 保存用户的数据，将其上传到服务器，并将其更换到侧滑栏进行显示
+     */
+    private void saveUserMessage(UserBean userBean){
+        //以下数据仅仅用于测试
+        Intent intent = new Intent(UserMessageActivity.this, UserMainActivity.class);
+        Bundle bundle = new Bundle();
+        Log.e(TAG, "saveUserMessage: 用户的昵称为：" + userBean.getNickName());
+        bundle.putString("userNick", userBean.getNickName());
+        Log.e(TAG, "saveUserMessage: 用户的Bitmap数组长度为：" + bitmapByte.length);
+        bundle.putByteArray("userHead", bitmapByte);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        UserMessageActivity.this.finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+
+        /*String url  = null;
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("userNick", userBean.getNickName());
+        map.put("userSex", userBean.getSex());
+        map.put("userBirthday", userBean.getBirthDay());
+        map.put("userAddress", userBean.getUserAddress());
+        VolleyRequestUtil.RequestPost(UserMessageActivity.this, url, "updateUseMessage", map, new VolleyListenerInterface(UserMessageActivity.this, VolleyListenerInterface.mSuccessListener, VolleyListenerInterface.mErrorListener) {
+            @Override
+            public void onSuccess(String result) {
+                //这里接受服务器返回来的用户头像地址
+
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                toastUtil.Short(UserMessageActivity.this, "服务器出现异常了！").show();
+            }
+        });*/
+    }
 }

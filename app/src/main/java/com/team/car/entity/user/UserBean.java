@@ -1,4 +1,4 @@
-package com.team.car.entity;
+package com.team.car.entity.user;
 
 /**
  * 用户的实体类

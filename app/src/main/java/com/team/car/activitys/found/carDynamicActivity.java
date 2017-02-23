@@ -7,10 +7,11 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -21,16 +22,17 @@ import com.team.car.R;
 import com.team.car.adapter.found.ImagePickerAdapter;
 import com.team.car.utils.BitmapUtil;
 import com.team.car.utils.ScreenUtil;
-import com.team.car.view.TitleView;
 import com.team.car.view.WavyLineView;
+import com.team.car.widgets.ToastUtil;
+import com.team.car.widgets.dialog1.Effectstype;
+import com.team.car.widgets.dialog1.NiftyDialogBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import mabeijianxi.camera.model.MediaRecorderConfig;
 
 
 /**
@@ -40,6 +42,10 @@ import mabeijianxi.camera.model.MediaRecorderConfig;
 
 public class carDynamicActivity extends Activity implements ImagePickerAdapter.OnRecyclerViewItemClickListener {
     private static final String TAG = carDynamicActivity.class.getSimpleName();
+    private ToastUtil toastUtil = new ToastUtil();
+    private Effectstype effect;
+
+
     public static final int IMAGE_ITEM_ADD = -1;
     public static final int REQUEST_CODE_SELECT = 100;
     public static final int REQUEST_CODE_PREVIEW = 101;
@@ -48,7 +54,8 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
     private ArrayList<ImageItem> selImageList; //当前选择的所有图片
     private int maxImgCount = 9;               //允许选择图片最大数
 
-    private TitleView mTitleBar;
+    private ImageView back;
+    private ImageView submmit;
     private String mFrom;
     private WavyLineView mWavyLine;
     private EditText mEditText;
@@ -64,6 +71,8 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_send_dynamic);
+        effect = Effectstype.Slidetop;
+
         updatePixel();
         bindView();
     }
@@ -80,29 +89,9 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
         mFiles = new ArrayList<>();
         mSmallUrls = new ArrayList<>();
 
-        mTitleBar = (TitleView) findViewById(R.id.release_title);
-        mTitleBar.setLeftButtonAsFinish(this);
-
-//        switch (mFrom) {
-//            case "公告":
-//                mTitleBar.setTitle("发布公告");
-//                infoType = 1;
-//                break;
-//            case "公告1":
-//                mTitleBar.setTitle("发布作业");
-//                infoType = 2;
-//                break;
-//            default:
-//                mTitleBar.setTitle("发布动态");
-//                infoType = 3;
-//                break;
-//        }
-        mTitleBar.setTitle("发表动态");
-        mTitleBar.changeRightButtonTextColor(getResources().getColor(R.color.white3));
-        mTitleBar.setRightButtonText(getResources().getString(R.string.send_back_right));
-        mTitleBar.setRightButtonTextSize(25);
-        mTitleBar.setFixRightButtonPadingTop();
-        mTitleBar.setRightButtonOnClickListener(new OnClickListener() {
+        back = (ImageView) findViewById(R.id.car_dynamic_back);
+        submmit = (ImageView) findViewById(R.id.car_dynamic_finish);
+        submmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tryDecodeSmallImg2();
@@ -120,7 +109,7 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
         mWavyLine.setStrokeWidth(ScreenUtil.dp2px(initStrokeWidth));
 
 
-        mEditText = (EditText) findViewById(R.id.release_edit);
+        mEditText = (EditText) findViewById(R.id.car_dynamic_content);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         selImageList = new ArrayList<>();
@@ -133,10 +122,43 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
 
     }
 
+
+    private void showDialog(){
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        dialogBuilder
+                .withTitle("发表动态")
+                .withTitleColor("#FFFFFF")
+                .withDividerColor("#11000000")
+                .withMessage("确定发表")
+                .withMessageColor("#FFFFFFFF")
+                .withDialogColor("#009688")
+                .isCancelableOnTouchOutside(false)
+                .withDuration(700)
+                .withEffect(effect)
+                .withButton1Text("确定")
+                .withButton2Text("取消")
+                .setButton1Click(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toastUtil.Short(carDynamicActivity.this, "确定").show();
+                        dialogBuilder.dismiss();
+                    }
+                })
+                .setButton2Click(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toastUtil.Short(carDynamicActivity.this, "取消").show();
+                        dialogBuilder.dismiss();
+                    }
+                })
+                .show();
+    }
+
     /**
      * 压缩图片为小图片
      */
     private void tryDecodeSmallImg2() {
+        showDialog();
 //        showLoading(this);显示弹窗
         for (int i = 0; i < selImageList.size(); i++) {
             Log.e(TAG,"第"+i+"个图片宽:"+selImageList.get(i).width);
@@ -149,7 +171,7 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
             int minSize = Math.min(reqHeight,reqWidth);
             int size = (int) (selImageList.get(i).size/1024);//当前图片的大小
             Log.e(TAG,"图片size:"+size+"KB");
-            while (minSize > 400 && size >= 200){
+            while (minSize > 350 && size >= 200){
                 reqWidth /= 2;
                 reqHeight /= 2;
                 minSize = Math.min(reqHeight,reqWidth);
@@ -170,6 +192,27 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
 //        uploadPic();  // 图片压缩完毕开始上传图片
 
     }
+
+
+    //向服务器发送图片
+    public void  load(Bitmap photodata) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            //将bitmap一字节流输出 Bitmap.CompressFormat.PNG 压缩格式，100：压缩率，baos：字节流
+            photodata.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            baos.close();
+            byte[] buffer = baos.toByteArray();
+            System.out.println("图片的大小："+buffer.length);
+
+            //将图片的字节流数据加密成base64字符输出
+            String photo = Base64.encodeToString(buffer, 0, buffer.length,Base64.DEFAULT);
+            String url = "http://139.199.23.142:8080/TestShowMessage1/lmy/ShowPicture";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
     /**
@@ -195,109 +238,6 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
         }
     }
 
-//    /**
-//     * 把图片上传上去
-//     */
-//    private void uploadPic() {
-//        Log.e(TAG,"需要上传图片的集合size:"+mFiles.size());
-//        final String content = mEditText.getText().toString().trim();
-//        if (TextUtils.isEmpty(content)) {
-//            Toast.makeText(this, "发布内容不能为空！", Toast.LENGTH_SHORT).show();
-////            stopLoading();取消弹窗
-//            return;
-//        }
-//        Toast.makeText(this, "图片上传成功", Toast.LENGTH_SHORT).show();
-
-//        if (mFiles.size() == 0){
-//            sendInfo();
-//            return;
-//        }
-//        AppService.getInstance().upLoadFileAsync(mFiles ,new JsonCallback<LslResponse<User>>() {
-//            @Override
-//            public void onSuccess(LslResponse<User> userLslResponse, Call call, Response response) {
-//                if (userLslResponse.code == LslResponse.RESPONSE_OK) {
-//                    Toast.makeText(ReleaseActivity.this, "图片上传成功", Toast.LENGTH_SHORT).show();
-//                    Log.e(TAG, "图片上传成功");
-//                } else {
-//                    Toast.makeText(ReleaseActivity.this, "图片上传失败", Toast.LENGTH_SHORT).show();
-//                    Log.e(TAG, "图片上传失败");
-//                }
-//                Toast.makeText(ReleaseActivity.this, "添加图片到服务器成功", Toast.LENGTH_SHORT).show();
-////                sendInfo();
-//            }
-//        });
-//    }
-
-//    /**
-//     * 发送信息到服务器
-//     */
-//    private void sendInfo() {
-//        final String content = mEditText.getText().toString().trim();
-//        if (TextUtils.isEmpty(content)) {
-//            UIUtil.showToast("发布内容不能为空！");
-//            stopLoading();
-//            return;
-//        }
-//        // 把图片的地址上传上去
-//        for (int i = 0; i < mFiles.size(); i++) {
-//            mSmallUrls.add(mFiles.get(i).getName());
-//            Log.e(TAG,"第"+(i+1)+"个图片名字:"+mFiles.get(i).getName());
-//        }
-//        Log.e(TAG,mSmallUrls.size()+" **** ");
-//        if(AppService.getInstance().getCurrentUser() == null){
-//            UIUtil.showToast("未知错误，请重新登录后操作");
-//            stopLoading();
-//            return;
-//        }
-//        final int classId = AppService.getInstance().getCurrentUser().classid;
-//        String username = AppService.getInstance().getCurrentUser().username;
-//        AppService.getInstance().addMainInfoAsync(classId, username, infoType, content, mSmallUrls,false,new JsonCallback<LslResponse<InfoModel>>() {
-//
-//            @Override
-//            public void onSuccess(LslResponse<InfoModel> infoModelLslResponse, Call call, Response response) {
-//                if (infoModelLslResponse.code == LslResponse.RESPONSE_OK) {
-//                    UIUtil.showToast("发布信息成功！");
-//
-//                    // 只有公告和作业才发布推送
-//                    if (infoType == 1 || infoType == 2){
-//                        sendMsgToOthers(classId,infoType);
-//                    }
-//
-//                    stopLoading();
-//                    Log.e(TAG, infoType + "");
-//                    if (infoType == InfoType.NOTICE) {
-//                        EventBus.getDefault().post(new NoticeEvent(infoModelLslResponse.data));
-//                        Log.e(TAG, "通知发起");
-//                    } else if (infoType == InfoType.HOMEWORK) {
-//                        EventBus.getDefault().post(new HomeworkEvent(infoModelLslResponse.data));
-//                        Log.e(TAG, "作业发起");
-//                    } else {
-//                        EventBus.getDefault().post(new CommunityEvent(infoModelLslResponse.data));
-//                        Log.e(TAG, "社区发起");
-//                    }
-//                    if (!ReleaseActivity.this.isFinishing()) {
-//                        stopLoading();
-//                    }
-//                    ReleaseActivity.this.finish();
-//                } else {
-//                    Toast.makeText(ReleaseActivity.this, "发布信息失败，请稍后再试！", Toast.LENGTH_SHORT).show();
-//                    if (!ReleaseActivity.this.isFinishing()) {
-//                        stopLoading();
-//                    }
-//                }
-//            }
-//        });
-//    }
-
-//    private void sendMsgToOthers(int classId,int infoType) {
-//        AppService.getInstance().sendMsgToOthersAsync(classId,infoType, new JsonCallback<LslResponse<Object>>() {
-//            @Override
-//            public void onSuccess(LslResponse<Object> objectLslResponse, Call call, Response response) {
-//                Log.e(TAG,objectLslResponse.msg);
-//            }
-//        });
-//    }
-
     @Override
     public void onItemClick(View view, int position) {
         switch (position) {
@@ -312,35 +252,9 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
                                     ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
                                     Intent intent = new Intent(carDynamicActivity.this, com.lzy.imagepicker.ui.ImageGridActivity.class);
                                     startActivityForResult(intent, REQUEST_CODE_SELECT);
-                                }else{ // 打开微视频
-
-//                                    App.initSmallVideo(ReleaseActivity.this.getApplicationContext());
-
-                                    // 存一个文件，以便于让后面发微视频知道发到哪里
-                                    getSharedPreferences("send.tmp",MODE_PRIVATE).edit().putString("infoType","公告")
-                                            .putString("content",mEditText.getText().toString().trim()).apply();
-
-                                    MediaRecorderConfig config = new MediaRecorderConfig.Buidler()
-                                            .doH264Compress(true)
-                                            .smallVideoWidth(480)
-                                            .smallVideoHeight(360)
-                                            .recordTimeMax(6 * 1000)
-                                            .maxFrameRate(20)
-                                            .minFrameRate(8)
-                                            .captureThumbnailsTime(1)
-                                            .recordTimeMin((int) (1.5 * 1000))
-                                            .build();
-                                    Log.e(TAG, "onSelection:" + "打开微视频成功");
-//                                    MediaRecorderActivity.goSmallVideoRecorder(ReleaseActivity.this, SendSmallVideoActivity.class.getName(), config);
-//                                    ReleaseActivity.this.finish();
                                 }
                             }
                         }).show();
-
-               //打开选择,本次允许选择的数量
-//               ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
-//               Intent intent = new Intent(ReleaseActivity.this, com.lzy.imagepicker.ui.ImageGridActivity.class);
-//               startActivityForResult(intent, REQUEST_CODE_SELECT);
                 break;
             default:
                 //打开预览
@@ -361,12 +275,6 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 mFiles.clear();
                 selImageList.addAll(images);
-//                for (int i = 0; i < selImageList.size(); i++) {
-//                    mFiles.add(new File(selImageList.get(i).path));
-//                }
-
-                //鲁班压缩
-//                compressWithLs(new File(selImageList.get(0).path));
                 adapter.setImages(selImageList);
             }
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {

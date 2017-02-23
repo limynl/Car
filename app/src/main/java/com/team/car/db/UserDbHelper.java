@@ -3,7 +3,7 @@ package com.team.car.db;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.team.car.entity.UserBean;
+import com.team.car.entity.user.UserBean;
 
 /**
  * 用户的数据库

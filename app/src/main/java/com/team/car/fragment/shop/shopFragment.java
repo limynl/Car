@@ -1,22 +1,32 @@
 package com.team.car.fragment.shop;
 
-import android.graphics.drawable.PaintDrawable;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.team.car.R;
+import com.team.car.adapter.shop.ShopMessageAdapter;
 import com.team.car.base.fragment.BaseFragment;
-import com.team.car.fragment.shop.adapter.shopSelectAdapter;
+import com.team.car.entity.shop.ShopMessageBean;
 import com.team.car.widgets.ToastUtil;
+import com.zxl.library.DropDownMenu;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Lmy on 2017/1/16.
@@ -26,147 +36,152 @@ import com.team.car.widgets.ToastUtil;
 public class shopFragment extends BaseFragment {
     private static final String TAG = shopFragment.class.getSimpleName();
     private ToastUtil toastUtil = new ToastUtil();
-    private View view;
-    private RadioGroup rg_main;
-    private RadioButton tab1, tab2, tab3;
-    /**
-     * popupWindow中的listView
-     */
+
+    private DropDownMenu mDropDownMenu;
+    private String[] headers= {"类别", "排序", "地区"};
+    private String[] category = {"汽车维修", "汽车保养"};
+    private String[] sort= {"默认", "距离", "订单", "价格"};
+    private String[] region= {"全市", "锦江区", "青羊区", "金牛区", "武侯区", "成华区", "高新区", "龙泉驿区", "青白江区", "新都区", "温江区", "金堂县", "双流县"};
+
+    private View menuView;//下拉检索视图
+    private View mainView;//主布局视图
+
     private ListView listView;
+    private ShopMessageAdapter adapter;
+    private List<ShopMessageBean> shopList = new ArrayList<ShopMessageBean>();
+    private String channel = URLEncoder.encode("汽车维修","UTF-8");
+    private int page = 1;
+    private String cityName = URLEncoder.encode("成都","UTF-8");//城市名-地区
+    private String type = URLEncoder.encode("汽车维修","UTF-8");//种类
+    private float locationLat;//纬度
+    private float locationLng;//经度
 
-    private static String[] dataZero = {"默认数据"};
-    private String[] dataOne = {"车身打蜡","车身抛光", "车身封釉", "油漆面", "车辆贴膜", "汽车改装"};
-    private String[] dataTwo = {"默认-智能排序", "距离-从近到远", "订单-从多到少", "价格-从低到高"};
-    private String[] dataThree = {"全市", "锦江区", "青羊区", "金牛区", "武侯区", "成华区", "高新区", "龙泉驿区"};
+    /*
 
-    private shopSelectAdapter adapter;
+    http://api.chuxingdata.com/surrounding/local?page=1&pagesize=20&cityName=成都&radius=10000&lat=104.43&lat=30.85&keyWord=汽车维修&appkey=bb7e380d901a599e
 
-    private PopupWindow popupWindow;
+    */
 
-    /**
-     * 弹出PopupWindow时背景变暗
-     */
-    private View darkView;
-
-    /**
-     * 弹出PopupWindow时，背景变暗的动画
-     */
-    private Animation animIn, animOut;
-
-    /**
-     * 加载主布局
-     * @return
-     */
-    @Override
-    protected View initView() {
-        Log.e(TAG, "shopFragment创建了");
-        view = View.inflate(context, R.layout.activity_shop, null);
-        return view;
+    public shopFragment() throws UnsupportedEncodingException {
     }
 
-    /**
-     * 用于初始化数据，请求数据，展示数据
-     */
+    @Override
+    protected View initView() {
+        menuView = LayoutInflater.from(context).inflate(R.layout.drop_down_view, null);
+        mainView = LayoutInflater.from(context).inflate(R.layout.activity_shop, null);
+        return menuView;
+    }
+
     @Override
     public void initDate() {
         super.initDate();
-        findView();
-        initListener();
-        initPopup();
-    }
+        listView = (ListView) mainView.findViewById(R.id.shop_listview);
 
 
-    /**
-     * 初始化控件
-     */
-    private void findView() {
-        tab1 = (RadioButton) view.findViewById(R.id.shop_selector_tab1);
-        tab2 = (RadioButton) view.findViewById(R.id.shop_selector_tab2);
-        tab3 = (RadioButton) view.findViewById(R.id.shop_selector_tab3);
-        rg_main = (RadioGroup) view.findViewById(R.id.shop_rg_main);
-        darkView = view.findViewById(R.id.shop_darkview);
-
-        animIn = AnimationUtils.loadAnimation(context, R.anim.popupwindow_slide_in_from_top);
-        animOut = AnimationUtils.loadAnimation(context, R.anim.popupwindow_slide_out_to_top);
-    }
-
-    /**
-     * 设置RadioGroup的监听事件
-     */
-    private void initListener() {
-        rg_main.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
-    }
-
-    private void initPopup() {
-        View viewPop = LayoutInflater.from(context).inflate(R.layout.shop_popup_layout, null);
-        listView = (ListView) viewPop.findViewById(R.id.shop_pop_listview);
-        popupWindow = new PopupWindow(viewPop, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setAnimationStyle(R.style.shop_popwin_anim_style);
-        popupWindow.setBackgroundDrawable(new PaintDrawable());
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        mDropDownMenu = (DropDownMenu) menuView.findViewById(R.id.dropDownMenu);
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), setData(), mainView);
+        mDropDownMenu.addMenuSelectListener(new DropDownMenu.OnDefultMenuSelectListener() {
             @Override
-            public void onDismiss() {
-                darkView.startAnimation(animOut);
-                darkView.setVisibility(View.GONE);
-                rg_main.clearCheck();
-//                listView.setSelection(0);
+            public void onSelectDefaultMenu(int index, int pos, String clickstr) {//index:点击的tab索引，pos：单项菜单中点击的位置索引，clickstr：点击位置的字符串
+                toastUtil.Long(context, "我是 : " + clickstr).show();
+                Log.e(TAG, "index:" + index);
+                Log.e(TAG, "pos:" + pos);
+                Log.e(TAG, "clickstr:" + clickstr);
+
+                setShopMessageData();
+
             }
         });
 
-        adapter = new shopSelectAdapter(context);
-        adapter.setData(dataZero);
-        listView.setAdapter(adapter);
+        setShopMessageData();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedName = (String) adapter.getItem(position);
-                tab1.setText(selectedName);
-                popupWindow.dismiss();
-                toastUtil.Short(context, "您选中的是：" + selectedName).show();
+                toastUtil.Short(context, shopList.get(position).getShopName()).show();
             }
         });
-    }
 
-    class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener{
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            for (int i = 0; i < group.getChildCount(); i++) {
-                if(group.getChildAt(i).getId() == checkedId){
-                    popupWindow.dismiss();
-                }
-            }
-            switch (checkedId){
-                case R.id.shop_selector_tab1:
-                    showPopupWindow();
-                    adapter.setData(dataOne);
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.shop_selector_tab2:
-                    showPopupWindow();
-                    adapter.setData(dataTwo);
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.shop_selector_tab3:
-                    showPopupWindow();
-                    adapter.setData(dataThree);
-                    adapter.notifyDataSetChanged();
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     /**
-     * 弹出弹窗
+     * 设置类型和数据源：
+     * DropDownMenu.KEY对应类型（DropDownMenu中的常量，参考上述核心源码）
+     * DropDownMenu.VALUE对应数据源：key不是TYPE_CUSTOM则传递string[],key是TYPE_CUSTOM类型则传递对应view
      */
-    private void showPopupWindow() {
-        popupWindow.showAsDropDown(view.findViewById(R.id.shop_div_line));
-        popupWindow.setAnimationStyle(-1);
-        //背景变暗
-        darkView.startAnimation(animIn);
-        darkView.setVisibility(View.VISIBLE);
+    private List<HashMap<String, Object>> setData() {
+        List<HashMap<String, Object>> viewDatas = new ArrayList<>();
+        HashMap<String, Object> categoryMap = new HashMap<String, Object>();
+        categoryMap.put(DropDownMenu.KEY, DropDownMenu.TYPE_LIST_CITY);
+        categoryMap.put(DropDownMenu.VALUE, category);
+        categoryMap.put(DropDownMenu.SELECT_POSITION,0);
+        viewDatas.add(categoryMap);
+
+        HashMap<String, Object> sortMap = new HashMap<String, Object>();
+        sortMap.put(DropDownMenu.KEY, DropDownMenu.TYPE_LIST_CITY);
+        sortMap.put(DropDownMenu.VALUE, sort);
+        sortMap.put(DropDownMenu.SELECT_POSITION,0);
+        viewDatas.add(sortMap);
+
+        HashMap<String, Object> regionMap = new HashMap<String, Object>();
+        regionMap.put(DropDownMenu.KEY, DropDownMenu.TYPE_LIST_CITY);
+        regionMap.put(DropDownMenu.VALUE, region);
+        regionMap.put(DropDownMenu.SELECT_POSITION,0);
+        viewDatas.add(regionMap);
+
+        return viewDatas;
     }
+
+    /**
+     * 设置商店条目显示数据
+     */
+    private void setShopMessageData() {
+        String shopUrl = "http://api.chuxingdata.com/surrounding/local?page=" + page + "&pagesize=20&cityName=" + cityName + "&radius=10000&lat=104.43&lat=30.85&keyWord=" + type + "&appkey=bb7e380d901a599e";
+        RequestParams params = new RequestParams(shopUrl);
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    ShopMessageBean bean = null;
+                    JSONObject jsonObject = new JSONObject(result);
+                    jsonObject = jsonObject.optJSONObject("result");
+                    JSONArray jsonArray = jsonObject.optJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        jsonObject = jsonArray.optJSONObject(i);
+                        bean = new ShopMessageBean();
+                        JSONObject jsonObject1 = jsonObject.optJSONObject("additionalInformation");
+                        bean.setShopPrice(jsonObject1.optString("price"));
+                        bean.setShopType(jsonObject1.optString("tag"));
+                        bean.setShopTelephone(jsonObject1.optString("telephone"));
+
+                        bean.setShopName(jsonObject.optString("name"));
+                        bean.setShopAddress(jsonObject.optString("address"));
+                        bean.setShopCityName(jsonObject.optString("cityName"));
+                        bean.setShopDistance(jsonObject.optString("distance"));
+                        bean.setDistrict(jsonObject.optString("district"));
+
+                        JSONObject jsonObject2 = jsonObject.optJSONObject("location");
+                        bean.setShopLocationLat(jsonObject2.optString("lat"));
+                        bean.setShopLocationLng(jsonObject2.optString("lng"));
+                        shopList.add(bean);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adapter = new ShopMessageAdapter(context, shopList);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e(TAG, "onError: " + ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {}
+
+            @Override
+            public void onFinished() {}
+        });
+    }
+
 }

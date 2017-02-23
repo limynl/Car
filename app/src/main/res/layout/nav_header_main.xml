@@ -21,18 +21,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+            app:srcCompat="@android:drawable/sym_def_app_icon"
+            android:src="@mipmap/default_avatar"/>
 
         <RelativeLayout
             android:id="@+id/r1"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp">
+            android:layout_marginLeft="115dp">
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/btnSstq"
@@ -65,11 +66,11 @@
 
     </LinearLayout>
         <TextView
-            android:id="@+id/custom_text_view"
+            android:id="@+id/user_nick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="14dp"
-            android:text="挑战杯 软件杯"
+            android:text="Limynl"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </LinearLayout>

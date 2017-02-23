@@ -11,6 +11,7 @@
 
     <!--设置界面版本号-->
     <string name="setting">Copyright &#169; 2017 车应用</string>
+    <string name="text_arrow_right">\ue64c</string>
 
     <!--自定义时间选择器-->
     <string name="cancle">取消</string>

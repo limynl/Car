@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -21,31 +23,32 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.qiyukf.unicorn.api.ConsultSource;
 import com.qiyukf.unicorn.api.Unicorn;
 import com.team.car.R;
 import com.team.car.activitys.car.ShowCarActivity;
-import com.team.car.utils.NetReceiver;
 import com.team.car.activitys.weather.WeatherActivity;
-import com.team.car.services.WeatherService;
 import com.team.car.base.fragment.BaseFragment;
 import com.team.car.fragment.found.foundFragment;
 import com.team.car.fragment.home.homeFragment;
 import com.team.car.fragment.manager.manageFragment;
 import com.team.car.fragment.shop.shopFragment;
+import com.team.car.services.WeatherService;
+import com.team.car.utils.NetReceiver;
 import com.team.car.widgets.ToastUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import pl.droidsonroids.gif.GifImageView;
+
 
 /**
  * Created by Lmy on 2017/1/15.
@@ -55,7 +58,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class UserMainActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
     private static final String TAG = UserMainActivity.class.getSimpleName();
     private ToastUtil toastUtil = new ToastUtil();
-    private Intent intent;//用于跳转
     private View headerView;//侧滑头布局
     private CoordinatorLayout right;
     private NavigationView left;
@@ -80,6 +82,10 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
     private GifImageView btnSstq;//显示gif
 
     private static Boolean isExit = false;//是否退出应用程序
+
+    private TextView userNick;//用户的昵称
+    private CircleImageView userHead;//用户的头像
+
 
     //创建一个服务连接,用于更新天气
     private ServiceConnection conn = new ServiceConnection() {
@@ -108,16 +114,15 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);//设置菜单列表图标颜色为图片的本来颜色
 
-        //以下可以设置侧滑部分的信息
-        //获取头部的信息
+        //设置侧滑栏中的头部信息
         headerView = navigationView.getHeaderView(0);
-        TextView customText = (TextView)headerView.findViewById(R.id.custom_text_view);//获取用户名或昵称
-        ImageView userHead = (ImageView)headerView.findViewById(R.id.user_head);//获取用户头像
+        userNick = (TextView)headerView.findViewById(R.id.user_nick);//获取用户名或昵称
+        userHead = (CircleImageView)headerView.findViewById(R.id.user_head);//获取用户头像
         btnSstq = (GifImageView)headerView.findViewById(R.id.btnSstq);//获取天气图标
         btnSstq.setImageResource(R.mipmap.test_gif);
-        userHead.setImageResource(R.mipmap.head);
-        userHead.setOnClickListener(this);
+
         btnSstq.setOnClickListener(this);
+        userHead.setOnClickListener(this);
 
         //初始化主布局
         initView(); //初始化
@@ -133,19 +138,21 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.user_head:
+            case R.id.user_head://展示用户的数据以及修改用户的数据
             {
                 toastUtil.Short(UserMainActivity.this, "个人中心").show();
-                startActivity(new Intent(UserMainActivity.this, UserMessageActivity.class));
-                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+                Intent intent = new Intent(UserMainActivity.this, UserMessageActivity.class);
+                //这里还要将用户的身份标识和一些其他相关的数据传递过去
+                startActivityForResult(intent, 1);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
                 break;
-            case R.id.btnSstq:{
+            case R.id.btnSstq:{//天气预报查询
                 toastUtil.Short(UserMainActivity.this, "天气预报").show();
                 Intent intent = new Intent(UserMainActivity.this, WeatherActivity.class);
                 intent.putExtra("city", city);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//淡入淡出效果
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
                 break;
         }
@@ -159,30 +166,39 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.add_car) {
-            toastUtil.Long(UserMainActivity.this, "添加爱车").show();
-            Intent intent = new Intent(UserMainActivity.this, ShowCarActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
-        } else if (id == R.id.integral) {
-            toastUtil.Long(UserMainActivity.this, "我的资产").show();
-        } else if (id == R.id.share) {
-            toastUtil.Long(UserMainActivity.this, "分享App").show();
-        } else if (id == R.id.online_complaint) {
-            toastUtil.Long(UserMainActivity.this, "在线客服").show();
-            ConsultSource source = new ConsultSource(null, null, null);
-            if(!Unicorn.isServiceAvailable()){
-                Toast.makeText(UserMainActivity.this, "客服接口有问题，请稍后再试", Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()){
+            case R.id.add_car:{//爱车管理
+                toastUtil.Long(UserMainActivity.this, "添加爱车").show();
+                Intent intent = new Intent(UserMainActivity.this, ShowCarActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
-            Unicorn.openServiceActivity(UserMainActivity.this, "车应用客服", source);
-        }else if (id == R.id.setting){
-            toastUtil.Long(UserMainActivity.this, "设置").show();
-            Intent intent = new Intent(UserMainActivity.this, SettingActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+            break;
+            case R.id.integral:{//个人资产管理中心
+                toastUtil.Long(UserMainActivity.this, "我的资产").show();
+            }
+            break;
+            case R.id.share:{//App分享
+                toastUtil.Long(UserMainActivity.this, "分享App").show();
+            }
+            break;
+            case R.id.online_complaint:{//在线客服
+                toastUtil.Long(UserMainActivity.this, "在线客服").show();
+                ConsultSource source = new ConsultSource(null, null, null);
+                if(!Unicorn.isServiceAvailable()){
+                    toastUtil.Short(UserMainActivity.this, "客服接口有问题，请稍后再试").show();
+                }
+                Unicorn.openServiceActivity(UserMainActivity.this, "车应用客服", source);
+            }
+            break;
+            case R.id.setting:{//用户设置中心
+                toastUtil.Long(UserMainActivity.this, "设置").show();
+                Intent intent = new Intent(UserMainActivity.this, SettingActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+            }
+            break;
         }
-
         //点击条目侧滑关闭
        /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);*/
@@ -282,7 +298,11 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
         baseFragment = new ArrayList<BaseFragment>();
         baseFragment.add(new homeFragment());
         baseFragment.add(new manageFragment());
-        baseFragment.add(new shopFragment());
+        try {
+            baseFragment.add(new shopFragment());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         baseFragment.add(new foundFragment());
     }
 
@@ -362,5 +382,24 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
             }
         }
         return false;
+    }
+
+    /**
+     * 接受其他页面返回来的值
+     * @param requestCode 请求码
+     * @param resultCode 结果码
+     * @param data 返回来的数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null){
+            Bundle bundle = data.getExtras();
+            userNick.setText(bundle.getString("userNick"));
+            byte[] byteBitmap = bundle.getByteArray("userHead");
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteBitmap, 0, byteBitmap.length);
+            userHead.setImageBitmap(bitmap);
+            toastUtil.Short(UserMainActivity.this, "用户信息修改完成").show();
+        }
     }
 }

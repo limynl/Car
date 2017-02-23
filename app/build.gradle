@@ -98,6 +98,10 @@ dependencies {
     // 支持下拉刷新和上拉加载的RecyclerView
     compile 'com.jcodecraeer:xrecyclerview:1.2.7'
 
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'com.github.fg2q1q3q:DropDownMenu:1.1.1'
+
 }
 
 repositories {
