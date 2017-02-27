@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_car_illegal_query_result"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e0e0e0">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:background="#7ADFB8">
+
+        <ImageView
+            android:id="@+id/car_query_result_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/add_car_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="违章查询结果"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="车牌号："
+            android:textColor="#ff969696"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/query_car_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:textColor="#ff555555"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="查询地："
+            android:textColor="#ff969696"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/query_car_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:textColor="#ff555555"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <com.team.car.utils.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/car_illegal_result_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:cacheColorHint="#fafafa"/>
+
+        </LinearLayout>
+
+    </com.team.car.utils.BounceScrollView>
+
+</LinearLayout>

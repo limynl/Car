@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:background="#7ADFB8">
+
+        <ImageView
+            android:id="@+id/choose_city_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="城市选择"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/list_tip"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textColor="#ff969696"
+        android:textSize="13.0sp"
+        android:text="全国已开通29个省份,其他省将陆续开放"/>
+
+    <ListView
+        android:id="@+id/province_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#ffd0d0d0"
+        android:dividerHeight="1px" />
+
+</LinearLayout>

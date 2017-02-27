@@ -183,7 +183,11 @@
         <activity android:name=".activitys.car.CarBrandSelectActivity" />
         <activity android:name=".activitys.car.CarBrandSelectTwoActivity" />
         <activity android:name=".activitys.car.CarBrandSelectThreeActivity" />
-        <activity android:name=".activitys.home.CarAddOilActivity"/>
+        <activity android:name=".activitys.home.CarAddOilActivity" />
+        <activity android:name=".activitys.manager.CarIllegalQueryActivity" />
+        <activity android:name=".activitys.manager.CarQueryProvinceActivity" />
+        <activity android:name=".activitys.manager.CarQueryDetailCityActivity" />
+        <activity android:name=".activitys.manager.CarIllegalQueryResultActivity"/>
 
         <!-- 注册服务 -->
         <service android:name=".services.WeatherService" />
@@ -199,7 +203,6 @@
             android:name=".services.LocationServices"
             android:enabled="true"
             android:exported="true" />
-
 
     </application>
 

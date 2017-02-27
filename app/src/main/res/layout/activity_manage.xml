@@ -1,106 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e0e0e0">
 
-    <com.daimajia.slider.library.SliderLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/discover_slider"/>
-
-    <com.team.car.view.WavyLineView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:strokeColor="#f5821f"
-        android:id="@+id/discover_wavyLine"/>
+        android:paddingTop="9dp"
+        android:paddingBottom="8dp"
+        android:background="#7ADFB8">
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="管 家"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_illegal_query"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:text="违章查询"
+            android:textStyle="bold"
+            android:textColor="#808080"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_open"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="20dp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/manager1" />
+
+        <LinearLayout
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#ffffff"
-                android:textColor="#000000">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"
-                    android:text="违章查询" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_open"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="20dp"/>
-
-            </RelativeLayout>
-            <View
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#e0e0e0" />
-            <RelativeLayout
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#ffffff">
-                <TextView
-                    android:gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="18sp"
-                    android:text="保养信息" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_open"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="20dp"/>
-            </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#ffffff">
-            <TextView
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
-                android:text="爱车日记" />
-
-            <ImageView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_open"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="20dp"/>
-        </RelativeLayout>
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/t11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="行驶公里数:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_mil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t11"
+                    android:text="无"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/t12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余汽油量:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_gas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t12"
+                    android:text="无"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/t31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="变速器状况:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_istran"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t31"
+                    android:textColor="#000000"
+                    android:text="无"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/t41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:text="车 灯  状 况:"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_islight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t41"
+                    android:textColor="#000000"
+                    android:text="无"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/t51"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="引 擎  状 况:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_iseng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t51"
+                    android:text="无"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/img3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/manager2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="120dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/t21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="空气质量:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_kqzl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t21"
+                    android:text="无"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/t22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="运动指数:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_ydzs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t22"
+                    android:text="无"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/t23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="洗车指数:"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/znwh_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/t23"
+                    android:text="无"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
+    <com.team.car.view.listview.XListView
         android:id="@+id/shop_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
