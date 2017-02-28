@@ -1,14 +1,39 @@
-<com.zxl.library.DropDownMenu xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dropDownMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:ddmaskColor="@color/mask_color"
-    app:ddmenuBackgroundColor="@color/white"
-    app:ddmenuMaxHeight="280dp"
-    app:ddmenuSelectedIcon="@mipmap/drop_down_selected_icon"
-    app:ddmenuTextSize="13sp"
-    app:ddmenuUnselectedIcon="@mipmap/drop_down_unselected_icon"
-    app:ddneedSetSlectedColor="true"
-    app:ddtextSelectedColor="@color/drop_down_selected"
-    app:ddtextUnselectedColor="@color/drop_down_unselected" />
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="8dp"
+        android:background="#545454">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商 店"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <com.zxl.library.DropDownMenu
+        android:id="@+id/dropDownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ddmaskColor="@color/mask_color"
+        app:ddmenuBackgroundColor="@color/white"
+        app:ddmenuMaxHeight="280dp"
+        app:ddmenuSelectedIcon="@mipmap/drop_down_selected_icon"
+        app:ddmenuTextSize="13sp"
+        app:ddmenuUnselectedIcon="@mipmap/drop_down_unselected_icon"
+        app:ddneedSetSlectedColor="true"
+        app:ddtextSelectedColor="@color/drop_down_selected"
+        app:ddtextUnselectedColor="@color/drop_down_unselected" />
+
+</LinearLayout>

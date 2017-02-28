@@ -1,95 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="30dp">
+    android:orientation="vertical"
+    android:background="#666666">
 
     <RelativeLayout
-        android:id="@+id/home_car_weixiu"
-        android:layout_width="200dp"
-        android:layout_height="240dp"
-        android:layout_above="@+id/home_car_jiayou"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/btn_sy_car">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:background="#545454">
 
         <ImageView
-            android:id="@+id/imgView2"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
-            android:background="@mipmap/car_xiu" />
+            android:id="@+id/car_brand_select_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/home_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="故障维修"
+            android:text="首页"
+            android:textSize="20sp"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:layout_centerHorizontal="true"/>
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/home_car_baoyang"
-        android:layout_width="105dp"
-        android:layout_height="95dp"
-        android:layout_above="@id/home_car_jiayou"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_toRightOf="@+id/home_car_weixiu"
-        android:background="@drawable/btn_sy_car1">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="30dp"
+        android:background="#666666">
 
-        <ImageView
-            android:id="@+id/imgView3"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:background="@mipmap/car_by" />
+        <RelativeLayout
+            android:id="@+id/home_car_weixiu"
+            android:layout_width="200dp"
+            android:layout_height="240dp"
+            android:layout_above="@+id/home_car_jiayou"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn_sy_car">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imgView3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="车辆保养"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgView2"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:background="@mipmap/car_xiu" />
 
-    <RelativeLayout
-        android:id="@+id/home_car_jiayou"
-        android:layout_width="105dp"
-        android:layout_height="125dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="90dp"
-        android:layout_marginLeft="112dp"
-        android:background="@drawable/btn_sy_car2">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgView2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="故障维修"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imgView4"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:background="@mipmap/car_jy" />
+        <RelativeLayout
+            android:id="@+id/home_car_baoyang"
+            android:layout_width="105dp"
+            android:layout_height="95dp"
+            android:layout_above="@id/home_car_jiayou"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/home_car_weixiu"
+            android:background="@drawable/btn_sy_car1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imgView4"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="车辆加油"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgView3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@mipmap/car_by" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="车辆保养"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/home_car_jiayou"
+            android:layout_width="105dp"
+            android:layout_height="125dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="90dp"
+            android:layout_marginLeft="112dp"
+            android:background="@drawable/btn_sy_car2">
+
+            <ImageView
+                android:id="@+id/imgView4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@mipmap/car_jy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgView4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="车辆加油"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        </RelativeLayout>
+</LinearLayout>

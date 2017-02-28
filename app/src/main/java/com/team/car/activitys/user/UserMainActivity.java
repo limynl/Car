@@ -144,7 +144,7 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
                 Intent intent = new Intent(UserMainActivity.this, UserMessageActivity.class);
                 //这里还要将用户的身份标识和一些其他相关的数据传递过去
                 startActivityForResult(intent, 1);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
                 break;
             case R.id.btnSstq:{//天气预报查询
@@ -152,7 +152,7 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
                 Intent intent = new Intent(UserMainActivity.this, WeatherActivity.class);
                 intent.putExtra("city", city);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
                 break;
         }
@@ -171,6 +171,7 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
                 toastUtil.Long(UserMainActivity.this, "添加爱车").show();
                 Intent intent = new Intent(UserMainActivity.this, ShowCarActivity.class);
                 startActivity(intent);
+//                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
             break;

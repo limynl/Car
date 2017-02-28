@@ -5,12 +5,14 @@
     android:layout_height="match_parent"
     android:background="#e0e0e0">
 
+    <!--e0e0e0-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="9dp"
         android:paddingBottom="8dp"
-        android:background="#7ADFB8">
+        android:background="#545454">
 
         <TextView
             android:id="@+id/setting_title"
@@ -28,7 +30,7 @@
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#ffffff"
+        android:background="#f5f5f5"
         android:clickable="true">
 
         <TextView
@@ -57,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginTop="10dp"
-        android:background="#ffffff">
+        android:background="#f5f5f5">
 
     <ImageView
         android:id="@+id/img2"
@@ -202,7 +204,7 @@
         android:layout_width="match_parent"
         android:layout_height="205dp"
         android:layout_marginTop="10dp"
-        android:background="#ffffff">
+        android:background="#f5f5f5">
 
         <ImageView
             android:id="@+id/img3"

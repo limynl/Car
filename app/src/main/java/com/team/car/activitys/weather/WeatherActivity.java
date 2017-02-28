@@ -246,6 +246,7 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
                 intent = new Intent();
                 intent.setClass(WeatherActivity.this, SelectCity.class);
                 WeatherActivity.this.startActivityForResult(intent, SELECT_CITY);
+                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 break;
         }
     }
@@ -316,5 +317,12 @@ public class WeatherActivity extends Activity implements APICallback,View.OnClic
                 break;
             default:
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

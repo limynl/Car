@@ -59,9 +59,9 @@ public class SettingActivity extends Activity {
         switch (view.getId()) {
             case R.id.setting_back:
             {
-                startActivity(new Intent(SettingActivity.this, UserMainActivity.class));
-                finish();
-                overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
+                this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                overridePendingTransition(R.anim.in_from_left_two, R.anim.out_from_right_two);//左右滑动效果
             }
                 break;
             case R.id.setting_account_bind:

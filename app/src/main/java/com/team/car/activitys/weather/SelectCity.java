@@ -78,6 +78,7 @@ public class SelectCity extends Activity implements AdapterView.OnItemClickListe
         intent.putExtra("city", city);
         SelectCity.this.setResult(RESULT_OK, intent);
         SelectCity.this.finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     class Watcher implements TextWatcher {
@@ -111,6 +112,7 @@ public class SelectCity extends Activity implements AdapterView.OnItemClickListe
                 intent.putExtra("city", city);
                 SelectCity.this.setResult(RESULT_OK, intent);
                 SelectCity.this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             default:
                 break;
@@ -122,5 +124,6 @@ public class SelectCity extends Activity implements AdapterView.OnItemClickListe
      */
     private void back() {
         SelectCity.this.finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

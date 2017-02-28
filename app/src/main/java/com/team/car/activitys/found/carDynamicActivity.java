@@ -40,7 +40,7 @@ import java.util.List;
  * email 1434117404@qq.com
  */
 
-public class carDynamicActivity extends Activity implements ImagePickerAdapter.OnRecyclerViewItemClickListener {
+public class carDynamicActivity extends Activity implements ImagePickerAdapter.OnRecyclerViewItemClickListener, View.OnClickListener{
     private static final String TAG = carDynamicActivity.class.getSimpleName();
     private ToastUtil toastUtil = new ToastUtil();
     private Effectstype effect;
@@ -97,6 +97,8 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
                 tryDecodeSmallImg2();
             }
         });
+
+        back.setOnClickListener(this);
 
 
         // 波浪线设置
@@ -298,6 +300,16 @@ public class carDynamicActivity extends Activity implements ImagePickerAdapter.O
         if (mSmallUrls != null){
             mSmallUrls.clear();
             mSmallUrls = null;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.car_dynamic_back:{
+                this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            }
         }
     }
 }

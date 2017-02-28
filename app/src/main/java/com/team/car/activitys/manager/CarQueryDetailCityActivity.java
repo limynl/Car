@@ -25,7 +25,7 @@ public class CarQueryDetailCityActivity extends Activity {
     private ListView listView;
     private ProvinceAdapter adapter;
     private List<String> list = new ArrayList<String>();
-    private String[] name = {"成都市", "自贡市", "攀枝花市", "泸州市", "德阳市", "，绵阳市", "广元市", "遂宁市",
+    private String[] name = {"成都市", "自贡市", "攀枝花市", "泸州市", "德阳市", "绵阳市", "广元市", "遂宁市",
             "内江市", "乐山市", "南充市", "宜宾市", "广安市", "达州市", "眉山市", "雅安市", "巴中市"};
 
     @Override

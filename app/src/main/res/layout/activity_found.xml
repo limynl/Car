@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#7ADFB8">
+        android:background="#545454">
 
         <RadioGroup
             android:id="@+id/rg_found"

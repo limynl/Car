@@ -24,7 +24,7 @@
                 android:background="@drawable/title_bar_image_pressed_effect"
                 android:padding="14dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/title_bar_back" />
+                android:src="@mipmap/back" />
 
             <TextView
                 android:layout_width="wrap_content"
