@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.team.car.R;
-import com.team.car.activitys.home.CarAddOilActivity;
+import com.team.car.activitys.home.repair.RepairMainActivity;
 import com.team.car.base.fragment.BaseFragment;
 import com.team.car.widgets.ToastUtil;
 
@@ -38,21 +38,26 @@ public class homeFragment extends BaseFragment implements View.OnClickListener{
     @Override
     public void initDate() {
         super.initDate();
+        carWeiXiu.setOnClickListener(this);
+        carBy.setOnClickListener(this);
+        carJy.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.home_car_weixiu:{//汽车故障
-
+                Intent intent = new Intent(context, RepairMainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
             break;
             case R.id.home_car_baoyang:{//汽车保养
 
             }
             break;
-            case R.id.home_car_jiayou:{//汽车加油
-                Intent intent = new Intent(context, CarAddOilActivity.class);
+            case R.id.home_car_jiayou:{//汽车保险
+
             }
             break;
         }

@@ -44,6 +44,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="20dp"
+            android:clickable="true"
             android:background="@drawable/btn_sy_car">
 
             <ImageView
@@ -118,7 +119,7 @@
                 android:layout_below="@+id/imgView4"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="车辆加油"
+                android:text="车辆保险"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
         </RelativeLayout>

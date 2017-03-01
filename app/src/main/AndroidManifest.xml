@@ -188,6 +188,7 @@
         <activity android:name=".activitys.manager.CarQueryProvinceActivity" />
         <activity android:name=".activitys.manager.CarQueryDetailCityActivity" />
         <activity android:name=".activitys.manager.CarIllegalQueryResultActivity"/>
+        <activity android:name=".activitys.home.repair.RepairMainActivity"/>
 
         <!-- 注册服务 -->
         <service android:name=".services.WeatherService" />

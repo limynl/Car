@@ -78,6 +78,7 @@ dependencies {
     compile project(':PullToRefresh_library')
     compile 'org.xutils:xutils:3.3.36'
     compile files('libs/glide-3.7.0.jar')
+    compile 'com.github.armcha:SpaceNavigationView:1.4.1'
     //图片加载框架
     compile 'com.squareup.picasso:picasso:2.5.2'
     //圆形图片

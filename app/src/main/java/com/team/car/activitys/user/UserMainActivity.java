@@ -171,7 +171,6 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
                 toastUtil.Long(UserMainActivity.this, "添加爱车").show();
                 Intent intent = new Intent(UserMainActivity.this, ShowCarActivity.class);
                 startActivity(intent);
-//                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
             }
             break;
@@ -379,6 +378,7 @@ public class UserMainActivity extends FragmentActivity implements NavigationView
                 }, 2000);
             }else{
                 UserMainActivity.this.finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 System.exit(0);
             }
         }

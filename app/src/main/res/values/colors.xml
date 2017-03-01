@@ -10,7 +10,7 @@
     <color name="roundProgressColor_svprogresshuddefault">@android:color/black</color>
     <color name="textColor_svprogresshuddefault_msg">#000000</color>
     <color name="bgColor_overlay">#60000000</color>
-    <color name="bgColor_overlay_black">#95000000</color>
+    <color name="bgColor_overlay_black">#666666</color>
 
 
     <color name="line">#eeeeee</color>
